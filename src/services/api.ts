@@ -7,18 +7,29 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000
 
 interface BackendUserProfile {
   age: number;
+  ageGroup: string;
   state: string;
   citizenship: string;
-  monthlyIncome: number;
-  householdIncome: number;
+  monthlyIncome: number | null;
+  householdIncome: number | null;
+  householdIncomeRange: string;
   employmentStatus: string;
+  workSituation: string;
   maritalStatus: string;
+  householdSituation: string;
   hasChildren: boolean;
   numberOfDependents: number;
+  dependents: number;
   disabilityStatus: boolean;
   housingStatus: string;
   studentStatus: boolean;
+  incomeStability: string;
+  contributionStatus: string;
+  hasEpf: boolean | null;
+  hasSocso: boolean | null;
   supportNeeds: string[];
+  specialSituations: string[];
+  extraContext: string | null;
 }
 
 function parseAgeGroup(ageGroup: string) {
@@ -32,12 +43,39 @@ function parseAgeGroup(ageGroup: string) {
 }
 
 function parseIncomeRange(incomeRange: string) {
+  const stableValues: Record<string, number | null> = {
+    no_income: 0,
+    below_1000: 999,
+    "1000_1999": 1999,
+    "2000_2999": 2999,
+    "3000_4999": 4999,
+    exactly_5000: 5000,
+    "5001_7999": 7999,
+    "8000_above": 8000,
+    unstable_unknown: null,
+    prefer_not_say: null
+  };
+  if (incomeRange in stableValues) return stableValues[incomeRange];
+  if (incomeRange.includes("RM5,000 and above")) return 8000;
   if (incomeRange.includes("No income")) return 0;
+  if (incomeRange.includes("Tiada pendapatan")) return 0;
   if (incomeRange.includes("Below")) return 900;
+  if (incomeRange.includes("Bawah")) return 900;
   if (incomeRange.includes("1,000")) return 1500;
   if (incomeRange.includes("2,000")) return 2500;
   if (incomeRange.includes("3,000")) return 4000;
+  if (incomeRange.includes("5,000 exactly") || incomeRange.includes("5,000 tepat")) return 5000;
+  if (incomeRange.includes("5,001")) return 7999;
+  if (incomeRange.includes("8,000")) return 8000;
   if (incomeRange.includes("5,000")) return 5000;
+  if (
+    incomeRange.includes("Not sure") ||
+    incomeRange.includes("Prefer not") ||
+    incomeRange.includes("Tidak pasti") ||
+    incomeRange.includes("Tidak mahu")
+  ) {
+    return null;
+  }
   return 2500;
 }
 
@@ -70,25 +108,40 @@ function mapMaritalStatus(householdSituation: string) {
 }
 
 export function mapFormToBackendProfile(form: EligibilityFormData): BackendUserProfile {
-  const supportNeeds = form.supportNeeds ? form.supportNeeds.split("|").filter(Boolean) : ["Not sure - show me what I may qualify for"];
+  const supportNeeds = form.supportNeeds ? form.supportNeeds.split("|").filter(Boolean) : ["Not sure — show me suitable support options"];
   const specialSituations = form.specialSituations ? form.specialSituations.split("|").filter(Boolean) : [];
   const employmentStatus = mapEmploymentStatus(form.workSituation);
   const numberOfDependents = parseDependents(form.dependents);
+  const contributionStatus = form.contributionStatus;
+  const hasEpf = contributionStatus.includes("EPF") || contributionStatus.includes("both");
+  const hasSocso = contributionStatus.includes("SOCSO") || contributionStatus.includes("both");
+  const unsureContribution = contributionStatus.includes("Not sure");
 
   return {
     age: parseAgeGroup(form.ageGroup),
+    ageGroup: form.ageGroup,
     state: form.state || "Selangor",
     citizenship: form.citizenship === "Yes" ? "Malaysian" : form.citizenship || "Prefer not to say",
     monthlyIncome: parseIncomeRange(form.householdIncomeRange),
     householdIncome: parseIncomeRange(form.householdIncomeRange),
+    householdIncomeRange: form.householdIncomeRange,
     employmentStatus,
+    workSituation: form.workSituation,
     maritalStatus: mapMaritalStatus(form.householdSituation),
+    householdSituation: form.householdSituation,
     hasChildren: form.householdSituation.includes("children") || specialSituations.includes("Has children in school"),
     numberOfDependents,
+    dependents: numberOfDependents,
     disabilityStatus: specialSituations.includes("Has a person with disability"),
     housingStatus: supportNeeds.includes("Rental or housing support") ? "renting" : "not-specified",
     studentStatus: employmentStatus === "student" || form.householdSituation === "Student",
-    supportNeeds
+    incomeStability: form.incomeStability,
+    contributionStatus,
+    hasEpf: unsureContribution ? null : hasEpf,
+    hasSocso: unsureContribution ? null : hasSocso,
+    supportNeeds,
+    specialSituations,
+    extraContext: form.extraContext || null
   };
 }
 

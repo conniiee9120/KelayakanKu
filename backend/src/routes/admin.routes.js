@@ -148,7 +148,7 @@ router.get("/policies/search-cache/latest", requireAdminAuth, async (req, res, n
 
 router.post("/policies/search-serpapi", requireAdminAuth, async (req, res, next) => {
   try {
-    const { presetId = "general-b40", customQuery = "", forceRefresh = false } = req.body || {};
+    const { presetId = "mof-benefit-hub", customQuery = "", forceRefresh = false } = req.body || {};
     const preset = await getSearchPresetById(presetId);
     if (!preset) return res.status(400).json({ error: "Search preset not found." });
 

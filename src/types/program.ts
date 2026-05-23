@@ -3,9 +3,25 @@ export type RecommendationStatus = "Recommended" | "Need More Info";
 
 export interface RuleBreakdownItem {
   rule: string;
-  points: number;
-  matched: boolean;
-  reason: string;
+  label?: string;
+  userValue?: string;
+  policyRule?: string;
+  impact?: string;
+  result?: "matched" | "failed" | "missing" | "unknown" | "partial" | "not_applicable" | string;
+  scoreAwarded?: number;
+  maxScore?: number;
+  message?: string;
+  detectedTags?: string[];
+  points?: number;
+  matched?: boolean;
+  reason?: string;
+}
+
+export interface ProfileFactor {
+  userValue?: string;
+  policyRule?: string;
+  result?: string;
+  impact?: string;
 }
 
 export interface ProgramRecommendation {
@@ -32,6 +48,7 @@ export interface ProgramRecommendation {
   needsMoreInfoReasons?: string[];
   disqualificationReasons?: string[];
   ruleBreakdown?: RuleBreakdownItem[];
+  profileFactors?: Record<string, ProfileFactor>;
   requiredDocuments: string[];
   requiredDocumentsBm?: string[];
   nextSteps: string[];

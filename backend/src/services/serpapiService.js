@@ -1,14 +1,23 @@
 // Admin-only SerpAPI search wrapper with trusted domain filtering.
 const TRUSTED_DOMAINS = [
   "gov.my",
+  "malaysia.gov.my",
+  "manfaat.mof.gov.my",
+  "mof.gov.my",
   "hasil.gov.my",
+  "bantuantunai.hasil.gov.my",
+  "sara.gov.my",
   "jkm.gov.my",
   "mohe.gov.my",
-  "kwsp.gov.my",
+  "moe.gov.my",
+  "moh.gov.my",
   "perkeso.gov.my",
-  "mykasih.com.my",
-  "epetrol.gov.my",
-  "bantuanrakyat.hasil.gov.my"
+  "myfuturejobs.gov.my",
+  "kwsp.gov.my",
+  "ptptn.gov.my",
+  "spnb.com.my",
+  "pekab40.com.my",
+  "mykasih.com.my"
 ];
 
 function getHostname(value) {

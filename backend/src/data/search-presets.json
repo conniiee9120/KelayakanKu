@@ -1,67 +1,67 @@
 [
   {
-    "id": "general-b40",
-    "label": "General B40 financial aid",
-    "description": "Search for broad Malaysian B40 financial support schemes.",
-    "query": "site:gov.my bantuan kewangan B40 Malaysia 2026",
-    "labelBm": "Bantuan kewangan B40 umum",
-    "descriptionBm": "Cari skim sokongan kewangan B40 Malaysia secara umum."
+    "id": "mof-benefit-hub",
+    "label": "MOF Portal Manfaat benefits",
+    "description": "Search the official MOF benefits portal for individual and family aid.",
+    "query": "site:manfaat.mof.gov.my bantuan individu keluarga B40 Belanjawan 2026",
+    "labelBm": "Manfaat MOF",
+    "descriptionBm": "Cari portal rasmi manfaat MOF untuk bantuan individu dan keluarga."
   },
   {
-    "id": "str-lhdn",
-    "label": "Sumbangan Tunai Rahmah / LHDN",
-    "description": "Search for STR and LHDN cash assistance eligibility.",
-    "query": "site:hasil.gov.my OR site:bantuantunai.hasil.gov.my Sumbangan Tunai Rahmah kelayakan 2026",
-    "labelBm": "Sumbangan Tunai Rahmah / LHDN",
-    "descriptionBm": "Cari kelayakan bantuan tunai STR dan LHDN."
+    "id": "str-sara",
+    "label": "STR / SARA official support",
+    "description": "Search official STR and SARA cash and essential goods support.",
+    "query": "site:bantuantunai.hasil.gov.my OR site:sara.gov.my STR SARA kelayakan 2026",
+    "labelBm": "Sokongan rasmi STR / SARA",
+    "descriptionBm": "Cari sokongan tunai STR dan barangan asas SARA daripada sumber rasmi."
   },
   {
     "id": "jkm-welfare",
-    "label": "JKM welfare assistance",
-    "description": "Search for welfare aid from Jabatan Kebajikan Masyarakat.",
-    "query": "site:jkm.gov.my bantuan kebajikan kelayakan",
-    "labelBm": "Bantuan kebajikan JKM",
-    "descriptionBm": "Cari bantuan kebajikan daripada Jabatan Kebajikan Masyarakat."
+    "label": "JKM welfare support",
+    "description": "Search JKM monthly welfare assistance programmes.",
+    "query": "site:jkm.gov.my bantuan bulanan kanak-kanak warga emas OKU penjagaan",
+    "labelBm": "Sokongan kebajikan JKM",
+    "descriptionBm": "Cari program bantuan bulanan Jabatan Kebajikan Masyarakat."
   },
   {
-    "id": "student-b40",
-    "label": "Student / education aid",
-    "description": "Search for B40 student and education support.",
-    "query": "site:mohe.gov.my OR site:moe.gov.my bantuan pelajar B40 kelayakan",
-    "labelBm": "Bantuan pelajar / pendidikan",
-    "descriptionBm": "Cari sokongan pelajar dan pendidikan untuk B40."
+    "id": "education-student-aid",
+    "label": "Education and student aid",
+    "description": "Search student, B40, and OKU education assistance.",
+    "query": "site:mohe.gov.my OR site:bkoku.mohe.gov.my OR site:manfaat.mof.gov.my bantuan pelajar B40 OKU",
+    "labelBm": "Bantuan pendidikan dan pelajar",
+    "descriptionBm": "Cari bantuan pendidikan untuk pelajar, B40, dan OKU."
   },
   {
-    "id": "food-aid",
-    "label": "Food aid / MyKasih",
-    "description": "Search for food aid and basic goods support.",
-    "query": "site:mykasih.com.my bantuan makanan kelayakan OR site:gov.my bantuan makanan B40",
-    "labelBm": "Bantuan makanan / MyKasih",
-    "descriptionBm": "Cari bantuan makanan dan sokongan barangan asas."
-  },
-  {
-    "id": "employment-socso",
-    "label": "Employment / PERKESO aid",
-    "description": "Search for job seeker, employment, and social security support.",
-    "query": "site:perkeso.gov.my bantuan pekerjaan kelayakan OR site:perkeso.gov.my insentif pekerjaan",
-    "labelBm": "Bantuan pekerjaan / PERKESO",
-    "descriptionBm": "Cari sokongan pencari kerja, pekerjaan, dan keselamatan sosial."
-  },
-  {
-    "id": "housing-aid",
-    "label": "Housing aid",
-    "description": "Search for housing assistance and rental/home ownership support.",
-    "query": "site:gov.my bantuan perumahan B40 kelayakan Malaysia",
-    "labelBm": "Bantuan perumahan",
-    "descriptionBm": "Cari bantuan perumahan, sewaan, atau pemilikan rumah."
+    "id": "employment-income-support",
+    "label": "Employment and income support",
+    "description": "Search employment, income, gig worker, and contribution-related support.",
+    "query": "site:perkeso.gov.my OR site:myfuturejobs.gov.my OR site:kwsp.gov.my OR site:manfaat.mof.gov.my bantuan pekerjaan pendapatan B40",
+    "labelBm": "Sokongan pekerjaan dan pendapatan",
+    "descriptionBm": "Cari sokongan pekerjaan, pendapatan, pekerja gig, dan caruman."
   },
   {
     "id": "healthcare-aid",
     "label": "Healthcare aid",
-    "description": "Search for healthcare and medical financial assistance.",
-    "query": "site:moh.gov.my OR site:gov.my bantuan kesihatan kewangan kelayakan",
+    "description": "Search healthcare support for B40 households.",
+    "query": "site:moh.gov.my OR site:pekab40.com.my OR site:manfaat.mof.gov.my bantuan kesihatan B40 STR",
     "labelBm": "Bantuan kesihatan",
-    "descriptionBm": "Cari bantuan kewangan kesihatan dan perubatan."
+    "descriptionBm": "Cari sokongan kesihatan untuk isi rumah B40."
+  },
+  {
+    "id": "housing-aid",
+    "label": "Housing aid",
+    "description": "Search housing and home assistance for B40 households.",
+    "query": "site:spnb.com.my OR site:manfaat.mof.gov.my bantuan perumahan B40 Rumah Mesra Rakyat",
+    "labelBm": "Bantuan perumahan",
+    "descriptionBm": "Cari bantuan perumahan dan kediaman untuk isi rumah B40."
+  },
+  {
+    "id": "state-aid",
+    "label": "State-level aid",
+    "description": "Search state government support programmes.",
+    "query": "site:selangor.gov.my OR site:penang.gov.my OR site:johor.gov.my OR site:sabah.gov.my OR site:sarawak.gov.my bantuan rakyat B40",
+    "labelBm": "Bantuan peringkat negeri",
+    "descriptionBm": "Cari program sokongan kerajaan negeri."
   },
   {
     "id": "custom",

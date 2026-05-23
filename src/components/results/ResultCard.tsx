@@ -31,15 +31,18 @@ export function RecommendationCard({ recommendation }: { recommendation: Program
         </div>
       </div>
       <p>{localized.shortDescription}</p>
-      {localized.matchReasons.length > 0 ? <p>{localized.matchReasons[0]}</p> : null}
+      {localized.matchReasons.slice(0, 2).map((reason) => <p key={reason}>{reason}</p>)}
+      {recommendation.status === "Need More Info" && localized.needsMoreInfoReasons.length > 0 ? (
+        <p>{localized.needsMoreInfoReasons[0]}</p>
+      ) : null}
       <div className="document-list">
         <strong>{text.results.documents}</strong>
         <ul>
           {localized.requiredDocuments.slice(0, 3).map((document) => <li key={document}>{document}</li>)}
         </ul>
       </div>
-      {recommendation.officialUrl ? (
-        <a className="source-placeholder" href={recommendation.officialUrl}>{text.results.officialSource}</a>
+      {recommendation.officialUrl || recommendation.sourceUrl ? (
+        <a className="source-placeholder" href={recommendation.officialUrl || recommendation.sourceUrl} target="_blank" rel="noopener noreferrer">{text.results.officialSource}</a>
       ) : (
         <span className="source-placeholder">{text.results.officialSource}</span>
       )}

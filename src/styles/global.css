@@ -92,15 +92,14 @@ p { color: var(--muted); line-height: 1.7; }
 .snapshot-heading h2 { font-size: 1.35rem; }
 .snapshot-heading p { margin: 6px 0 0; }
 .snapshot-icon { align-items: center; background: var(--lime); border-radius: 50%; color: #05210f; display: inline-flex; font-size: 1.1rem; font-weight: 900; height: 44px; justify-content: center; width: 44px; }
-.auto-flow-window { border: 1px solid #d7e4f0; border-radius: 18px; height: 226px; margin-top: 18px; overflow: hidden; background: linear-gradient(180deg, #f8fbff 0%, #eef7ff 100%); position: relative; }
-.auto-flow-window::after { background: linear-gradient(to bottom, rgba(248,251,255,0), #eef7ff); bottom: 0; content: ""; height: 42px; left: 0; pointer-events: none; position: absolute; right: 0; }
-.auto-flow-track { animation: autoFlowScroll 13s ease-in-out infinite; display: grid; gap: 12px; padding: 16px; }
-.auto-flow-window:hover .auto-flow-track { animation-play-state: paused; }
+.auto-flow-window { background: linear-gradient(180deg, #f8fbff 0%, #eef7ff 100%); border: 1px solid #d7e4f0; border-radius: 18px; margin-top: 10px; max-height: 226px; overflow-x: hidden; overflow-y: auto; overscroll-behavior: contain; position: relative; scroll-behavior: smooth; scrollbar-gutter: stable; }
+.auto-flow-window:focus-visible { outline: 3px solid rgba(48, 108, 168, 0.28); outline-offset: 3px; }
+.auto-flow-track { display: grid; gap: 12px; padding: 16px 16px 28px; }
+.journey-scroll-hint { color: #5d6b78; font-size: 0.84rem; font-weight: 700; margin: 12px 0 0; }
 .flow-card { align-items: flex-start; background: #fff; border: 1px solid #dce3ea; border-radius: 15px; box-shadow: 0 8px 16px rgba(15, 23, 42, 0.12); display: flex; gap: 12px; min-height: 88px; padding: 14px; position: relative; }
 .flow-card > span { background: var(--primary); border-radius: 12px; color: #fff; display: grid; flex: 0 0 34px; font-weight: 900; height: 34px; place-items: center; }
 .flow-card strong { display: block; font-size: 1rem; }
 .flow-card p { margin: 4px 0 0; font-size: 0.92rem; line-height: 1.45; }
-@keyframes autoFlowScroll { 0%,18%{ transform: translateY(0); } 28%,43%{ transform: translateY(-100px); } 53%,68%{ transform: translateY(-200px); } 78%,100%{ transform: translateY(-300px); } }
 .metrics-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: 20px; }
 .metric-card { border-radius: 16px; background: #e5f3ff; padding: 18px; text-align: center; }
 .metric-card:nth-child(1) { background: #d9fbe7; }
@@ -197,6 +196,10 @@ p { color: var(--muted); line-height: 1.7; }
 .checklist-actions { grid-column: 2; grid-row: 1 / span 2; position: sticky; top: 112px; display: grid; gap: 12px; }
 .checklist-detail-grid { display: grid; grid-column: 1; gap: 18px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .checklist-detail-grid .checklist-card:last-child { grid-column: 1 / -1; }
+.rule-breakdown-list { display: grid; gap: 12px; margin-top: 14px; }
+.rule-breakdown-item { border-top: 1px solid #e5eef6; padding-top: 12px; }
+.rule-breakdown-item p { margin: 4px 0; }
+.rule-breakdown-item small { color: var(--muted); line-height: 1.5; }
 
 .admin-shell { max-width: 1180px; }
 .admin-topbar, .admin-page-actions, .admin-filters { display: flex; align-items: center; justify-content: space-between; gap: 18px; margin-bottom: 22px; }
@@ -283,7 +286,7 @@ p { color: var(--muted); line-height: 1.7; }
   .metrics-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
   .spacious-form-card { padding: 20px; }
   .button-row, .form-actions { flex-direction: column; }
-  .auto-flow-window { height: 196px; }
+  .auto-flow-window { max-height: 196px; }
   .flow-card { min-height: 78px; padding: 12px; }
   .snapshot-card .metrics-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
   .snapshot-card .metric-card { padding: 14px 8px; }
@@ -314,7 +317,7 @@ p { color: var(--muted); line-height: 1.7; }
   .landing-band { padding-left: 12px; padding-right: 12px; }
   .page-section { padding: 28px 0; }
   .snapshot-card { border-radius: 18px; padding: 18px; }
-  .auto-flow-window { height: 176px; }
+  .auto-flow-window { max-height: 176px; }
   .flow-card strong { font-size: 0.9rem; }
   .flow-card p { font-size: 0.82rem; }
   .metrics-grid { grid-template-columns: 1fr; }

@@ -81,14 +81,16 @@ const optionSets: Record<OptionField, LocalizedFormOption[]> = {
     option("Other", "Lain-lain")
   ],
   householdIncomeRange: [
-    option("No income currently", "Tiada pendapatan buat masa ini"),
-    option("Below RM1,000", "Bawah RM1,000"),
-    option("RM1,000 - RM1,999", "RM1,000 - RM1,999"),
-    option("RM2,000 - RM2,999", "RM2,000 - RM2,999"),
-    option("RM3,000 - RM4,999", "RM3,000 - RM4,999"),
-    option("RM5,000 and above", "RM5,000 dan ke atas"),
-    option("Not sure / income changes every month", "Tidak pasti / pendapatan berubah setiap bulan"),
-    option("Prefer not to say", "Tidak mahu nyatakan")
+    option("no_income", "Tiada pendapatan buat masa ini", "No income currently"),
+    option("below_1000", "Bawah RM1,000", "Below RM1,000"),
+    option("1000_1999", "RM1,000 - RM1,999", "RM1,000 - RM1,999"),
+    option("2000_2999", "RM2,000 - RM2,999", "RM2,000 - RM2,999"),
+    option("3000_4999", "RM3,000 - RM4,999", "RM3,000 - RM4,999"),
+    option("exactly_5000", "RM5,000 tepat", "RM5,000 exactly"),
+    option("5001_7999", "RM5,001 - RM7,999", "RM5,001 - RM7,999"),
+    option("8000_above", "RM8,000 dan ke atas", "RM8,000 and above"),
+    option("unstable_unknown", "Tidak pasti / pendapatan berubah setiap bulan", "Not sure / income changes every month"),
+    option("prefer_not_say", "Tidak mahu nyatakan", "Prefer not to say")
   ],
   incomeStability: [
     option("Yes, fixed every month", "Ya, tetap setiap bulan"),
@@ -113,7 +115,7 @@ const optionSets: Record<OptionField, LocalizedFormOption[]> = {
     option("EPF / retirement contribution support", "Sokongan caruman EPF / persaraan"),
     option("Medical or disability-related support", "Sokongan perubatan atau berkaitan OKU"),
     option("Child or family support", "Sokongan anak atau keluarga"),
-    option("Not sure - show me what I may qualify for", "Tidak pasti - tunjukkan sokongan yang mungkin layak")
+    option("Not sure — show me suitable support options", "Tidak pasti — tunjukkan pilihan sokongan yang sesuai")
   ],
   specialSituations: [
     option("Single parent household", "Isi rumah ibu atau bapa tunggal"),

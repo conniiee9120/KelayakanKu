@@ -33,7 +33,7 @@ function saveExtractionPayload(payload: ExtractionPayload) {
 export function AdminPolicyImportPage() {
   const { language, text } = useLanguage();
   const [presets, setPresets] = useState<SearchPreset[]>([]);
-  const [presetId, setPresetId] = useState("general-b40");
+  const [presetId, setPresetId] = useState("mof-benefit-hub");
   const [customQuery, setCustomQuery] = useState("");
   const [sourceUrl, setSourceUrl] = useState("");
   const [rawText, setRawText] = useState("");
@@ -154,6 +154,7 @@ export function AdminPolicyImportPage() {
             <textarea value={activeQuery} readOnly />
           )}
         </label>
+        <p className="field-helper">{text.admin.recommendedSourceTypes}</p>
       </Card>
 
       <Card className="stack">

@@ -35,6 +35,8 @@ const landingCopy = {
     needInfo: "Need Info",
     match: "Match based on income and household.",
     depends: "Depends on household records.",
+    scrollHint: "Scroll to preview the steps",
+    journeyAria: "Eligibility journey preview",
     howEyebrow: "How it works",
     whoEyebrow: "Who it helps",
     faqEyebrow: "FAQ preview"
@@ -66,6 +68,8 @@ const landingCopy = {
     needInfo: "Perlu Info",
     match: "Padanan berdasarkan pendapatan dan isi rumah.",
     depends: "Bergantung pada rekod isi rumah.",
+    scrollHint: "Tatal untuk melihat langkah-langkah",
+    journeyAria: "Pratonton perjalanan kelayakan",
     howEyebrow: "Cara ia berfungsi",
     whoEyebrow: "Untuk siapa",
     faqEyebrow: "Soalan lazim"
@@ -98,13 +102,13 @@ export function Landing() {
               <span className="snapshot-icon" aria-hidden="true">✓</span>
               <div>
                 <h2>{text.landing.journeyTitle}</h2>
-                <p>{text.landing.journeySubtitle}</p>
               </div>
             </div>
-            <div className="auto-flow-window" aria-label="Preview of the user journey">
+            <p className="journey-scroll-hint">{copy.scrollHint}</p>
+            <div className="auto-flow-window" aria-label={copy.journeyAria} tabIndex={0}>
               <div className="auto-flow-track">
-                {[...copy.journeySteps, ...copy.journeySteps].map(([number, title, description], index) => (
-                  <div className="flow-card" key={`${title}-${index}`} aria-hidden={index >= copy.journeySteps.length ? "true" : undefined}>
+                {copy.journeySteps.map(([number, title, description]) => (
+                  <div className="flow-card" key={title}>
                     <span>{number}</span>
                     <div>
                       <strong>{title}</strong>

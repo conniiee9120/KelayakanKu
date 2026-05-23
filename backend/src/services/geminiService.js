@@ -16,7 +16,24 @@ const matchReasonBm = {
   "Special household conditions appear to match.": "situasi khas isi rumah kelihatan sepadan."
 };
 
-export function generateFallbackExplanation(_userProfile, recommendation = {}, language = "en") {
+function summarizeProfileContext(userProfile = {}, language = "en") {
+  const parts = [];
+  if (Array.isArray(userProfile.supportNeeds) && userProfile.supportNeeds.length > 0) {
+    parts.push(language === "bm" ? `keperluan sokongan yang dipilih (${userProfile.supportNeeds.join(", ")})` : `selected support needs (${userProfile.supportNeeds.join(", ")})`);
+  }
+  if (Array.isArray(userProfile.specialSituations) && userProfile.specialSituations.length > 0) {
+    parts.push(language === "bm" ? `situasi khas isi rumah (${userProfile.specialSituations.join(", ")})` : `special household situations (${userProfile.specialSituations.join(", ")})`);
+  }
+  if (userProfile.incomeStability) {
+    parts.push(language === "bm" ? `kestabilan pendapatan (${userProfile.incomeStability})` : `income stability (${userProfile.incomeStability})`);
+  }
+  if (userProfile.contributionStatus) {
+    parts.push(language === "bm" ? `status caruman (${userProfile.contributionStatus})` : `contribution status (${userProfile.contributionStatus})`);
+  }
+  return parts.slice(0, 3).join(language === "bm" ? ", " : ", ");
+}
+
+export function generateFallbackExplanation(userProfile = {}, recommendation = {}, language = "en") {
   const title = language === "bm" ? recommendation.titleBm || recommendation.title || "program sokongan ini" : recommendation.title || "this support program";
   const benefit = language === "bm"
     ? recommendation.benefitSummaryBm || recommendation.shortDescriptionBm || recommendation.benefitSummary || recommendation.shortDescription || ""
@@ -29,6 +46,7 @@ export function generateFallbackExplanation(_userProfile, recommendation = {}, l
     Array.isArray(recommendation.needsMoreInfoReasons) && recommendation.needsMoreInfoReasons.length > 0
       ? ` Some details may still need confirmation, such as ${recommendation.needsMoreInfoReasons.slice(0, 2).join(" ")}`
       : "";
+  const profileContext = summarizeProfileContext(userProfile, language);
   const documents =
     Array.isArray(recommendation.requiredDocuments) && recommendation.requiredDocuments.length > 0
       ? ` You may need to prepare documents such as ${recommendation.requiredDocuments.slice(0, 3).join(", ")}.`
@@ -51,10 +69,12 @@ export function generateFallbackExplanation(_userProfile, recommendation = {}, l
       Array.isArray(recommendation.nextStepsBm || recommendation.nextSteps) && (recommendation.nextStepsBm || recommendation.nextSteps).length > 0
         ? ` Langkah seterusnya yang baik ialah: ${(recommendation.nextStepsBm || recommendation.nextSteps)[0]}.`
         : "";
-    return `${title} mungkin berkaitan dengan isi rumah anda. ${benefit ? `${benefit} ` : ""}Sokongan ini kelihatan sepadan dengan profil anda kerana ${bmReasons}${bmDocuments}${bmNextStep} Sila sahkan syarat akhir melalui portal rasmi atau agensi berkaitan sebelum memohon.`;
+    const bmContext = profileContext ? ` Faktor profil seperti ${profileContext} juga dipertimbangkan dalam semakan ini.` : "";
+    return `${title} mungkin berkaitan dengan isi rumah anda. ${benefit ? `${benefit} ` : ""}Sokongan ini kelihatan sepadan dengan profil anda kerana ${bmReasons}${bmContext}${bmDocuments}${bmNextStep} Sila sahkan syarat akhir melalui portal rasmi atau agensi berkaitan sebelum memohon.`;
   }
 
-  return `${title} may be relevant to your household. ${benefit ? `${benefit} ` : ""}This support appears to match your profile because ${reasons}${needsMoreInfo}${documents}${nextStep} Please verify the final criteria through the official portal or relevant agency before applying.`;
+  const context = profileContext ? ` Profile factors such as ${profileContext} were also considered in this rule check.` : "";
+  return `${title} may be relevant to your household. ${benefit ? `${benefit} ` : ""}This support appears to match your profile because ${reasons}${context}${needsMoreInfo}${documents}${nextStep} Please verify the final criteria through the official portal or relevant agency before applying.`;
 }
 
 function buildExplanationPrompt(userProfile, recommendation, language = "en") {
@@ -67,6 +87,10 @@ You must not override the score.
 You must not claim the user is definitely eligible.
 Use simple, supportive language suitable for B40 users in Malaysia.
 Use safer phrasing like "may be relevant" or "appears to match your profile".
+Mention the most relevant user inputs that affected the match, such as support needs, special situations, income stability, contribution status, or extra notes when they matter.
+Do not mention every field mechanically.
+If income is missing, prefer not to say, or unstable/unknown, explain that income needs confirmation.
+If contribution status is unsure and relevant, explain that it needs confirmation.
 Write one short paragraph or two short paragraphs.
 Do not use bullet points.
 Do not use markdown.
@@ -97,6 +121,8 @@ ${JSON.stringify({
     matchReasons: recommendation?.matchReasons,
     missingInfo: recommendation?.missingInfo,
     needsMoreInfoReasons: recommendation?.needsMoreInfoReasons,
+    ruleBreakdown: recommendation?.ruleBreakdown,
+    profileFactors: recommendation?.profileFactors,
     requiredDocuments: recommendation?.requiredDocuments,
     requiredDocumentsBm: recommendation?.requiredDocumentsBm,
     nextSteps: recommendation?.nextSteps,

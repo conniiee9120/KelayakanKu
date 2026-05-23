@@ -70,6 +70,10 @@ function buildLocalExplanationFallback(language: "bm" | "en", recommendation: Pr
   return `${localized.title} may be relevant to your household. ${benefit} ${reasons ? `Match reasons: ${reasons}` : "Some profile details match the rule checks."}${documents ? ` Documents you may need include ${documents}.` : ""} Please verify the final criteria through the official portal or relevant agency before applying.`;
 }
 
+function visibleRuleBreakdown(recommendation: ProgramRecommendation) {
+  return (recommendation.ruleBreakdown || []).filter((item) => item.maxScore || item.result !== "not_applicable").slice(0, 12);
+}
+
 export function ChecklistDetail() {
   const { language, text } = useLanguage();
   const programId = useMemo(() => getProgramId(), []);
@@ -189,6 +193,22 @@ export function ChecklistDetail() {
           )}
           <ChecklistCard title={text.checklist.why} items={localizedRecommendation?.matchReasons.length ? localizedRecommendation.matchReasons : [text.checklist.fallbackMatch]} />
           <ChecklistCard title={text.checklist.confirm} items={localizedRecommendation?.missingInfo.length ? localizedRecommendation.missingInfo : localizedRecommendation?.needsMoreInfoReasons.length ? localizedRecommendation.needsMoreInfoReasons : [text.checklist.fallbackConfirm]} />
+          {visibleRuleBreakdown(recommendation).length > 0 && (
+            <Card className="checklist-card">
+              <details>
+                <summary>{text.checklist.matchLogic}</summary>
+                <div className="rule-breakdown-list">
+                  {visibleRuleBreakdown(recommendation).map((item) => (
+                    <div className="rule-breakdown-item" key={item.rule}>
+                      <strong>{item.label || item.rule}</strong>
+                      <p>{item.message || item.reason}</p>
+                      <small>{text.checklist.userValue}: {item.userValue || "-"} · {text.checklist.policyRule}: {item.policyRule || "-"} · {text.checklist.ruleResult}: {item.result}</small>
+                    </div>
+                  ))}
+                </div>
+              </details>
+            </Card>
+          )}
           <Card className="checklist-card">
             <h2>{text.checklist.source}</h2>
             <p>

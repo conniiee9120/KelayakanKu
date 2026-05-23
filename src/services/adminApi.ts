@@ -185,10 +185,6 @@ async function adminRequest<T>(path: string, options: RequestInit = {}): Promise
     }
   });
 
-  if (import.meta.env.DEV) {
-    console.debug(`[adminApi] ${options.method || "GET"} ${path} -> HTTP ${response.status}`);
-  }
-
   if (!response.ok) {
     const body = await response.json().catch(() => null);
     if (response.status === 401) {

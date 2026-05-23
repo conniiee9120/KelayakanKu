@@ -41,10 +41,6 @@ interface ExtractionErrorDetail {
   canUsePastedTextFallback?: boolean;
 }
 
-function devLog(message: string, meta?: Record<string, unknown>) {
-  if (import.meta.env.DEV) console.debug(`[AdminPolicyExtraction] ${message}`, meta || {});
-}
-
 function readExtractionPayload(): ExtractionPayload | null {
   try {
     const raw = sessionStorage.getItem(EXTRACTION_PAYLOAD_KEY);
@@ -150,8 +146,6 @@ export function AdminPolicyExtractionPage() {
   async function runExtraction() {
     if (hasStartedExtractionRef.current) return;
 
-    devLog("payload check", { hasPayload: Boolean(payload), hasToken: Boolean(getAdminToken()) });
-
     if (!payload) {
       setState("error");
       setError(text.admin.noExtractionDesc);
@@ -187,12 +181,6 @@ export function AdminPolicyExtractionPage() {
     setFailedIndex(null);
     setActiveIndex(1);
 
-    devLog("extraction API request started", {
-      sourceType: payload.sourceType,
-      hasSourceUrl: Boolean(payload.sourceUrl),
-      hasRawText: Boolean(payload.rawText)
-    });
-
     const maxSimulatedStep = Math.max(1, steps.length - 2);
     const progressTimer = window.setInterval(() => {
       setActiveIndex((current) => Math.min(current + 1, maxSimulatedStep));
@@ -219,11 +207,6 @@ export function AdminPolicyExtractionPage() {
       setExtraction(result);
       setActiveIndex(steps.length);
       setState("success");
-      devLog("extraction API request completed", {
-        success: result.success,
-        validationValid: result.validation.valid,
-        stage: result.stage
-      });
     } catch (err) {
       window.clearInterval(progressTimer);
       window.clearTimeout(timeoutTimer);
