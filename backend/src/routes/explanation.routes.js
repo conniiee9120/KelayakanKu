@@ -5,7 +5,7 @@ const router = Router();
 
 router.post("/", async (req, res, next) => {
   try {
-    const { userProfile, recommendation } = req.body || {};
+    const { userProfile, recommendation, language } = req.body || {};
 
     if (!userProfile || !recommendation) {
       return res.status(400).json({
@@ -13,7 +13,7 @@ router.post("/", async (req, res, next) => {
       });
     }
 
-    const result = await generateRecommendationExplanation(userProfile, recommendation);
+    const result = await generateRecommendationExplanation(userProfile, recommendation, language === "bm" ? "bm" : "en");
     res.json(result);
   } catch (error) {
     next(error);

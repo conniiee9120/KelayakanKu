@@ -1,5 +1,6 @@
 // Frontend API client for the KelayakanKu Express backend.
 import type { EligibilityFormData } from "../types/eligibility";
+import type { Language } from "../data/translations";
 import type { EligibilityResult, ProgramRecommendation } from "../types/program";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
@@ -117,9 +118,20 @@ export function getPolicies() {
   return request<unknown[]>("/api/policies");
 }
 
-export function getExplanation(userProfile: BackendUserProfile, recommendation: ProgramRecommendation) {
-  return request<{ source: "gemini" | "fallback"; explanation: string }>("/api/explanation", {
+interface StructuredExplanation {
+  whyItMayMatch: string[];
+  needsConfirmation: string[];
+  documents: string[];
+  nextSteps: string[];
+}
+
+export type ExplanationResponse =
+  | { source: "gemini" | "fallback"; format: "structured"; reason?: string; explanation: StructuredExplanation }
+  | { source: "gemini" | "fallback"; reason?: string; explanation: string };
+
+export function getExplanation(userProfile: BackendUserProfile, recommendation: ProgramRecommendation, language: Language = "en") {
+  return request<ExplanationResponse>("/api/explanation", {
     method: "POST",
-    body: JSON.stringify({ userProfile, recommendation })
+    body: JSON.stringify({ userProfile, recommendation, language })
   });
 }

@@ -1,0 +1,74 @@
+[
+  {
+    "id": "general-b40",
+    "label": "General B40 financial aid",
+    "description": "Search for broad Malaysian B40 financial support schemes.",
+    "query": "site:gov.my bantuan kewangan B40 Malaysia 2026",
+    "labelBm": "Bantuan kewangan B40 umum",
+    "descriptionBm": "Cari skim sokongan kewangan B40 Malaysia secara umum."
+  },
+  {
+    "id": "str-lhdn",
+    "label": "Sumbangan Tunai Rahmah / LHDN",
+    "description": "Search for STR and LHDN cash assistance eligibility.",
+    "query": "site:hasil.gov.my OR site:bantuantunai.hasil.gov.my Sumbangan Tunai Rahmah kelayakan 2026",
+    "labelBm": "Sumbangan Tunai Rahmah / LHDN",
+    "descriptionBm": "Cari kelayakan bantuan tunai STR dan LHDN."
+  },
+  {
+    "id": "jkm-welfare",
+    "label": "JKM welfare assistance",
+    "description": "Search for welfare aid from Jabatan Kebajikan Masyarakat.",
+    "query": "site:jkm.gov.my bantuan kebajikan kelayakan",
+    "labelBm": "Bantuan kebajikan JKM",
+    "descriptionBm": "Cari bantuan kebajikan daripada Jabatan Kebajikan Masyarakat."
+  },
+  {
+    "id": "student-b40",
+    "label": "Student / education aid",
+    "description": "Search for B40 student and education support.",
+    "query": "site:mohe.gov.my OR site:moe.gov.my bantuan pelajar B40 kelayakan",
+    "labelBm": "Bantuan pelajar / pendidikan",
+    "descriptionBm": "Cari sokongan pelajar dan pendidikan untuk B40."
+  },
+  {
+    "id": "food-aid",
+    "label": "Food aid / MyKasih",
+    "description": "Search for food aid and basic goods support.",
+    "query": "site:mykasih.com.my bantuan makanan kelayakan OR site:gov.my bantuan makanan B40",
+    "labelBm": "Bantuan makanan / MyKasih",
+    "descriptionBm": "Cari bantuan makanan dan sokongan barangan asas."
+  },
+  {
+    "id": "employment-socso",
+    "label": "Employment / PERKESO aid",
+    "description": "Search for job seeker, employment, and social security support.",
+    "query": "site:perkeso.gov.my bantuan pekerjaan kelayakan OR site:perkeso.gov.my insentif pekerjaan",
+    "labelBm": "Bantuan pekerjaan / PERKESO",
+    "descriptionBm": "Cari sokongan pencari kerja, pekerjaan, dan keselamatan sosial."
+  },
+  {
+    "id": "housing-aid",
+    "label": "Housing aid",
+    "description": "Search for housing assistance and rental/home ownership support.",
+    "query": "site:gov.my bantuan perumahan B40 kelayakan Malaysia",
+    "labelBm": "Bantuan perumahan",
+    "descriptionBm": "Cari bantuan perumahan, sewaan, atau pemilikan rumah."
+  },
+  {
+    "id": "healthcare-aid",
+    "label": "Healthcare aid",
+    "description": "Search for healthcare and medical financial assistance.",
+    "query": "site:moh.gov.my OR site:gov.my bantuan kesihatan kewangan kelayakan",
+    "labelBm": "Bantuan kesihatan",
+    "descriptionBm": "Cari bantuan kewangan kesihatan dan perubatan."
+  },
+  {
+    "id": "custom",
+    "label": "Custom search",
+    "description": "Admin enters a custom official-source search query.",
+    "query": "",
+    "labelBm": "Carian tersuai",
+    "descriptionBm": "Admin memasukkan pertanyaan carian sumber rasmi tersuai."
+  }
+]

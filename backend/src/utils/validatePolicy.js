@@ -1,6 +1,37 @@
 // Minimal schema validation for policy records managed by admins.
 const STATUSES = new Set(["draft", "pending_review", "approved"]);
 
+function nullableNumber(value) {
+  if (value === "" || value === undefined || value === null) return null;
+  const number = Number(value);
+  return Number.isFinite(number) ? number : null;
+}
+
+function booleanValue(value) {
+  if (typeof value === "boolean") return value;
+  if (typeof value === "string") {
+    const normalized = value.trim().toLowerCase();
+    if (normalized === "true" || normalized === "yes") return true;
+    if (normalized === "false" || normalized === "no" || normalized === "") return false;
+  }
+  return Boolean(value);
+}
+
+function stringArray(value, fallback = []) {
+  if (Array.isArray(value)) {
+    return value.map((item) => String(item).trim()).filter(Boolean);
+  }
+
+  if (typeof value === "string") {
+    return value
+      .split(/\r?\n|,/)
+      .map((item) => item.trim())
+      .filter(Boolean);
+  }
+
+  return fallback;
+}
+
 export function normalizePolicy(input = {}) {
   const rules = input.eligibilityRules || {};
 
@@ -11,21 +42,21 @@ export function normalizePolicy(input = {}) {
     shortDescription: input.shortDescription || "",
     eligibilityRules: {
       citizenship: rules.citizenship || "Malaysian",
-      maxHouseholdIncome: rules.maxHouseholdIncome === "" || rules.maxHouseholdIncome === undefined ? null : rules.maxHouseholdIncome,
-      maxMonthlyIncome: rules.maxMonthlyIncome === "" || rules.maxMonthlyIncome === undefined ? null : rules.maxMonthlyIncome,
-      states: Array.isArray(rules.states) && rules.states.length ? rules.states : ["All"],
-      minAge: rules.minAge === "" || rules.minAge === undefined ? null : rules.minAge,
-      maxAge: rules.maxAge === "" || rules.maxAge === undefined ? null : rules.maxAge,
-      employmentStatuses: Array.isArray(rules.employmentStatuses) ? rules.employmentStatuses : [],
-      requiresChildren: Boolean(rules.requiresChildren),
-      requiresDisability: Boolean(rules.requiresDisability),
-      requiresStudent: Boolean(rules.requiresStudent),
-      minDependents: Number(rules.minDependents || 0),
-      supportNeeds: Array.isArray(rules.supportNeeds) ? rules.supportNeeds : [],
-      housingStatuses: Array.isArray(rules.housingStatuses) ? rules.housingStatuses : undefined
+      maxHouseholdIncome: nullableNumber(rules.maxHouseholdIncome),
+      maxMonthlyIncome: nullableNumber(rules.maxMonthlyIncome),
+      states: stringArray(rules.states, ["All"]).length ? stringArray(rules.states, ["All"]) : ["All"],
+      minAge: nullableNumber(rules.minAge),
+      maxAge: nullableNumber(rules.maxAge),
+      employmentStatuses: stringArray(rules.employmentStatuses),
+      requiresChildren: booleanValue(rules.requiresChildren),
+      requiresDisability: booleanValue(rules.requiresDisability),
+      requiresStudent: booleanValue(rules.requiresStudent),
+      minDependents: Number.isFinite(Number(rules.minDependents)) ? Number(rules.minDependents) : 0,
+      supportNeeds: stringArray(rules.supportNeeds),
+      housingStatuses: rules.housingStatuses === undefined ? undefined : stringArray(rules.housingStatuses)
     },
-    requiredDocuments: Array.isArray(input.requiredDocuments) ? input.requiredDocuments.filter(Boolean) : [],
-    nextSteps: Array.isArray(input.nextSteps) ? input.nextSteps.filter(Boolean) : [],
+    requiredDocuments: stringArray(input.requiredDocuments),
+    nextSteps: stringArray(input.nextSteps),
     officialUrl: input.officialUrl || "",
     sourceUrl: input.sourceUrl || "",
     lastUpdated: input.lastUpdated || new Date().toISOString().slice(0, 10),

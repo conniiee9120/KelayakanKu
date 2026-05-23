@@ -1,6 +1,50 @@
 # KelayakanKu API
 
+KelayakanKu is an AI-assisted eligibility navigator for Malaysian B40 households.
+
+It helps users check which financial aid, subsidies, welfare support, food aid, education aid, or other support programmes may be relevant to their household profile. The system does not submit applications or guarantee approval. Users must verify and apply through official channels.
+
+**System Features**
+
+User:
+- Household eligibility form
+- Rule-based matching
+- Eligibility Snapshot
+- Two result sections:
+  - Recommended
+  - Need More Info
+- Programme details page
+- Required document checklist
+- Next steps
+- Official source links
+- Gemini-generated simple explanation when available
+
+Admin:
+- Admin login
+- Policy database management
+- SerpAPI official-source search
+- Saved search cache to reduce SerpAPI usage
+- Webpage text extraction
+- Manual pasted-text fallback
+- Gemini policy extraction with evidence
+- Gemini audit and confidence checking
+- Save as draft or approve policy
+- Approved policies become active for user recommendations
+
+
+**API Usage**
+
+Gemini API:
+- Explaining why a programme may match the user
+- Extracting policy information from official source text
+- Auditing extracted policy fields
+
+SerpAPI:
+- Search official policy sources
+
+
 Express backend for the KelayakanKu MVP. It receives a user profile, scores demo policy records with deterministic rule-based logic, and returns recommendation groups for the frontend.
+
 
 ## Setup
 
@@ -24,12 +68,25 @@ Create `backend/.env` from `.env.example`.
 PORT=5000
 FRONTEND_ORIGIN=http://localhost:5173
 GEMINI_API_KEY=your_gemini_api_key_here
+GEMINI_EXPLANATION_MODEL=gemini-2.5-flash-lite
+GEMINI_EXTRACTION_MODEL=gemini-2.5-flash-lite
+GEMINI_AUDIT_MODEL=gemini-2.5-flash-lite
+USE_MOCK_GEMINI=false
 SERPAPI_KEY=your_serpapi_key_here
 ADMIN_PASSWORD=choose_a_strong_admin_password
 ADMIN_TOKEN_SECRET=choose_a_long_random_token_secret
 ```
 
 `GEMINI_API_KEY` is optional. If missing, `/api/explanation` returns a deterministic fallback explanation. Keep the real key only in `backend/.env`; do not paste it into source files or commit it.
+Gemini model names are configurable. To use Flash-Lite for lighter work, set:
+
+```text
+GEMINI_EXPLANATION_MODEL=gemini-2.5-flash-lite
+GEMINI_EXTRACTION_MODEL=gemini-2.5-flash-lite
+GEMINI_AUDIT_MODEL=gemini-2.5-flash-lite
+```
+
+If the selected Gemini model returns a quota error, the backend retries once with `gemini-2.5-flash-lite` and then falls back to deterministic text or a low-confidence editable admin draft. Set `USE_MOCK_GEMINI=true` during local testing to force fallback behavior without spending Gemini quota.
 `SERPAPI_KEY` is optional. If missing, admin source search shows a friendly setup message.
 `ADMIN_PASSWORD` and `ADMIN_TOKEN_SECRET` are required for `/api/admin/*` routes.
 
@@ -87,8 +144,10 @@ Admin policy changes are written to `backend/src/data/policies.json`. The public
 
 Gemini does not decide eligibility. The rule engine scores each policy using citizenship, income, state, age, work/student category, and household/special conditions.
 
-Score classification:
+User-facing score classification:
 
 - `>= 75`: Recommended
 - `45 - 74`: Need More Info
-- `< 45`: Less Likely
+- `< 45`: excluded from the public result
+
+The public eligibility response only returns `recommended` and `needMoreInfo`. Policies that clearly fail hard rules, such as citizenship mismatch, income above a strict cap, state mismatch, or age outside the allowed range, are excluded from the user-facing result instead of being shown to users.

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getAllPolicies } from "../services/policyDatabaseService.js";
+import { getPublicPolicies } from "../services/policyDatabaseService.js";
 import { runEligibilityCheck } from "../services/ruleEngine.js";
 import { formatEligibilityResponse } from "../utils/responseFormatter.js";
 import { validateUserProfile } from "../utils/validateUserProfile.js";
@@ -14,7 +14,7 @@ router.post("/check", async (req, res, next) => {
   }
 
   try {
-    const scoredPolicies = runEligibilityCheck(validation.profile, await getAllPolicies());
+    const scoredPolicies = runEligibilityCheck(validation.profile, await getPublicPolicies());
     res.json(formatEligibilityResponse(scoredPolicies));
   } catch (error) {
     next(error);

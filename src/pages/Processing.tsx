@@ -11,9 +11,7 @@ export function Processing() {
   const { language, text } = useLanguage();
   const [error, setError] = useState("");
   const [ready, setReady] = useState(false);
-  const items = language === "bm"
-    ? ["Menyemak profil anda", "Memadankan peraturan kelayakan terpilih", "Menyemak sumber rasmi dipercayai", "Menyediakan senarai semak anda", "Memudahkan keputusan dalam bahasa pilihan anda"]
-    : ["Reviewing your profile", "Matching curated eligibility rules", "Checking trusted official sources", "Preparing your checklist", "Simplifying the result in your chosen language"];
+  const items = text.processing.steps;
 
   useEffect(() => {
     let cancelled = false;
@@ -22,7 +20,7 @@ export function Processing() {
       const form = getEligibilityForm();
 
       if (!form) {
-        const message = language === "bm" ? "Tiada jawapan borang dijumpai. Sila isi borang kelayakan dahulu." : "No form answers were found. Please complete the eligibility form first.";
+        const message = text.processing.missingForm;
         saveEligibilityError(message);
         if (!cancelled) setError(message);
         return;
@@ -37,7 +35,7 @@ export function Processing() {
           window.setTimeout(() => navigate("/results"), 500);
         }
       } catch (apiError) {
-        const message = apiError instanceof Error ? apiError.message : "Unable to connect to the eligibility API.";
+        const message = text.processing.apiError;
         saveEligibilityError(message);
         if (!cancelled) setError(message);
       }
@@ -60,13 +58,13 @@ export function Processing() {
         </ul>
         {error ? (
           <>
-            <p><strong>{language === "bm" ? "Ralat:" : "Error:"}</strong> {error}</p>
+            <p><strong>{text.common.error}</strong> {error}</p>
             <Button onClick={() => navigate("/review")}>{text.buttons.edit}</Button>
           </>
         ) : (
           <>
-            <p>{ready ? (language === "bm" ? "Keputusan sudah sedia." : "Results are ready.") : text.processing.note}</p>
-            <Button onClick={() => navigate("/results")}>{language === "bm" ? "Lihat Keputusan" : "View Results"}</Button>
+            <p>{ready ? text.processing.ready : text.processing.note}</p>
+            <Button onClick={() => navigate("/results")}>{text.processing.viewResults}</Button>
           </>
         )}
       </Card>

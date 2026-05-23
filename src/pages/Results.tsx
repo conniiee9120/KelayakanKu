@@ -9,7 +9,7 @@ import { navigate } from "../utils/navigation";
 import { getEligibilityError, getEligibilityResult } from "../utils/storage";
 
 export function Results() {
-  const { language, text } = useLanguage();
+  const { text } = useLanguage();
   const result = getEligibilityResult();
   const error = getEligibilityError();
 
@@ -17,8 +17,8 @@ export function Results() {
     return (
       <main className="section-shell page-section">
         <Card className="empty-state">
-          <h1>{language === "bm" ? "Keputusan belum tersedia" : "Results are not ready yet"}</h1>
-          <p>{error || (language === "bm" ? "Sila jalankan semakan kelayakan dahulu." : "Please run the eligibility check first.")}</p>
+          <h1>{text.results.notReadyTitle}</h1>
+          <p>{error || text.results.notReadyDesc}</p>
           <Button onClick={() => navigate("/eligibility")}>{text.buttons.start}</Button>
         </Card>
       </main>
@@ -36,7 +36,7 @@ export function Results() {
         <div className="metrics-grid">
           <MetricCard label={text.results.recommended} value={result.recommended.length} />
           <MetricCard label={text.results.needInfo} value={result.needMoreInfo.length} />
-          <MetricCard label={language === "bm" ? "Sokongan lain" : "Other support"} value={result.lessLikely.length} />
+          <MetricCard label={text.results.readyReview} value={result.recommended.length + result.needMoreInfo.length} />
         </div>
       </Card>
 
@@ -45,9 +45,15 @@ export function Results() {
           <h2>{text.results.recommended}</h2>
           <p>{text.results.recommendedDesc}</p>
         </div>
-        <div className="card-grid two">
-          {result.recommended.map((recommendation) => <RecommendationCard key={recommendation.id} recommendation={recommendation} />)}
-        </div>
+        {result.recommended.length > 0 ? (
+          <div className="card-grid two">
+            {result.recommended.map((recommendation) => <RecommendationCard key={recommendation.id} recommendation={recommendation} />)}
+          </div>
+        ) : (
+          <Card className="empty-state">
+            <p>{text.results.noRecommended}</p>
+          </Card>
+        )}
       </section>
 
       <section className="page-section compact">
@@ -55,19 +61,15 @@ export function Results() {
           <h2>{text.results.needInfo}</h2>
           <p>{text.results.needInfoDesc}</p>
         </div>
-        <div className="card-grid two">
-          {result.needMoreInfo.map((recommendation) => <RecommendationCard key={recommendation.id} recommendation={recommendation} />)}
-        </div>
-      </section>
-
-      <section className="page-section compact">
-        <div className="section-header">
-          <h2>{language === "bm" ? "Sokongan lain" : "Less likely / other support"}</h2>
-          <p>{language === "bm" ? "Program ini kurang sepadan, tetapi masih dipaparkan untuk rujukan demo." : "These programs are less likely matches, but are still shown for demo reference."}</p>
-        </div>
-        <div className="card-grid two">
-          {result.lessLikely.map((recommendation) => <RecommendationCard key={recommendation.id} recommendation={recommendation} />)}
-        </div>
+        {result.needMoreInfo.length > 0 ? (
+          <div className="card-grid two">
+            {result.needMoreInfo.map((recommendation) => <RecommendationCard key={recommendation.id} recommendation={recommendation} />)}
+          </div>
+        ) : (
+          <Card className="empty-state">
+            <p>{text.results.noNeedInfo}</p>
+          </Card>
+        )}
       </section>
 
       <DisclaimerBanner>{text.common.disclaimer}</DisclaimerBanner>

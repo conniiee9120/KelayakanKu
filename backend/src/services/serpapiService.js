@@ -26,7 +26,7 @@ function isTrusted(link) {
 
 export async function searchTrustedPolicySources(query) {
   if (!process.env.SERPAPI_KEY) {
-    const error = new Error("SerpAPI key is not configured yet. You can still add policies manually.");
+    const error = new Error("SerpAPI key is not configured. You can use cached results or paste policy text manually.");
     error.status = 400;
     throw error;
   }

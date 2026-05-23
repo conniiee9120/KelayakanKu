@@ -50,6 +50,5 @@ export const mockPrograms: EligibilityResult = {
       nextSteps: ["Verify household records", "Check application period", "Prepare supporting documents"],
       officialUrl: ""
     }
-  ],
-  lessLikely: []
+  ]
 };

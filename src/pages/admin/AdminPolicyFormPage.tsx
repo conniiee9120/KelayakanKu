@@ -4,6 +4,7 @@ import { PolicyForm, createBlankPolicy } from "../../components/admin/PolicyForm
 import { Button } from "../../components/ui/Button";
 import { createAdminPolicy, deleteAdminPolicy, getAdminPolicies, updateAdminPolicy, type AdminPolicy } from "../../services/adminApi";
 import { navigate } from "../../utils/navigation";
+import { useLanguage } from "../../context/LanguageContext";
 
 function getEditId() {
   const match = window.location.pathname.match(/^\/admin\/policies\/([^/]+)\/edit$/);
@@ -11,6 +12,7 @@ function getEditId() {
 }
 
 export function AdminPolicyFormPage() {
+  const { text } = useLanguage();
   const editId = getEditId();
   const [policy, setPolicy] = useState<AdminPolicy | null>(editId ? null : createBlankPolicy());
   const [message, setMessage] = useState("");
@@ -21,9 +23,9 @@ export function AdminPolicyFormPage() {
       .then((policies) => {
         const found = policies.find((item) => item.id === editId);
         if (found) setPolicy(found);
-        else setMessage("Policy not found.");
+        else setMessage(text.admin.policyNotFound);
       })
-      .catch((err) => setMessage(err instanceof Error ? err.message : "Could not load policy."));
+      .catch((err) => setMessage(err instanceof Error ? err.message : text.admin.loadPolicyError));
   }, [editId]);
 
   async function handleSubmit(nextPolicy: AdminPolicy) {
@@ -32,7 +34,7 @@ export function AdminPolicyFormPage() {
   }
 
   async function handleDelete() {
-    if (!editId || !window.confirm("Delete this policy?")) return;
+    if (!editId || !window.confirm(text.admin.deleteConfirm)) return;
     await deleteAdminPolicy(editId);
     navigate("/admin/policies");
   }
@@ -41,13 +43,13 @@ export function AdminPolicyFormPage() {
     <AdminLayout>
       <div className="admin-page-actions">
         <div>
-          <h2>{editId ? "Edit Policy" : "New Policy"}</h2>
-          <p>Keep fields clear and verify official criteria before approving.</p>
+          <h2>{editId ? text.admin.editPolicy : text.admin.newPolicy}</h2>
+          <p>{text.admin.policyFormDesc}</p>
         </div>
-        {editId && <Button variant="outline" onClick={handleDelete}>Delete Policy</Button>}
+        {editId && <Button variant="outline" onClick={handleDelete}>{text.admin.deletePolicy}</Button>}
       </div>
       {message && <div className="disclaimer-banner">{message}</div>}
-      {policy ? <PolicyForm initialPolicy={policy} onSubmit={handleSubmit} submitLabel={editId ? "Save changes" : "Create policy"} /> : <p>Loading policy...</p>}
+      {policy ? <PolicyForm initialPolicy={policy} onSubmit={handleSubmit} submitLabel={editId ? text.admin.saveChanges : text.admin.createPolicy} /> : <p>{text.admin.loadingPolicy}</p>}
     </AdminLayout>
   );
 }

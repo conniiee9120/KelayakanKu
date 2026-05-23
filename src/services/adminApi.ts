@@ -1,6 +1,25 @@
 // Admin API client. Tokens stay in sessionStorage and are sent only to the backend.
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
-const ADMIN_TOKEN_KEY = "kelayakankuAdminToken";
+const ADMIN_TOKEN_KEY = "kelayakanku_admin_token";
+const LEGACY_ADMIN_TOKEN_KEY = "kelayakankuAdminToken";
+
+export class AdminApiError extends Error {
+  status: number;
+  stage?: string;
+  technicalHint?: string;
+  suggestedAction?: string;
+  canUsePastedTextFallback?: boolean;
+
+  constructor(message: string, status: number, details: Partial<AdminApiError> = {}) {
+    super(message);
+    this.name = "AdminApiError";
+    this.status = status;
+    this.stage = details.stage;
+    this.technicalHint = details.technicalHint;
+    this.suggestedAction = details.suggestedAction;
+    this.canUsePastedTextFallback = details.canUsePastedTextFallback;
+  }
+}
 
 export interface AdminPolicy {
   id?: string;
@@ -46,6 +65,33 @@ export interface SearchResult {
   trusted: boolean;
 }
 
+export interface SearchPreset {
+  id: string;
+  label: string;
+  labelBm?: string;
+  description: string;
+  descriptionBm?: string;
+  query: string;
+}
+
+export interface SearchCacheEntry {
+  id: string;
+  presetId: string;
+  query: string;
+  searchedAt: string;
+  source: string;
+  results: SearchResult[];
+}
+
+export interface SearchResponse {
+  source: "cache" | "serpapi";
+  usesSerpApiQuota: boolean;
+  cacheId: string;
+  results: SearchResult[];
+  cacheEntry?: SearchCacheEntry;
+  message?: string;
+}
+
 export interface FieldEvidence {
   evidence: string;
   confidence: number;
@@ -87,12 +133,19 @@ export interface AuditIssue {
 }
 
 export interface ExtractionResponse {
+  success: boolean;
+  stage?: string;
+  message?: string;
+  technicalHint?: string;
+  suggestedAction?: string;
+  canUsePastedTextFallback?: boolean;
   policy: AdminPolicy;
-  policyDraft: PolicyDraft;
+  policyDraft: PolicyDraft | null;
+  evidenceByField: Record<string, FieldEvidence>;
   audit: {
     auditPassed: boolean;
     fieldIssues: AuditIssue[];
-    correctedWarnings: string[];
+    correctedWarnings?: string[];
   };
   confidence: {
     overallConfidence: number;
@@ -108,15 +161,17 @@ export interface ExtractionResponse {
 }
 
 export function getAdminToken() {
-  return sessionStorage.getItem(ADMIN_TOKEN_KEY);
+  return sessionStorage.getItem(ADMIN_TOKEN_KEY) || sessionStorage.getItem(LEGACY_ADMIN_TOKEN_KEY);
 }
 
 export function saveAdminToken(token: string) {
   sessionStorage.setItem(ADMIN_TOKEN_KEY, token);
+  sessionStorage.removeItem(LEGACY_ADMIN_TOKEN_KEY);
 }
 
 export function clearAdminToken() {
   sessionStorage.removeItem(ADMIN_TOKEN_KEY);
+  sessionStorage.removeItem(LEGACY_ADMIN_TOKEN_KEY);
 }
 
 async function adminRequest<T>(path: string, options: RequestInit = {}): Promise<T> {
@@ -130,11 +185,29 @@ async function adminRequest<T>(path: string, options: RequestInit = {}): Promise
     }
   });
 
-  if (response.status === 401) clearAdminToken();
+  if (import.meta.env.DEV) {
+    console.debug(`[adminApi] ${options.method || "GET"} ${path} -> HTTP ${response.status}`);
+  }
 
   if (!response.ok) {
     const body = await response.json().catch(() => null);
-    throw new Error(body?.errors?.join(" ") || body?.error || "Admin request failed.");
+    if (response.status === 401) {
+      clearAdminToken();
+      const loginMessage = path === "/api/admin/login"
+        ? "Invalid admin password."
+        : "Unauthorized. Please log in again.";
+      throw new AdminApiError(loginMessage, response.status, body || {});
+    }
+
+    if (response.status === 503 && path === "/api/admin/login") {
+      throw new AdminApiError("Admin login is not configured. Please check backend/.env.", response.status, body || {});
+    }
+
+    throw new AdminApiError(
+      body?.message || body?.errors?.join(" ") || body?.error || `Admin request failed. HTTP ${response.status}.`,
+      response.status,
+      body || {}
+    );
   }
 
   return response.json() as Promise<T>;
@@ -177,11 +250,23 @@ export function deleteAdminPolicy(id: string) {
   });
 }
 
-export function searchPolicySources(query: string) {
-  return adminRequest<{ results: SearchResult[] }>("/api/admin/policies/search-serpapi", {
+export function getSearchPresets() {
+  return adminRequest<{ presets: SearchPreset[] }>("/api/admin/policies/search-presets");
+}
+
+export function searchPolicySources(payload: { presetId: string; customQuery?: string; forceRefresh: boolean }) {
+  return adminRequest<SearchResponse>("/api/admin/policies/search-serpapi", {
     method: "POST",
-    body: JSON.stringify({ query })
+    body: JSON.stringify(payload)
   });
+}
+
+export function getSearchCache() {
+  return adminRequest<{ cache: SearchCacheEntry[] }>("/api/admin/policies/search-cache");
+}
+
+export function getLatestSearchCache(presetId: string) {
+  return adminRequest<{ cacheEntry: SearchCacheEntry | null }>(`/api/admin/policies/search-cache/latest?presetId=${encodeURIComponent(presetId)}`);
 }
 
 export function extractPolicy(payload: { sourceUrl?: string; rawText?: string }) {
@@ -196,4 +281,8 @@ export function approvePolicy(policy: AdminPolicy) {
     method: "POST",
     body: JSON.stringify(policy)
   });
+}
+
+export function savePolicyDraft(policy: AdminPolicy) {
+  return createAdminPolicy({ ...policy, verificationStatus: "draft" });
 }

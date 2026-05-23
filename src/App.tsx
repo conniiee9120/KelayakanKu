@@ -15,6 +15,7 @@ import { AdminDashboardPage } from "./pages/admin/AdminDashboardPage";
 import { AdminLoginPage } from "./pages/admin/AdminLoginPage";
 import { AdminPoliciesPage } from "./pages/admin/AdminPoliciesPage";
 import { AdminPolicyFormPage } from "./pages/admin/AdminPolicyFormPage";
+import { AdminPolicyExtractionPage } from "./pages/admin/AdminPolicyExtractionPage";
 import { AdminPolicyImportPage } from "./pages/admin/AdminPolicyImportPage";
 
 function CurrentPage() {
@@ -24,7 +25,9 @@ function CurrentPage() {
   if (path === "/admin/login") return <AdminLoginPage />;
   if (path === "/admin/dashboard") return <AdminProtectedRoute><AdminDashboardPage /></AdminProtectedRoute>;
   if (path === "/admin/policies" || path === "/admin/policies/") return <AdminProtectedRoute><AdminPoliciesPage /></AdminProtectedRoute>;
+  if (path === "/admin/drafts") return <AdminProtectedRoute><AdminPoliciesPage /></AdminProtectedRoute>;
   if (path === "/admin/policies/new" || /^\/admin\/policies\/[^/]+\/edit$/.test(path)) return <AdminProtectedRoute><AdminPolicyFormPage /></AdminProtectedRoute>;
+  if (path === "/admin/policy-import/extract") return <AdminPolicyExtractionPage />;
   if (path === "/admin/policy-import") return <AdminProtectedRoute><AdminPolicyImportPage /></AdminProtectedRoute>;
   if (path === "/admin") return <AdminProtectedRoute><AdminDashboardPage /></AdminProtectedRoute>;
   if (path === "/review") return <ReviewDetails />;

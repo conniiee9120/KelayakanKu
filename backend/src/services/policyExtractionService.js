@@ -1,6 +1,6 @@
 // Gemini extraction with field-level evidence. Nothing here saves policies automatically.
-import { GoogleGenAI } from "@google/genai";
 import { normalizePolicy } from "../utils/validatePolicy.js";
+import { DEFAULT_GEMINI_MODEL, generateGeminiText, getConfiguredGeminiModel } from "./geminiClient.js";
 
 const FIELD_STATUSES = new Set(["confirmed", "uncertain", "missing", "conflicting"]);
 
@@ -38,6 +38,33 @@ function fallbackPolicyDraft({ sourceUrl = "", rawText = "" }) {
     sourceUrl: field(sourceUrl, sourceUrl ? "source URL provided by admin" : "", sourceUrl ? 1 : 0, sourceUrl ? "confirmed" : "missing"),
     applicationDeadline: field(null)
   };
+}
+
+export function createEmptyEditablePolicy({ sourceUrl = "" } = {}) {
+  return normalizePolicy({
+    id: "",
+    title: "",
+    category: "Other",
+    shortDescription: "",
+    eligibilityRules: {
+      citizenship: "Malaysian",
+      maxHouseholdIncome: null,
+      maxMonthlyIncome: null,
+      states: ["All"],
+      minAge: null,
+      maxAge: null,
+      employmentStatuses: [],
+      requiresChildren: false,
+      requiresDisability: false,
+      requiresStudent: false
+    },
+    requiredDocuments: [],
+    nextSteps: [],
+    officialUrl: sourceUrl || "",
+    sourceUrl: sourceUrl || "",
+    lastUpdated: new Date().toISOString().slice(0, 10),
+    verificationStatus: "pending_review"
+  });
 }
 
 function parseJson(text = "") {
@@ -200,32 +227,41 @@ export function flattenPolicyDraft(policyDraft, { confidence, audit, warnings = 
 }
 
 export async function extractPolicyWithEvidence({ rawText = "", sourceUrl = "" }) {
-  if (!process.env.GEMINI_API_KEY) {
-    return {
-      policyDraft: fallbackPolicyDraft({ sourceUrl, rawText }),
-      warnings: ["Gemini extraction is not configured. Admin must review manually."]
-    };
+  const model = getConfiguredGeminiModel("GEMINI_EXTRACTION_MODEL");
+
+  const result = await generateGeminiText({
+    task: "policy_extraction",
+    model,
+    fallbackModel: DEFAULT_GEMINI_MODEL,
+    contents: buildExtractionPrompt({ rawText, sourceUrl })
+  });
+
+  if (result.text) {
+    try {
+      const parsed = parseJson(result.text);
+      const warnings = Array.isArray(parsed.warnings) ? parsed.warnings : [];
+      if (result.fallbackModelUsed) warnings.push("Selected Gemini extraction model hit quota. Retried with fallback model.");
+      return {
+        policyDraft: normalizeDraft(parsed.policyDraft, sourceUrl),
+        warnings
+      };
+    } catch (error) {
+      console.error("Policy extraction JSON parsing failed:", error?.message || error);
+    }
   }
 
-  try {
-    const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
-    const response = await ai.models.generateContent({
-      model: "gemini-2.5-flash",
-      contents: buildExtractionPrompt({ rawText, sourceUrl })
-    });
-    const parsed = parseJson(response.text || "{}");
-
-    return {
-      policyDraft: normalizeDraft(parsed.policyDraft, sourceUrl),
-      warnings: Array.isArray(parsed.warnings) ? parsed.warnings : []
-    };
-  } catch (error) {
-    console.error("Policy extraction failed:", error?.message || error);
-    return {
-      policyDraft: fallbackPolicyDraft({ sourceUrl, rawText }),
-      warnings: ["Extraction failed. Admin must review and complete the draft manually."]
-    };
-  }
+  return {
+    policyDraft: fallbackPolicyDraft({ sourceUrl, rawText }),
+    warnings: [
+      result.reason === "quota_exceeded"
+        ? "Gemini quota is exhausted. Admin must review and complete the draft manually."
+        : result.reason === "mock_gemini_enabled"
+          ? "Mock Gemini mode is enabled. Admin must review manually."
+        : result.reason === "not_configured"
+          ? "Gemini extraction is not configured. Admin must review manually."
+        : "Extraction failed. Admin must review and complete the draft manually."
+    ]
+  };
 }
 
 // Backward-compatible wrapper for older callers.

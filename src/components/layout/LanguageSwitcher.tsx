@@ -5,7 +5,7 @@ export function LanguageSwitcher() {
   const { language, setLanguage } = useLanguage();
 
   return (
-    <div className="language-switcher" aria-label="Language switcher">
+    <div className="language-switcher" aria-label={language === "bm" ? "Penukar bahasa" : "Language switcher"}>
       <button type="button" className={language === "bm" ? "active" : ""} onClick={() => setLanguage("bm")}>
         BM
       </button>

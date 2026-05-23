@@ -1,35 +1,76 @@
 // Gemini explanation service. The rule engine remains the source of truth.
-import { GoogleGenAI } from "@google/genai";
-
-const MODEL_NAME = "gemini-2.5-flash";
+import { DEFAULT_GEMINI_MODEL, generateGeminiText, getConfiguredGeminiModel, isMockGeminiEnabled } from "./geminiClient.js";
 
 export function isGeminiConfigured() {
-  return Boolean(process.env.GEMINI_API_KEY);
+  return Boolean(process.env.GEMINI_API_KEY) && !isMockGeminiEnabled();
 }
 
-export function generateFallbackExplanation(_userProfile, recommendation = {}) {
-  const title = recommendation.title || "this support program";
+const matchReasonBm = {
+  "Citizenship matches this policy requirement.": "kewarganegaraan sepadan dengan syarat polisi ini.",
+  "Household income appears within the policy limit.": "pendapatan isi rumah kelihatan berada dalam had polisi.",
+  "Monthly income appears within the policy limit.": "pendapatan bulanan kelihatan berada dalam had polisi.",
+  "State matches the policy coverage.": "negeri anda termasuk dalam liputan polisi.",
+  "Age appears within the supported range.": "umur anda kelihatan berada dalam julat yang disokong.",
+  "Work, student, or support need profile appears relevant.": "profil kerja, pelajar, atau keperluan sokongan kelihatan relevan.",
+  "No special household condition is required.": "tiada syarat khas isi rumah diperlukan.",
+  "Special household conditions appear to match.": "situasi khas isi rumah kelihatan sepadan."
+};
+
+export function generateFallbackExplanation(_userProfile, recommendation = {}, language = "en") {
+  const title = language === "bm" ? recommendation.titleBm || recommendation.title || "program sokongan ini" : recommendation.title || "this support program";
+  const benefit = language === "bm"
+    ? recommendation.benefitSummaryBm || recommendation.shortDescriptionBm || recommendation.benefitSummary || recommendation.shortDescription || ""
+    : recommendation.benefitSummary || recommendation.shortDescription || "";
   const reasons =
     Array.isArray(recommendation.matchReasons) && recommendation.matchReasons.length > 0
       ? recommendation.matchReasons.slice(0, 2).join(" ")
       : "some parts of your profile appear to match the rule checks.";
+  const needsMoreInfo =
+    Array.isArray(recommendation.needsMoreInfoReasons) && recommendation.needsMoreInfoReasons.length > 0
+      ? ` Some details may still need confirmation, such as ${recommendation.needsMoreInfoReasons.slice(0, 2).join(" ")}`
+      : "";
   const documents =
     Array.isArray(recommendation.requiredDocuments) && recommendation.requiredDocuments.length > 0
       ? ` You may need to prepare documents such as ${recommendation.requiredDocuments.slice(0, 3).join(", ")}.`
       : "";
+  const nextStep =
+    Array.isArray(recommendation.nextSteps) && recommendation.nextSteps.length > 0
+      ? ` A good next step is to ${recommendation.nextSteps[0].charAt(0).toLowerCase()}${recommendation.nextSteps[0].slice(1)}.`
+      : "";
 
-  return `You may be eligible for ${title}. This support appears to match your profile because ${reasons}${documents} Please verify the final criteria through the official portal or relevant agency before applying.`;
+  if (language === "bm") {
+    const bmReasons =
+      Array.isArray(recommendation.matchReasons) && recommendation.matchReasons.length > 0
+        ? recommendation.matchReasons.slice(0, 2).map((reason) => matchReasonBm[reason] || reason).join(" ")
+        : "beberapa maklumat profil anda sepadan dengan semakan peraturan.";
+    const bmDocuments =
+      Array.isArray(recommendation.requiredDocuments) && recommendation.requiredDocuments.length > 0
+          ? ` Dokumen yang mungkin diperlukan termasuk ${(recommendation.requiredDocumentsBm || recommendation.requiredDocuments).slice(0, 3).join(", ")}.`
+        : "";
+    const bmNextStep =
+      Array.isArray(recommendation.nextStepsBm || recommendation.nextSteps) && (recommendation.nextStepsBm || recommendation.nextSteps).length > 0
+        ? ` Langkah seterusnya yang baik ialah: ${(recommendation.nextStepsBm || recommendation.nextSteps)[0]}.`
+        : "";
+    return `${title} mungkin berkaitan dengan isi rumah anda. ${benefit ? `${benefit} ` : ""}Sokongan ini kelihatan sepadan dengan profil anda kerana ${bmReasons}${bmDocuments}${bmNextStep} Sila sahkan syarat akhir melalui portal rasmi atau agensi berkaitan sebelum memohon.`;
+  }
+
+  return `${title} may be relevant to your household. ${benefit ? `${benefit} ` : ""}This support appears to match your profile because ${reasons}${needsMoreInfo}${documents}${nextStep} Please verify the final criteria through the official portal or relevant agency before applying.`;
 }
 
-function buildExplanationPrompt(userProfile, recommendation) {
+function buildExplanationPrompt(userProfile, recommendation, language = "en") {
+  const outputLanguage = language === "bm" ? "Bahasa Melayu" : "English";
   return `
-You are helping explain Malaysian financial aid eligibility to a user.
+You are helping explain Malaysian financial aid eligibility to a B40 Malaysian household.
+Write the final explanation in ${outputLanguage}.
 The backend rule engine has already calculated the eligibility score.
 You must not override the score.
 You must not claim the user is definitely eligible.
 Use simple, supportive language suitable for B40 users in Malaysia.
-Use safer phrasing like "You may be eligible" or "This support appears to match your profile".
-Keep the explanation short, around 3 to 5 sentences.
+Use safer phrasing like "may be relevant" or "appears to match your profile".
+Write one short paragraph or two short paragraphs.
+Do not use bullet points.
+Do not use markdown.
+Keep it concise and easy to read.
 Mention that users should verify through the official portal or relevant agency.
 Use only the data provided by the backend.
 Do not invent new eligibility rules.
@@ -40,43 +81,47 @@ User profile:
 ${JSON.stringify(userProfile, null, 2)}
 
 Recommendation:
-${JSON.stringify(recommendation, null, 2)}
+${JSON.stringify({
+    title: recommendation?.title,
+    category: recommendation?.category,
+    status: recommendation?.status,
+    eligibilityScore: recommendation?.eligibilityScore,
+    benefitSummary: recommendation?.benefitSummary,
+    benefitSummaryBm: recommendation?.benefitSummaryBm,
+    targetGroup: recommendation?.targetGroup,
+    targetGroupBm: recommendation?.targetGroupBm,
+    eligibilitySummary: recommendation?.eligibilitySummary,
+    eligibilitySummaryBm: recommendation?.eligibilitySummaryBm,
+    shortDescription: recommendation?.shortDescription,
+    shortDescriptionBm: recommendation?.shortDescriptionBm,
+    matchReasons: recommendation?.matchReasons,
+    missingInfo: recommendation?.missingInfo,
+    needsMoreInfoReasons: recommendation?.needsMoreInfoReasons,
+    requiredDocuments: recommendation?.requiredDocuments,
+    requiredDocumentsBm: recommendation?.requiredDocumentsBm,
+    nextSteps: recommendation?.nextSteps,
+    nextStepsBm: recommendation?.nextStepsBm,
+    officialUrl: recommendation?.officialUrl
+  }, null, 2)}
 
-Write a short explanation with:
-1. Why this support may match the user
-2. What information/documents may be needed
-3. What next step the user should take
-
-Return plain text only.
+Return paragraph text only.
 `.trim();
 }
 
-export async function generateRecommendationExplanation(userProfile, recommendation) {
-  if (!isGeminiConfigured()) {
-    return {
-      source: "fallback",
-      explanation: generateFallbackExplanation(userProfile, recommendation)
-    };
-  }
+export async function generateRecommendationExplanation(userProfile, recommendation, language = "en") {
+  const fallbackExplanation = generateFallbackExplanation(userProfile, recommendation, language);
+  const model = getConfiguredGeminiModel("GEMINI_EXPLANATION_MODEL");
 
-  try {
-    const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
-    const response = await ai.models.generateContent({
-      model: MODEL_NAME,
-      contents: buildExplanationPrompt(userProfile, recommendation)
-    });
+  const result = await generateGeminiText({
+    task: "explanation",
+    model,
+    fallbackModel: DEFAULT_GEMINI_MODEL,
+    contents: buildExplanationPrompt(userProfile, recommendation, language)
+  });
 
-    const explanation = response.text?.trim();
-
-    return {
-      source: explanation ? "gemini" : "fallback",
-      explanation: explanation || generateFallbackExplanation(userProfile, recommendation)
-    };
-  } catch (error) {
-    console.error("Gemini explanation request failed:", error?.message || error);
-    return {
-      source: "fallback",
-      explanation: generateFallbackExplanation(userProfile, recommendation)
-    };
-  }
+  return {
+    source: result.text ? "gemini" : "fallback",
+    ...(result.reason ? { reason: result.reason } : {}),
+    explanation: result.text || fallbackExplanation
+  };
 }

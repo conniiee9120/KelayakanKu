@@ -13,6 +13,31 @@ const requiredFields = [
   "studentStatus"
 ];
 
+function numberValue(value) {
+  return Number(value);
+}
+
+function booleanValue(value) {
+  if (typeof value === "boolean") return value;
+  if (typeof value === "string") {
+    const normalized = value.trim().toLowerCase();
+    if (normalized === "true" || normalized === "yes") return true;
+    if (normalized === "false" || normalized === "no" || normalized === "") return false;
+  }
+  return Boolean(value);
+}
+
+function stringArray(value) {
+  if (Array.isArray(value)) return value.map((item) => String(item).trim()).filter(Boolean);
+  if (typeof value === "string") {
+    return value
+      .split(/\r?\n|,|\|/)
+      .map((item) => item.trim())
+      .filter(Boolean);
+  }
+  return [];
+}
+
 export function validateUserProfile(body) {
   const errors = [];
 
@@ -46,13 +71,14 @@ export function validateUserProfile(body) {
     errors: [],
     profile: {
       ...body,
-      age: Number(body.age),
-      monthlyIncome: Number(body.monthlyIncome),
-      householdIncome: Number(body.householdIncome),
-      numberOfDependents: Number(body.numberOfDependents),
-      hasChildren: Boolean(body.hasChildren),
-      disabilityStatus: Boolean(body.disabilityStatus),
-      studentStatus: Boolean(body.studentStatus)
+      age: numberValue(body.age),
+      monthlyIncome: numberValue(body.monthlyIncome),
+      householdIncome: numberValue(body.householdIncome),
+      numberOfDependents: numberValue(body.numberOfDependents),
+      hasChildren: booleanValue(body.hasChildren),
+      disabilityStatus: booleanValue(body.disabilityStatus),
+      studentStatus: booleanValue(body.studentStatus),
+      supportNeeds: stringArray(body.supportNeeds)
     }
   };
 }

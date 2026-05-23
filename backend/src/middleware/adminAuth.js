@@ -6,7 +6,10 @@ export function requireAdminAuth(req, res, next) {
   const decoded = verifyAdminToken(token);
 
   if (!decoded) {
-    return res.status(401).json({ error: "Admin authentication required." });
+    return res.status(401).json({
+      code: "admin_unauthorized",
+      error: "Admin authentication required."
+    });
   }
 
   req.admin = decoded;

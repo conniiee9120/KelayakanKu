@@ -4,7 +4,8 @@ import type { EligibilityFormData } from "../types/eligibility";
 import type { EligibilityResult } from "../types/program";
 
 const FORM_KEY = "kelayakankuEligibilityForm";
-const LANGUAGE_KEY = "kelayakankuLanguage";
+const LANGUAGE_KEY = "kelayakanku_language";
+const LEGACY_LANGUAGE_KEY = "kelayakankuLanguage";
 const RESULT_KEY = "kelayakankuEligibilityResult";
 const RESULT_ERROR_KEY = "kelayakankuEligibilityError";
 
@@ -28,6 +29,7 @@ export function getEligibilityForm(): EligibilityFormData | null {
 export function saveLanguage(language: Language) {
   try {
     window.localStorage.setItem(LANGUAGE_KEY, language);
+    window.localStorage.removeItem(LEGACY_LANGUAGE_KEY);
   } catch {
     return;
   }
@@ -35,7 +37,7 @@ export function saveLanguage(language: Language) {
 
 export function getLanguage(): Language {
   try {
-    const language = window.localStorage.getItem(LANGUAGE_KEY);
+    const language = window.localStorage.getItem(LANGUAGE_KEY) || window.localStorage.getItem(LEGACY_LANGUAGE_KEY);
     return language === "bm" || language === "en" ? language : "en";
   } catch {
     return "en";

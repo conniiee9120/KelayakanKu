@@ -165,6 +165,9 @@ p { color: var(--muted); line-height: 1.7; }
 .radio-group label { display: flex; align-items: flex-start; gap: 10px; min-height: 46px; border-radius: 13px; background: var(--surface); color: var(--muted); font-weight: 750; padding: 10px 12px; }
 .radio-group input { width: 18px; height: 18px; margin-top: 3px; accent-color: var(--primary); }
 .field-helper { margin: 0; color: var(--muted); font-size: 0.95rem; }
+.form-error { border: 1px solid #f5c8ba; border-radius: 14px; background: var(--danger-bg); color: #6f3526; margin-top: 16px; padding: 12px 14px; }
+.form-error p { color: inherit; margin: 0; }
+.form-error p + p { margin-top: 6px; }
 .form-actions { justify-content: space-between; border-top: 1px solid var(--border); padding-top: 22px; }
 .summary-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
 .summary-grid div { border-radius: 15px; background: #f2f7f9; padding: 14px; }
@@ -199,9 +202,20 @@ p { color: var(--muted); line-height: 1.7; }
 .admin-topbar, .admin-page-actions, .admin-filters { display: flex; align-items: center; justify-content: space-between; gap: 18px; margin-bottom: 22px; }
 .admin-topbar h1 { font-size: clamp(2rem, 4vw, 3rem); margin-top: 12px; }
 .admin-nav { display: flex; flex-wrap: wrap; gap: 10px; justify-content: flex-end; }
+.admin-nav .active { background: #e5f3ff; border-color: #9ad5ff; color: var(--primary); }
+.admin-page-intro { margin: -6px 0 22px; max-width: 760px; }
+.admin-page-intro p, .admin-page-actions p { color: var(--muted); margin: 6px 0 0; }
 .admin-page-actions .button-row { margin-top: 0; }
 .admin-filters { align-items: end; }
 .admin-filters .form-field { flex: 1; }
+.admin-workflow-card { align-items: center; display: grid; gap: 24px; grid-template-columns: minmax(0, 1fr) auto; margin-top: 22px; }
+.admin-workflow-copy h2 { margin-bottom: 14px; }
+.admin-workflow-list { display: grid; gap: 10px; margin: 0; padding-left: 22px; }
+.admin-workflow-list li { color: var(--text); font-weight: 700; line-height: 1.45; }
+.admin-command-actions { align-items: flex-end; display: grid; gap: 14px; min-width: 240px; }
+.admin-secondary-links { display: flex; flex-wrap: wrap; gap: 12px; justify-content: flex-end; }
+.admin-secondary-links button { background: transparent; border: 0; color: var(--primary); cursor: pointer; font: inherit; font-weight: 800; padding: 4px 0; text-decoration: underline; text-underline-offset: 4px; }
+.admin-empty-state { color: var(--muted); font-weight: 700; margin: 18px 0 4px; }
 .admin-table-wrap { overflow-x: auto; }
 .admin-table { border-collapse: collapse; min-width: 820px; width: 100%; }
 .admin-table th, .admin-table td { border-bottom: 1px solid var(--border); padding: 14px 12px; text-align: left; vertical-align: top; }
@@ -277,6 +291,9 @@ p { color: var(--muted); line-height: 1.7; }
   .btn { width: 100%; }
   .admin-topbar, .admin-page-actions, .admin-filters { align-items: stretch; flex-direction: column; }
   .admin-nav, .admin-row-actions { flex-direction: column; width: 100%; }
+  .admin-workflow-card { grid-template-columns: 1fr; }
+  .admin-command-actions { align-items: stretch; min-width: 0; }
+  .admin-secondary-links { justify-content: flex-start; }
   .admin-review-grid { grid-template-columns: 1fr; }
   .admin-table { min-width: 700px; }
 }

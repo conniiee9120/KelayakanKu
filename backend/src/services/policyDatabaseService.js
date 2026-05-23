@@ -21,6 +21,11 @@ export async function getAllPolicies() {
   return JSON.parse(raw);
 }
 
+export async function getPublicPolicies() {
+  const policies = await getAllPolicies();
+  return policies.filter((policy) => policy.verificationStatus === "approved");
+}
+
 export async function savePolicies(policies) {
   await writeFile(POLICIES_PATH, `${JSON.stringify(policies, null, 2)}\n`, "utf8");
   return policies;

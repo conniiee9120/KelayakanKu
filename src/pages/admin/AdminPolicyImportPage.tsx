@@ -1,195 +1,264 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { AdminLayout } from "../../components/admin/AdminLayout";
-import { PolicyForm } from "../../components/admin/PolicyForm";
 import { Button } from "../../components/ui/Button";
 import { Card } from "../../components/ui/Card";
-import { approvePolicy, extractPolicy, searchPolicySources, type AdminPolicy, type ExtractionResponse, type FieldEvidence, type PolicyDraft, type SearchResult } from "../../services/adminApi";
+import {
+  getSearchCache,
+  getSearchPresets,
+  searchPolicySources,
+  type SearchCacheEntry,
+  type SearchPreset,
+  type SearchResponse,
+  type SearchResult
+} from "../../services/adminApi";
 import { navigate } from "../../utils/navigation";
+import { useLanguage } from "../../context/LanguageContext";
 
-function stringifyValue(value: unknown) {
-  if (Array.isArray(value)) return value.length ? value.join(", ") : "[]";
-  if (value === null || value === undefined || value === "") return "Not found";
-  if (typeof value === "boolean") return value ? "true" : "false";
-  return String(value);
+const EXTRACTION_PAYLOAD_KEY = "kelayakanku_admin_extraction_payload";
+
+interface ExtractionPayload {
+  sourceType: "url" | "rawText";
+  sourceUrl?: string;
+  rawText?: string;
+  title?: string;
+  snippet?: string;
+  source?: string;
 }
 
-function flattenDraftEvidence(draft: PolicyDraft | null) {
-  if (!draft) return [];
-
-  return [
-    ["title", draft.title],
-    ["category", draft.category],
-    ["shortDescription", draft.shortDescription],
-    ["eligibilityRules.citizenship", draft.eligibilityRules.citizenship],
-    ["eligibilityRules.maxHouseholdIncome", draft.eligibilityRules.maxHouseholdIncome],
-    ["eligibilityRules.maxMonthlyIncome", draft.eligibilityRules.maxMonthlyIncome],
-    ["eligibilityRules.states", draft.eligibilityRules.states],
-    ["eligibilityRules.minAge", draft.eligibilityRules.minAge],
-    ["eligibilityRules.maxAge", draft.eligibilityRules.maxAge],
-    ["eligibilityRules.employmentStatuses", draft.eligibilityRules.employmentStatuses],
-    ["eligibilityRules.requiresChildren", draft.eligibilityRules.requiresChildren],
-    ["eligibilityRules.requiresDisability", draft.eligibilityRules.requiresDisability],
-    ["eligibilityRules.requiresStudent", draft.eligibilityRules.requiresStudent],
-    ["requiredDocuments", draft.requiredDocuments],
-    ["nextSteps", draft.nextSteps],
-    ["officialUrl", draft.officialUrl],
-    ["sourceUrl", draft.sourceUrl],
-    ["applicationDeadline", draft.applicationDeadline]
-  ] as Array<[string, FieldEvidence & { value: unknown }]>;
+function saveExtractionPayload(payload: ExtractionPayload) {
+  sessionStorage.setItem(EXTRACTION_PAYLOAD_KEY, JSON.stringify(payload));
+  navigate("/admin/policy-import/extract");
 }
 
 export function AdminPolicyImportPage() {
-  const [query, setQuery] = useState("site:gov.my bantuan kewangan B40 Malaysia 2026");
+  const { language, text } = useLanguage();
+  const [presets, setPresets] = useState<SearchPreset[]>([]);
+  const [presetId, setPresetId] = useState("general-b40");
+  const [customQuery, setCustomQuery] = useState("");
+  const [sourceUrl, setSourceUrl] = useState("");
   const [rawText, setRawText] = useState("");
+  const [cache, setCache] = useState<SearchCacheEntry[]>([]);
   const [results, setResults] = useState<SearchResult[]>([]);
-  const [extraction, setExtraction] = useState<ExtractionResponse | null>(null);
+  const [searchMeta, setSearchMeta] = useState<SearchResponse | null>(null);
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState("");
+  const [extractingLink, setExtractingLink] = useState("");
+  const [showEmptyCache, setShowEmptyCache] = useState(false);
 
-  async function handleSearch() {
+  useEffect(() => {
+    Promise.all([getSearchPresets(), getSearchCache()])
+      .then(([presetResponse, cacheResponse]) => {
+        setPresets(presetResponse.presets);
+        setCache(cacheResponse.cache);
+      })
+      .catch((err) => setMessage(err instanceof Error ? err.message : text.admin.overviewError));
+  }, []);
+
+  const selectedPreset = useMemo(() => presets.find((preset) => preset.id === presetId), [presetId, presets]);
+  const activeQuery = presetId === "custom" ? customQuery : selectedPreset?.query || "";
+
+  async function refreshCache() {
+    const response = await getSearchCache();
+    setCache(response.cache);
+  }
+
+  async function handleSearch(forceRefresh: boolean) {
     setMessage("");
-    setLoading("Searching official sources...");
+    setShowEmptyCache(false);
+    setSearchMeta(null);
+
+    if (forceRefresh && !window.confirm(text.admin.quotaConfirm)) return;
+
+    setLoading(forceRefresh ? text.admin.runningSearch : text.admin.loadingSaved);
     try {
-      const response = await searchPolicySources(query);
+      const response = await searchPolicySources({ presetId, customQuery, forceRefresh });
+      setSearchMeta(response);
       setResults(response.results);
-      if (response.results.length === 0) setMessage("No trusted results found. Try another query or add policy manually.");
+      await refreshCache();
+
+      if (!forceRefresh && response.results.length === 0) {
+        setShowEmptyCache(true);
+        setMessage(response.message || text.admin.noSavedBody);
+      } else if (response.results.length === 0) {
+        setMessage(text.admin.noTrustedResults);
+      }
     } catch (err) {
-      setMessage(err instanceof Error ? err.message : "Search failed.");
+      setMessage(err instanceof Error ? err.message : text.admin.searchFailed);
     } finally {
       setLoading("");
     }
   }
 
-  async function handleExtract(payload: { sourceUrl?: string; rawText?: string }) {
-    setMessage("");
-    setLoading("Extracting policy with evidence and audit...");
-    try {
-      setExtraction(await extractPolicy(payload));
-    } catch (err) {
-      setMessage(err instanceof Error ? err.message : "Extraction failed.");
-    } finally {
-      setLoading("");
+  function loadCacheEntry(entry: SearchCacheEntry) {
+    setResults(entry.results);
+    setPresetId(entry.presetId);
+    setShowEmptyCache(false);
+    setSearchMeta({
+      source: "cache",
+      usesSerpApiQuota: false,
+      cacheId: entry.id,
+      results: entry.results,
+      cacheEntry: entry
+    });
+    setMessage(text.admin.loadedCache);
+  }
+
+  function startUrlExtraction(result: SearchResult) {
+    if (extractingLink) return;
+    setExtractingLink(result.link);
+    saveExtractionPayload({
+      sourceType: "url",
+      sourceUrl: result.link,
+      title: result.title,
+      snippet: result.snippet,
+      source: result.source
+    });
+  }
+
+  function startPastedTextExtraction() {
+    if (!rawText.trim()) {
+      setMessage(text.admin.pasteBeforeExtraction);
+      return;
     }
-  }
 
-  async function handleApprove(policy: AdminPolicy) {
-    const saved = await approvePolicy(policy);
-    navigate(`/admin/policies/${saved.id}/edit`);
+    saveExtractionPayload({
+      sourceType: "rawText",
+      sourceUrl: sourceUrl.trim() || undefined,
+      rawText
+    });
   }
-
-  const evidenceRows = flattenDraftEvidence(extraction?.policyDraft || null);
 
   return (
     <AdminLayout>
       <div className="admin-page-actions">
         <div>
-          <h2>Import Policy</h2>
-          <p>Extract from official sources, cross-check evidence, edit if needed, then approve manually.</p>
+          <h2>{text.admin.importPolicy}</h2>
+          <p>{text.admin.importDesc}</p>
         </div>
       </div>
 
       <Card className="stack">
+        <span className="badge badge-info">{text.admin.step1}</span>
         <label className="form-field">
-          <span>Search query</span>
-          <input value={query} onChange={(event) => setQuery(event.target.value)} />
+          <span>{text.admin.chooseCategory}</span>
+          <select value={presetId} onChange={(event) => setPresetId(event.target.value)}>
+            {presets.map((preset) => <option key={preset.id} value={preset.id}>{language === "bm" && preset.labelBm ? preset.labelBm : preset.label}</option>)}
+          </select>
         </label>
-        <Button onClick={handleSearch}>Search Official Sources</Button>
+        {selectedPreset && <p className="field-helper">{language === "bm" && selectedPreset.descriptionBm ? selectedPreset.descriptionBm : selectedPreset.description}</p>}
+        <label className="form-field">
+          <span>{text.admin.queryPreview}</span>
+          {presetId === "custom" ? (
+            <textarea value={customQuery} onChange={(event) => setCustomQuery(event.target.value)} placeholder={text.admin.customQueryPlaceholder} />
+          ) : (
+            <textarea value={activeQuery} readOnly />
+          )}
+        </label>
+      </Card>
+
+      <Card className="stack">
+        <span className="badge badge-info">{text.admin.step2}</span>
+        <div className="admin-review-grid">
+          <Card className="soft-info">
+            <h3>{text.admin.loadSaved}</h3>
+            <p>{text.admin.savedNoQuota}</p>
+            <Button variant="secondary" disabled={Boolean(loading)} onClick={() => handleSearch(false)}>{text.admin.loadSaved}</Button>
+          </Card>
+          <Card className="soft-info">
+            <h3>{text.admin.runSearch}</h3>
+            <p>{text.admin.liveQuota}</p>
+            <Button disabled={Boolean(loading)} onClick={() => handleSearch(true)}>{text.admin.runSearch}</Button>
+          </Card>
+        </div>
         {loading && <p>{loading}</p>}
         {message && <div className="disclaimer-banner">{message}</div>}
-        <div className="stack">
-          {results.map((result) => (
-            <Card key={result.link} className="soft-info">
-              <h3>{result.title}</h3>
-              <p>{result.snippet}</p>
-              <p><strong>{result.source}</strong></p>
-              <div className="button-row">
-                <a className="btn btn-outline" href={result.link} target="_blank" rel="noreferrer">Open official portal</a>
-                <Button variant="outline" onClick={() => handleExtract({ sourceUrl: result.link })}>Extract Policy</Button>
-              </div>
-            </Card>
-          ))}
+        {searchMeta && searchMeta.results.length > 0 && (
+          <span className={`badge ${searchMeta.source === "cache" ? "badge-info" : "badge-warning"}`}>
+            {searchMeta.source === "cache" ? text.admin.cacheSource : text.admin.liveSource}
+          </span>
+        )}
+      </Card>
+
+      {showEmptyCache && (
+        <Card className="empty-state">
+          <h2>{text.admin.noSavedTitle}</h2>
+          <p>{text.admin.noSavedBody}</p>
+          <div className="button-row">
+            <Button onClick={() => handleSearch(true)}>{text.admin.runSearch}</Button>
+            <Button variant="outline" onClick={() => document.getElementById("paste-official-text")?.scrollIntoView({ behavior: "smooth" })}>{text.admin.pasteInstead}</Button>
+          </div>
+        </Card>
+      )}
+
+      <Card className="stack">
+        <span className="badge badge-info">{text.admin.savedCache}</span>
+        <h2>{text.admin.savedResults}</h2>
+        <p>{text.admin.reuseResults}</p>
+        <div className="admin-table-wrap">
+          <table className="admin-table">
+            <thead>
+              <tr>
+                <th>{text.admin.searchCategory}</th>
+                <th>{text.admin.query}</th>
+                <th>{text.admin.date}</th>
+                <th>{text.admin.results}</th>
+                <th>{text.admin.action}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {cache.map((entry) => (
+                <tr key={entry.id}>
+                  <td>{(() => {
+                    const preset = presets.find((item) => item.id === entry.presetId);
+                    return preset ? (language === "bm" && preset.labelBm ? preset.labelBm : preset.label) : entry.presetId;
+                  })()}</td>
+                  <td>{entry.query}</td>
+                  <td>{new Date(entry.searchedAt).toLocaleString()}</td>
+                  <td>{entry.results.length}</td>
+                  <td><Button variant="outline" onClick={() => loadCacheEntry(entry)}>{text.admin.loadResults}</Button></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          {cache.length === 0 && <p>{text.admin.noSavedSearches}</p>}
         </div>
       </Card>
 
       <Card className="stack">
-        <h2>Extract from pasted text</h2>
-        <label className="form-field">
-          <span>Policy text</span>
-          <textarea value={rawText} onChange={(event) => setRawText(event.target.value)} placeholder="Paste official policy text here..." />
-        </label>
-        <Button variant="secondary" onClick={() => handleExtract({ rawText })}>Extract from Text</Button>
-      </Card>
-
-      {extraction && (
-        <div className="stack">
-          <div className="admin-review-grid">
-            <Card>
-              <h2>Extraction confidence</h2>
-              <div className="match-pill inline">
-                <strong>{Math.round(extraction.confidence.overallConfidence * 100)}%</strong>
-                <span>{extraction.confidence.riskLevel} risk</span>
-              </div>
-              <p>Manual admin review is still required. This system never treats extraction as 100% accurate.</p>
-              {extraction.policy.sourceUrl && (
-                <a className="btn btn-outline" href={extraction.policy.sourceUrl} target="_blank" rel="noreferrer">Open official portal</a>
-              )}
-            </Card>
-            <Card>
-              <h2>Audit result</h2>
-              <p>{extraction.audit.auditPassed ? "No major audit issue was returned." : "Audit found issues or needs manual checking."}</p>
-              {extraction.audit.fieldIssues.length > 0 && (
-                <ul className="plain-list">
-                  {extraction.audit.fieldIssues.map((issue) => (
-                    <li key={`${issue.field}-${issue.issue}`}>
-                      <strong>{issue.severity.toUpperCase()}:</strong> {issue.field} - {issue.issue}
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </Card>
-          </div>
-
-          {(extraction.warnings.length > 0 || extraction.validation.errors.length > 0) && (
-            <div className="disclaimer-banner">
-              <strong>Review warnings:</strong> {[...extraction.warnings, ...extraction.validation.errors].join(" ")}
-            </div>
-          )}
-
-          <Card>
-            <h2>Field-level evidence</h2>
-            <p>Compare each extracted value with the evidence before approving.</p>
-            <div className="admin-table-wrap">
-              <table className="admin-table evidence-table">
-                <thead>
-                  <tr>
-                    <th>Field</th>
-                    <th>Extracted value</th>
-                    <th>Evidence quote</th>
-                    <th>Confidence</th>
-                    <th>Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {evidenceRows.map(([name, field]) => (
-                    <tr key={name}>
-                      <td><strong>{name}</strong></td>
-                      <td>{stringifyValue(field.value)}</td>
-                      <td>{field.evidence || "No evidence found"}</td>
-                      <td>{Math.round((field.confidence || 0) * 100)}%</td>
-                      <td>{field.status}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+        <span className="badge badge-info">{text.admin.step3}</span>
+        <h2>{text.admin.searchResults}</h2>
+        <p>{text.admin.extractNoSerpApi}</p>
+        {results.map((result) => (
+          <Card key={result.link} className="soft-info">
+            <h3>{result.title}</h3>
+            <p>{result.snippet}</p>
+            <p><strong>{result.source}</strong></p>
+            <div className="button-row">
+              <a className="btn btn-outline" href={result.link} target="_blank" rel="noreferrer">{text.admin.openPortal}</a>
+              <Button variant="outline" disabled={Boolean(extractingLink)} onClick={() => startUrlExtraction(result)}>
+                {extractingLink === result.link ? text.admin.openingReview : text.admin.extractPolicy}
+              </Button>
             </div>
           </Card>
+        ))}
+        {results.length === 0 && <p>{text.admin.noResultsLoaded}</p>}
+      </Card>
 
-          <div className="stack">
-            <h2>Editable policy draft</h2>
-            <PolicyForm initialPolicy={extraction.policy} onSubmit={handleApprove} submitLabel="Approve and Save" />
-          </div>
-        </div>
-      )}
+      <Card id="paste-official-text" className="stack">
+        <span className="badge badge-warning">{text.admin.fallbackOption}</span>
+        <h2>{text.admin.pasteTitle}</h2>
+        <p>{text.admin.pasteDesc}</p>
+        <p>{text.admin.scraperLimit}</p>
+        <label className="form-field">
+          <span>{text.admin.sourceUrlOptional}</span>
+          <input value={sourceUrl} onChange={(event) => setSourceUrl(event.target.value)} placeholder={text.admin.sourceUrlPlaceholder} />
+        </label>
+        <label className="form-field">
+          <span>{text.admin.officialText}</span>
+          <textarea value={rawText} onChange={(event) => setRawText(event.target.value)} placeholder={text.admin.officialTextPlaceholder} />
+        </label>
+        <Button variant="secondary" disabled={Boolean(extractingLink)} onClick={startPastedTextExtraction}>{text.admin.extractFromText}</Button>
+      </Card>
     </AdminLayout>
   );
 }

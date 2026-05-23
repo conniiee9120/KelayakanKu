@@ -1,11 +1,11 @@
 import { Router } from "express";
-import { getAllPolicies } from "../services/policyDatabaseService.js";
+import { getPublicPolicies } from "../services/policyDatabaseService.js";
 
 const router = Router();
 
 router.get("/", async (_req, res, next) => {
   try {
-    res.json(await getAllPolicies());
+    res.json(await getPublicPolicies());
   } catch (error) {
     next(error);
   }

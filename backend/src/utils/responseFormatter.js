@@ -1,7 +1,12 @@
 export function formatEligibilityResponse(scoredPolicies) {
+  const publicPolicies = scoredPolicies.filter((item) => item.status === "Recommended" || item.status === "Need More Info");
+
   return {
-    recommended: scoredPolicies.filter((item) => item.status === "Recommended"),
-    needMoreInfo: scoredPolicies.filter((item) => item.status === "Need More Info"),
-    lessLikely: scoredPolicies.filter((item) => item.status === "Less Likely")
+    recommended: publicPolicies
+      .filter((item) => item.status === "Recommended")
+      .sort((a, b) => b.eligibilityScore - a.eligibilityScore),
+    needMoreInfo: publicPolicies
+      .filter((item) => item.status === "Need More Info")
+      .sort((a, b) => b.eligibilityScore - a.eligibilityScore)
   };
 }
