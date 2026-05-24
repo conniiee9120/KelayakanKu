@@ -52,6 +52,9 @@ export interface AdminPolicy {
     overallConfidence: number;
     riskLevel: "low" | "medium" | "high";
     evidenceByField: Record<string, FieldEvidence>;
+    auditStatus?: "completed" | "unavailable";
+    auditSummary?: string;
+    auditReason?: string;
     auditIssues: AuditIssue[];
     warnings: string[];
   };
@@ -130,6 +133,18 @@ export interface AuditIssue {
   field: string;
   issue: string;
   severity: "low" | "medium" | "high";
+  suggestion?: string;
+}
+
+export interface ExtractionAudit {
+  status?: "completed" | "unavailable";
+  auditPassed: boolean;
+  summary?: string;
+  fieldIssues: AuditIssue[];
+  warnings?: string[];
+  correctedWarnings?: string[];
+  needsManualReview?: boolean;
+  reason?: "quota_exceeded" | "missing_api_key" | "invalid_json" | "gemini_request_failed" | "unknown";
 }
 
 export interface ExtractionResponse {
@@ -142,16 +157,19 @@ export interface ExtractionResponse {
   policy: AdminPolicy;
   policyDraft: PolicyDraft | null;
   evidenceByField: Record<string, FieldEvidence>;
-  audit: {
-    auditPassed: boolean;
-    fieldIssues: AuditIssue[];
-    correctedWarnings?: string[];
-  };
-  confidence: {
+  audit: ExtractionAudit;
+  confidence?: {
     overallConfidence: number;
     riskLevel: "low" | "medium" | "high";
     needsAdminReview: boolean;
     autoApprovalEligible: false;
+    confidenceBreakdown?: {
+      fieldCompleteness: number;
+      evidenceCoverage: number;
+      auditScore: number;
+      validationScore: number;
+      warningPenalty: number;
+    };
   };
   warnings: string[];
   validation: {
@@ -272,10 +290,10 @@ export function extractPolicy(payload: { sourceUrl?: string; rawText?: string })
   });
 }
 
-export function approvePolicy(policy: AdminPolicy) {
+export function approvePolicy(policy: AdminPolicy, options: { manualVerificationConfirmed?: boolean } = {}) {
   return adminRequest<AdminPolicy>("/api/admin/policies/approve", {
     method: "POST",
-    body: JSON.stringify(policy)
+    body: JSON.stringify({ ...policy, ...options })
   });
 }
 

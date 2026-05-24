@@ -1,4 +1,4 @@
-// Full FAQ page with static MVP guidance.
+// Full FAQ page with static public guidance.
 import { Button } from "../components/ui/Button";
 import { Card } from "../components/ui/Card";
 import { useLanguage } from "../context/LanguageContext";

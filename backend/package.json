@@ -7,7 +7,9 @@
     "dev": "node --watch src/server.js",
     "start": "node src/server.js",
     "test:rules": "node scripts/testRuleEngine.js",
-    "test:policies": "node scripts/validatePolicies.js"
+    "test:policies": "node scripts/validatePolicies.js",
+    "test:extraction-confidence": "node scripts/testPolicyExtractionConfidence.js",
+    "test:extraction-audit": "node scripts/testPolicyExtractionAudit.js"
   },
   "dependencies": {
     "@google/genai": "^2.6.0",

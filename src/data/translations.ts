@@ -52,7 +52,7 @@ export const translations = {
     form: {
       eyebrow: "Eligibility check",
       title: "Check possible B40 household support in a few minutes",
-      desc: "This MVP focuses on B40 household guidance. It asks enough to guide you, without feeling like an official application.",
+      desc: "This check focuses on B40 household guidance. It asks enough to guide you, without feeling like an official application.",
       checksTitle: "What KelayakanKu checks",
       privacyTitle: "Privacy and guidance",
       privacyDesc: "KelayakanKu only uses your answers to generate possible matches. It does not submit applications for you.",
@@ -420,7 +420,7 @@ export const translations = {
     form: {
       eyebrow: "Semakan kelayakan",
       title: "Semak sokongan isi rumah B40 dalam beberapa minit",
-      desc: "MVP ini berfokus pada panduan isi rumah B40. Ia bertanya maklumat yang cukup untuk membantu, tanpa rasa seperti permohonan rasmi.",
+      desc: "Semakan ini berfokus pada panduan isi rumah B40. Ia bertanya maklumat yang cukup untuk membantu, tanpa rasa seperti permohonan rasmi.",
       checksTitle: "Apa yang KelayakanKu semak",
       privacyTitle: "Privasi dan panduan",
       privacyDesc: "KelayakanKu hanya menggunakan jawapan anda untuk menjana padanan yang mungkin. Ia tidak menghantar permohonan untuk anda.",

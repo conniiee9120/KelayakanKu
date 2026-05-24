@@ -2,13 +2,20 @@ import { useEffect, useState } from "react";
 import { AdminLayout } from "../../components/admin/AdminLayout";
 import { PolicyForm, createBlankPolicy } from "../../components/admin/PolicyForm";
 import { Button } from "../../components/ui/Button";
-import { createAdminPolicy, deleteAdminPolicy, getAdminPolicies, updateAdminPolicy, type AdminPolicy } from "../../services/adminApi";
+import { approvePolicy, createAdminPolicy, deleteAdminPolicy, getAdminPolicies, updateAdminPolicy, type AdminPolicy } from "../../services/adminApi";
 import { navigate } from "../../utils/navigation";
 import { useLanguage } from "../../context/LanguageContext";
 
 function getEditId() {
   const match = window.location.pathname.match(/^\/admin\/policies\/([^/]+)\/edit$/);
   return match?.[1];
+}
+
+function requiresManualVerification(policy: AdminPolicy | null) {
+  return policy?.extractionMeta?.auditStatus === "unavailable"
+    || policy?.extractionMeta?.riskLevel === "high"
+    || policy?.extractionMeta?.auditIssues?.some((issue) => issue.severity === "high")
+    || false;
 }
 
 export function AdminPolicyFormPage() {
@@ -28,8 +35,10 @@ export function AdminPolicyFormPage() {
       .catch((err) => setMessage(err instanceof Error ? err.message : text.admin.loadPolicyError));
   }, [editId]);
 
-  async function handleSubmit(nextPolicy: AdminPolicy) {
-    const saved = editId ? await updateAdminPolicy(editId, nextPolicy) : await createAdminPolicy(nextPolicy);
+  async function handleSubmit(nextPolicy: AdminPolicy, options?: { manualVerificationConfirmed?: boolean }) {
+    const saved = nextPolicy.verificationStatus === "approved"
+      ? await approvePolicy(nextPolicy, options)
+      : editId ? await updateAdminPolicy(editId, nextPolicy) : await createAdminPolicy(nextPolicy);
     navigate(`/admin/policies/${saved.id}/edit`);
   }
 
@@ -49,7 +58,14 @@ export function AdminPolicyFormPage() {
         {editId && <Button variant="outline" onClick={handleDelete}>{text.admin.deletePolicy}</Button>}
       </div>
       {message && <div className="disclaimer-banner">{message}</div>}
-      {policy ? <PolicyForm initialPolicy={policy} onSubmit={handleSubmit} submitLabel={editId ? text.admin.saveChanges : text.admin.createPolicy} /> : <p>{text.admin.loadingPolicy}</p>}
+      {policy ? (
+        <PolicyForm
+          initialPolicy={policy}
+          onSubmit={handleSubmit}
+          submitLabel={editId ? text.admin.saveChanges : text.admin.createPolicy}
+          requiresManualVerification={requiresManualVerification(policy)}
+        />
+      ) : <p>{text.admin.loadingPolicy}</p>}
     </AdminLayout>
   );
 }

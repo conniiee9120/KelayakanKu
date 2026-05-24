@@ -71,6 +71,25 @@ function stringifyValue(value: unknown, labels: { notFound: string; yes: string;
   return String(value);
 }
 
+function normalizeConfidencePercent(value: unknown) {
+  if (typeof value !== "number" || !Number.isFinite(value)) return null;
+  const percent = value > 0 && value <= 1 ? value * 100 : value;
+  return Math.max(0, Math.min(100, Math.round(percent)));
+}
+
+function formatRiskLevel(riskLevel?: string) {
+  if (!riskLevel) return "Unavailable";
+  return `${riskLevel.charAt(0).toUpperCase()}${riskLevel.slice(1)}`;
+}
+
+function auditReasonMessage(reason?: string) {
+  if (reason === "quota_exceeded") return "Gemini quota was exceeded during audit.";
+  if (reason === "missing_api_key") return "Gemini API key is not configured.";
+  if (reason === "invalid_json") return "Gemini audit response could not be parsed.";
+  if (reason === "gemini_request_failed") return "Gemini audit request failed.";
+  return "Audit could not be completed.";
+}
+
 function flattenDraftEvidence(draft: PolicyDraft | null) {
   if (!draft) return [];
   return [
@@ -142,6 +161,8 @@ export function AdminPolicyExtractionPage() {
 
   const steps = useMemo(() => getSteps(payload?.sourceType || "url", text), [payload?.sourceType, text]);
   const evidenceRows = flattenDraftEvidence(extraction?.policyDraft || null);
+  const confidencePercent = normalizeConfidencePercent(extraction?.confidence?.overallConfidence);
+  const confidenceBreakdown = extraction?.confidence?.confidenceBreakdown;
 
   async function runExtraction() {
     if (hasStartedExtractionRef.current) return;
@@ -259,9 +280,16 @@ export function AdminPolicyExtractionPage() {
     runExtraction();
   }
 
-  async function handleApprove(policy: AdminPolicy) {
+  function requiresManualVerification() {
+    return extraction?.audit.status === "unavailable"
+      || extraction?.confidence?.riskLevel === "high"
+      || extraction?.audit.fieldIssues.some((issue) => issue.severity === "high")
+      || false;
+  }
+
+  async function handleApprove(policy: AdminPolicy, options?: { manualVerificationConfirmed?: boolean }) {
     if (!window.confirm(text.admin.approveConfirm)) return;
-    const saved = await approvePolicy(policy);
+    const saved = await approvePolicy(policy, options);
     setSavedPolicyId(saved.id || "");
     setSaveMessage(text.admin.approvedSaved);
   }
@@ -366,18 +394,47 @@ export function AdminPolicyExtractionPage() {
             <Card>
               <h2>{text.admin.confidence}</h2>
               <div className="match-pill inline">
-                <strong>{Math.round(extraction.confidence.overallConfidence * 100)}%</strong>
-                <span>{extraction.confidence.riskLevel} {text.admin.risk}</span>
+                <strong>{confidencePercent === null ? "Confidence unavailable" : `${confidencePercent}%`}</strong>
+                <span>{formatRiskLevel(extraction.confidence?.riskLevel)} {text.admin.risk}</span>
               </div>
+              {confidenceBreakdown && (
+                <ul className="plain-list">
+                  <li>Evidence coverage: {confidenceBreakdown.evidenceCoverage}/25</li>
+                  <li>Field completeness: {confidenceBreakdown.fieldCompleteness}/35</li>
+                  <li>Audit score: {confidenceBreakdown.auditScore}/25</li>
+                  <li>Validation score: {confidenceBreakdown.validationScore}/15</li>
+                  <li>Warning penalty: -{confidenceBreakdown.warningPenalty}</li>
+                </ul>
+              )}
+              <p>Audit status: {extraction.audit.auditPassed ? text.admin.auditPassed : text.admin.auditNeedsCheck}</p>
+              <p>Validation status: {extraction.validation.valid ? "Valid" : "Needs admin review"}</p>
               <p>{text.admin.not100}</p>
             </Card>
             <Card>
               <h2>{text.admin.auditResult}</h2>
-              <p>{extraction.audit.auditPassed ? text.admin.auditPassed : text.admin.auditNeedsCheck}</p>
+              {extraction.audit.status === "unavailable" ? (
+                <>
+                  <p><strong>Audit unavailable - manual review required</strong></p>
+                  <p>{auditReasonMessage(extraction.audit.reason)}</p>
+                </>
+              ) : extraction.audit.auditPassed ? (
+                <>
+                  <p><strong>Audit completed</strong></p>
+                  <p>No critical issues found.</p>
+                </>
+              ) : (
+                <>
+                  <p><strong>Audit found fields that need manual checking</strong></p>
+                  <p>{extraction.audit.summary || text.admin.auditNeedsCheck}</p>
+                </>
+              )}
               {extraction.audit.fieldIssues.length > 0 && (
                 <ul className="plain-list">
                   {extraction.audit.fieldIssues.map((issue) => (
-                    <li key={`${issue.field}-${issue.issue}`}><strong>{issue.severity.toUpperCase()}:</strong> {issue.field} - {issue.issue}</li>
+                    <li key={`${issue.field}-${issue.issue}`}>
+                      <strong>{issue.severity.toUpperCase()}:</strong> {issue.field} - {issue.issue}
+                      {issue.suggestion ? ` ${issue.suggestion}` : ""}
+                    </li>
                   ))}
                 </ul>
               )}
@@ -434,7 +491,6 @@ export function AdminPolicyExtractionPage() {
                 <Button onClick={() => navigate("/admin/policies")}>{text.admin.viewPolicies}</Button>
                 <Button variant="outline" onClick={() => navigate("/admin/policy-import")}>{text.admin.importAnother}</Button>
                 {savedPolicyId && <Button variant="secondary" onClick={() => navigate(`/admin/policies/${savedPolicyId}/edit`)}>{text.admin.continueEditing}</Button>}
-                <Button variant="outline" onClick={() => navigate("/eligibility")}>{text.admin.testUserFlow}</Button>
               </div>
             </Card>
           ) : (
@@ -448,6 +504,7 @@ export function AdminPolicyExtractionPage() {
                 secondaryLabel={text.admin.saveDraft}
                 onSecondarySubmit={handleSaveDraft}
                 primaryDisabled={!extraction.success}
+                requiresManualVerification={requiresManualVerification()}
               />
               {!extraction.success && (
                 <p className="helper-text">

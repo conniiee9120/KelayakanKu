@@ -46,22 +46,25 @@ export function createBlankPolicy() {
   return structuredClone(blankPolicy);
 }
 
-export function PolicyForm({ initialPolicy, onSubmit, submitLabel = "Save policy", secondaryLabel, onSecondarySubmit, primaryDisabled = false }: {
+export function PolicyForm({ initialPolicy, onSubmit, submitLabel = "Save policy", secondaryLabel, onSecondarySubmit, primaryDisabled = false, requiresManualVerification = false }: {
   initialPolicy?: AdminPolicy;
-  onSubmit: (policy: AdminPolicy) => Promise<void> | void;
+  onSubmit: (policy: AdminPolicy, options?: { manualVerificationConfirmed?: boolean }) => Promise<void> | void;
   submitLabel?: string;
   secondaryLabel?: string;
   onSecondarySubmit?: (policy: AdminPolicy) => Promise<void> | void;
   primaryDisabled?: boolean;
+  requiresManualVerification?: boolean;
 }) {
   const { text } = useLanguage();
   const [policy, setPolicy] = useState<AdminPolicy>(initialPolicy || createBlankPolicy());
   const [saving, setSaving] = useState(false);
   const [errors, setErrors] = useState<string[]>([]);
+  const [manualVerified, setManualVerified] = useState(false);
 
   useEffect(() => {
     setPolicy(initialPolicy || createBlankPolicy());
     setErrors([]);
+    setManualVerified(false);
   }, [initialPolicy]);
 
   function update<K extends keyof AdminPolicy>(key: K, value: AdminPolicy[K]) {
@@ -101,7 +104,9 @@ export function PolicyForm({ initialPolicy, onSubmit, submitLabel = "Save policy
 
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
-    await saveWithValidation(onSubmit);
+    await saveWithValidation((nextPolicy) => onSubmit(nextPolicy, {
+      manualVerificationConfirmed: requiresManualVerification ? manualVerified : undefined
+    }));
   }
 
   async function handleSecondarySubmit() {
@@ -191,13 +196,23 @@ export function PolicyForm({ initialPolicy, onSubmit, submitLabel = "Save policy
           {errors.map((item) => <p key={item}>{item}</p>)}
         </div>
       )}
+      {requiresManualVerification && (
+        <label className="admin-manual-check">
+          <input
+            type="checkbox"
+            checked={manualVerified}
+            onChange={(event) => setManualVerified(event.target.checked)}
+          />
+          I have manually verified this policy against the official source.
+        </label>
+      )}
       <div className="form-actions">
         {secondaryLabel && onSecondarySubmit && (
           <Button type="button" variant="outline" disabled={saving} onClick={handleSecondarySubmit}>
             {secondaryLabel}
           </Button>
         )}
-        <Button type="submit" disabled={saving || primaryDisabled}>{saving ? text.admin.saving : submitLabel}</Button>
+        <Button type="submit" disabled={saving || primaryDisabled || (requiresManualVerification && !manualVerified)}>{saving ? text.admin.saving : submitLabel}</Button>
       </div>
     </form>
   );

@@ -8,17 +8,127 @@ import { searchTrustedPolicySources } from "../services/serpapiService.js";
 import { getLatestCacheForPreset, getSearchCache, saveSearchCacheEntry } from "../services/searchCacheService.js";
 import { getSearchPresetById, getSearchPresets } from "../services/searchPresetService.js";
 import { getSourceText } from "../services/webpageTextService.js";
-import { calculateOverallConfidence } from "../utils/policyConfidence.js";
+import { calculateExtractionConfidence } from "../utils/policyConfidence.js";
 import { validatePolicy } from "../utils/validatePolicy.js";
 
 const router = Router();
 const MIN_EXTRACTABLE_TEXT_LENGTH = 220;
+
+function isDevelopment() {
+  return process.env.NODE_ENV !== "production";
+}
+
+function countExtractedFields(policy = {}) {
+  const checks = [
+    policy.title,
+    policy.category,
+    policy.shortDescription,
+    policy.eligibilityRules?.citizenship,
+    policy.eligibilityRules?.maxHouseholdIncome,
+    policy.eligibilityRules?.maxMonthlyIncome,
+    policy.eligibilityRules?.states,
+    policy.eligibilityRules?.minAge,
+    policy.eligibilityRules?.maxAge,
+    policy.eligibilityRules?.employmentStatuses,
+    policy.requiredDocuments,
+    policy.nextSteps,
+    policy.officialUrl || policy.sourceUrl
+  ];
+
+  return checks.filter((value) => {
+    if (Array.isArray(value)) return value.length > 0;
+    return value !== null && value !== undefined && value !== "";
+  }).length;
+}
+
+function countEvidenceFields(evidenceByField = {}) {
+  return Object.values(evidenceByField).filter((field) => field?.evidence?.trim()).length;
+}
+
+function logExtractionDebug({
+  sourceTextLength = 0,
+  success,
+  policy,
+  evidenceByField,
+  audit,
+  validation,
+  confidence
+}) {
+  if (!isDevelopment()) return;
+  console.info("[admin-policy-extraction]", {
+    cleanedSourceTextLength: sourceTextLength,
+    extractionSuccess: Boolean(success),
+    extractedFieldCount: countExtractedFields(policy),
+    evidenceFieldCount: countEvidenceFields(evidenceByField),
+    auditPassed: Boolean(audit?.auditPassed),
+    validationValid: Boolean(validation?.valid),
+    calculatedConfidence: confidence?.overallConfidence ?? null,
+    riskLevel: confidence?.riskLevel ?? null
+  });
+}
+
+function approvalNeedsManualVerification(policy = {}) {
+  const auditStatus = policy.extractionMeta?.auditStatus;
+  const riskLevel = policy.extractionMeta?.riskLevel;
+  const hasHighAuditIssue = (policy.extractionMeta?.auditIssues || []).some((issue) => issue.severity === "high");
+  return auditStatus === "unavailable" || riskLevel === "high" || hasHighAuditIssue;
+}
+
+function rejectUnverifiedApproval(req, res) {
+  if (req.body?.verificationStatus !== "approved") return false;
+  if (!approvalNeedsManualVerification(req.body)) return false;
+  if (req.body?.manualVerificationConfirmed === true) return false;
+  res.status(400).json({
+    error: "Manual verification is required before approving high-risk or unaudited policies."
+  });
+  return true;
+}
 
 function extractionFailure(res, payload, source = {}) {
   const fallbackPolicy = createEmptyEditablePolicy({
     sourceUrl: source.sourceUrl || source.body?.sourceUrl || ""
   });
   const message = payload.message || "Extraction failed. Admin must review and complete the draft manually.";
+  const confidence = {
+    overallConfidence: 0,
+    riskLevel: "high",
+    needsAdminReview: true,
+    autoApprovalEligible: false
+  };
+  const warnings = [
+    "Extraction failed. Admin must review and complete the draft manually."
+  ];
+  const audit = {
+    status: "unavailable",
+    auditPassed: false,
+    summary: "Gemini audit was unavailable. Admin must manually cross-check all extracted fields.",
+    fieldIssues: [
+      {
+        field: "overall",
+        severity: "high",
+        issue: "Gemini audit was unavailable.",
+        suggestion: "Admin must cross-check all fields manually against the official source."
+      }
+    ],
+    warnings: [],
+    correctedWarnings: [],
+    needsManualReview: true,
+    reason: "unknown"
+  };
+  const validation = {
+    valid: false,
+    errors: ["Policy draft requires manual completion."]
+  };
+
+  logExtractionDebug({
+    sourceTextLength: source.rawText?.length || 0,
+    success: false,
+    policy: fallbackPolicy,
+    evidenceByField: {},
+    audit,
+    validation,
+    confidence
+  });
 
   return res.json({
     success: false,
@@ -30,30 +140,10 @@ function extractionFailure(res, payload, source = {}) {
     policyDraft: null,
     policy: fallbackPolicy,
     evidenceByField: {},
-    confidence: {
-      overallConfidence: 0,
-      riskLevel: "high",
-      needsAdminReview: true,
-      autoApprovalEligible: false
-    },
-    warnings: [
-      "Extraction failed. Admin must review and complete the draft manually."
-    ],
-    audit: {
-      auditPassed: false,
-      fieldIssues: [
-        {
-          field: "overall",
-          severity: "high",
-          issue: "Gemini audit was unavailable. Admin must cross-check all fields manually."
-        }
-      ],
-      correctedWarnings: []
-    },
-    validation: {
-      valid: false,
-      errors: ["Policy draft requires manual completion."]
-    }
+    confidence,
+    warnings,
+    audit,
+    validation
   });
 }
 
@@ -88,6 +178,7 @@ router.get("/policies", requireAdminAuth, async (_req, res, next) => {
 
 router.post("/policies", requireAdminAuth, async (req, res, next) => {
   try {
+    if (rejectUnverifiedApproval(req, res)) return;
     const validation = validatePolicy(req.body);
     if (!validation.valid) return res.status(400).json({ errors: validation.errors });
     res.status(201).json(await createPolicy(validation.policy));
@@ -98,6 +189,7 @@ router.post("/policies", requireAdminAuth, async (req, res, next) => {
 
 router.put("/policies/:id", requireAdminAuth, async (req, res, next) => {
   try {
+    if (rejectUnverifiedApproval(req, res)) return;
     const validation = validatePolicy(req.body);
     if (!validation.valid) return res.status(400).json({ errors: validation.errors });
 
@@ -229,20 +321,38 @@ router.post("/policies/extract", requireAdminAuth, async (req, res, next) => {
       rawText: source.rawText,
       extractedPolicy: extraction.policyDraft
     });
-    const confidence = calculateOverallConfidence(extraction.policyDraft, audit);
     const warnings = [
       ...source.warnings,
       ...extraction.warnings,
       ...(audit.correctedWarnings || [])
     ];
+    const preliminaryPolicy = flattenPolicyDraft(extraction.policyDraft, { audit, warnings });
+    const evidenceByField = preliminaryPolicy.extractionMeta?.evidenceByField || {};
+    const validation = validatePolicy(preliminaryPolicy);
+    const confidence = calculateExtractionConfidence({
+      policy: validation.policy,
+      evidenceByField,
+      audit,
+      validation,
+      warnings
+    });
     const policy = flattenPolicyDraft(extraction.policyDraft, { confidence, audit, warnings });
-    const validation = validatePolicy(policy);
+
+    logExtractionDebug({
+      sourceTextLength: source.rawText.length,
+      success: true,
+      policy,
+      evidenceByField,
+      audit,
+      validation,
+      confidence
+    });
 
     res.json({
       success: true,
       policy,
       policyDraft: extraction.policyDraft,
-      evidenceByField: policy.extractionMeta?.evidenceByField || {},
+      evidenceByField,
       audit,
       confidence,
       warnings,
@@ -264,6 +374,12 @@ router.post("/policies/extract", requireAdminAuth, async (req, res, next) => {
 
 router.post("/policies/approve", requireAdminAuth, async (req, res, next) => {
   try {
+    if (approvalNeedsManualVerification(req.body) && req.body?.manualVerificationConfirmed !== true) {
+      return res.status(400).json({
+        error: "Manual verification is required before approving high-risk or unaudited policies."
+      });
+    }
+
     const validation = validatePolicy({
       ...req.body,
       verificationStatus: "approved"

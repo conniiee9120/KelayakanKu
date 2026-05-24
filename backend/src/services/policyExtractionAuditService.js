@@ -1,17 +1,67 @@
 // Second-pass audit that checks whether extracted values are supported by source text.
-import { DEFAULT_GEMINI_MODEL, generateGeminiText, getConfiguredGeminiModel } from "./geminiClient.js";
+import { DEFAULT_GEMINI_MODEL, generateGeminiText, getConfiguredGeminiModel, isMockGeminiEnabled } from "./geminiClient.js";
 
-function fallbackAudit() {
+const SEVERITIES = new Set(["low", "medium", "high"]);
+
+function isDevelopment() {
+  return process.env.NODE_ENV !== "production";
+}
+
+function countDraftFields(node) {
+  if (!node || typeof node !== "object") return 0;
+  return Object.values(node).reduce((count, value) => {
+    if (value && typeof value === "object" && "value" in value) return count + 1;
+    return count + countDraftFields(value);
+  }, 0);
+}
+
+function logAuditDebug(payload) {
+  if (!isDevelopment()) return;
+  console.info("[policy-extraction-audit]", payload);
+}
+
+function unavailableAudit(reason = "unknown", warning = "Audit unavailable. Do not approve without manual review.") {
   return {
+    status: "unavailable",
     auditPassed: false,
+    summary: "Gemini audit was unavailable. Admin must manually cross-check all extracted fields.",
     fieldIssues: [
       {
         field: "overall",
-        issue: "Gemini audit was unavailable. Admin must cross-check all fields manually.",
-        severity: "high"
+        severity: "high",
+        issue: "Gemini audit was unavailable.",
+        suggestion: "Admin must cross-check all fields manually against the official source."
       }
     ],
-    correctedWarnings: ["Audit unavailable. Do not approve without manual review."]
+    warnings: warning ? [warning] : [],
+    correctedWarnings: warning ? [warning] : [],
+    needsManualReview: true,
+    reason
+  };
+}
+
+function completedAudit(parsed = {}) {
+  const fieldIssues = Array.isArray(parsed.fieldIssues)
+    ? parsed.fieldIssues.map((issue) => ({
+      field: issue.field || "overall",
+      severity: SEVERITIES.has(issue.severity) ? issue.severity : "medium",
+      issue: issue.issue || "This field needs manual checking.",
+      suggestion: issue.suggestion || "Admin should verify this field manually."
+    }))
+    : [];
+  const auditPassed = Boolean(parsed.auditPassed) && fieldIssues.length === 0;
+  const warnings = Array.isArray(parsed.warnings) ? parsed.warnings.filter(Boolean) : [];
+
+  return {
+    status: "completed",
+    auditPassed,
+    summary: parsed.summary || (auditPassed
+      ? "Audit completed. Extracted fields are mostly supported by the source text."
+      : "Audit found fields that need manual checking."),
+    fieldIssues,
+    warnings,
+    correctedWarnings: warnings,
+    needsManualReview: true
   };
 }
 
@@ -28,18 +78,22 @@ Do not add new policy data.
 Flag unsupported, uncertain, conflicting, or invented fields.
 Return valid JSON only.
 
-Return shape:
+Expected JSON format:
 {
-  "auditPassed": true,
+  "auditPassed": false,
+  "summary": "string",
   "fieldIssues": [
     {
       "field": "eligibilityRules.maxHouseholdIncome",
       "issue": "No supporting evidence found in source text.",
-      "severity": "high"
+      "severity": "high",
+      "suggestion": "Admin should verify this field manually."
     }
   ],
-  "correctedWarnings": []
+  "warnings": []
 }
+
+Return JSON only. Do not include markdown or explanation outside JSON.
 
 Official source text:
 ${rawText.slice(0, 18000)}
@@ -49,8 +103,33 @@ ${JSON.stringify(extractedPolicy, null, 2)}
 `.trim();
 }
 
+export function auditResultFromGeminiResult(result, { missingApiKey = false } = {}) {
+  if (missingApiKey) return unavailableAudit("missing_api_key", "Gemini API key is not configured. Admin must audit manually.");
+  if (result.reason === "mock_gemini_enabled") return unavailableAudit("missing_api_key", "Mock Gemini mode is enabled. Admin must audit manually.");
+  if (result.reason === "not_configured") return unavailableAudit("missing_api_key", "Gemini API key is not configured. Admin must audit manually.");
+  if (result.reason === "quota_exceeded") return unavailableAudit("quota_exceeded", "Gemini audit quota is exhausted. Admin must cross-check all fields manually.");
+  if (result.reason === "request_failed") return unavailableAudit("gemini_request_failed", "Gemini audit request failed. Admin must cross-check all fields manually.");
+  if (!result.text) return unavailableAudit("unknown", "Gemini audit returned no text. Admin must cross-check all fields manually.");
+
+  try {
+    return completedAudit(parseJson(result.text));
+  } catch (error) {
+    console.error("Policy extraction audit parsing failed:", error?.message || error);
+    return unavailableAudit("invalid_json", "Gemini audit response could not be parsed. Admin must cross-check all fields manually.");
+  }
+}
+
 export async function auditExtractedPolicy({ rawText, extractedPolicy }) {
   const model = getConfiguredGeminiModel("GEMINI_AUDIT_MODEL");
+  const missingApiKey = !process.env.GEMINI_API_KEY;
+
+  logAuditDebug({
+    auditStarted: true,
+    auditModel: model,
+    sourceTextLength: rawText?.length || 0,
+    extractedPolicyFieldCount: countDraftFields(extractedPolicy),
+    mockGeminiEnabled: isMockGeminiEnabled()
+  });
 
   const result = await generateGeminiText({
     task: "policy_extraction_audit",
@@ -59,24 +138,19 @@ export async function auditExtractedPolicy({ rawText, extractedPolicy }) {
     contents: buildAuditPrompt({ rawText, extractedPolicy })
   });
 
-  if (result.text) {
-    try {
-      const parsed = parseJson(result.text);
-      const correctedWarnings = Array.isArray(parsed.correctedWarnings) ? parsed.correctedWarnings : [];
-      if (result.fallbackModelUsed) correctedWarnings.push("Selected Gemini audit model hit quota. Retried with fallback model.");
-      return {
-        auditPassed: Boolean(parsed.auditPassed),
-        fieldIssues: Array.isArray(parsed.fieldIssues) ? parsed.fieldIssues : [],
-        correctedWarnings
-      };
-    } catch (error) {
-      console.error("Policy extraction audit parsing failed:", error?.message || error);
-    }
+  const audit = auditResultFromGeminiResult(result, { missingApiKey });
+  if (result.fallbackModelUsed && audit.status === "completed") {
+    audit.warnings.push("Selected Gemini audit model hit quota. Retried with fallback model.");
+    audit.correctedWarnings.push("Selected Gemini audit model hit quota. Retried with fallback model.");
   }
 
-  const audit = fallbackAudit();
-  if (result.reason === "quota_exceeded") {
-    audit.correctedWarnings = ["Gemini audit quota is exhausted. Admin must cross-check all fields manually."];
-  }
+  logAuditDebug({
+    auditStarted: false,
+    auditSuccess: audit.status === "completed",
+    auditIssueCount: audit.fieldIssues.length,
+    auditErrorReason: audit.reason || "",
+    fallbackAuditUsed: audit.status === "unavailable"
+  });
+
   return audit;
 }

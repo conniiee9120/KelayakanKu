@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { AdminLayout } from "../../components/admin/AdminLayout";
 import { PolicyTable } from "../../components/admin/PolicyTable";
 import { Button } from "../../components/ui/Button";
-import { approvePolicy, deleteAdminPolicy, getAdminPolicies, type AdminPolicy } from "../../services/adminApi";
+import { deleteAdminPolicy, getAdminPolicies, type AdminPolicy } from "../../services/adminApi";
 import { navigate } from "../../utils/navigation";
 import { useLanguage } from "../../context/LanguageContext";
 
@@ -36,17 +36,6 @@ export function AdminPoliciesPage() {
     await loadPolicies();
   }
 
-  async function handleApprove(policy: AdminPolicy) {
-    if (!window.confirm(text.admin.approveDraftConfirm)) return;
-    try {
-      await approvePolicy(policy);
-      setMessage(text.admin.approvedDraftMessage);
-      await loadPolicies();
-    } catch (err) {
-      setMessage(err instanceof Error ? err.message : text.admin.savePolicyFailed);
-    }
-  }
-
   const pageTitle = isDraftsPage ? text.admin.policyDraftsTitle : text.admin.approvedPoliciesTitle;
   const pageDesc = isDraftsPage ? text.admin.policyDraftsDesc : text.admin.approvedPoliciesDesc;
   const emptyMessage = isDraftsPage ? text.admin.noPendingDrafts : text.admin.noApprovedPolicies;
@@ -71,7 +60,6 @@ export function AdminPoliciesPage() {
         policies={filtered}
         onEdit={(id) => navigate(`/admin/policies/${id}/edit`)}
         onDelete={handleDelete}
-        onApprove={isDraftsPage ? handleApprove : undefined}
         editLabel={isDraftsPage ? text.admin.reviewPolicy : text.admin.viewEdit}
         emptyMessage={emptyMessage}
       />

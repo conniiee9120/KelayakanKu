@@ -220,6 +220,9 @@ export function flattenPolicyDraft(policyDraft, { confidence, audit, warnings = 
       overallConfidence: confidence?.overallConfidence ?? 0,
       riskLevel: confidence?.riskLevel || "high",
       evidenceByField: collectEvidence(policyDraft),
+      auditStatus: audit?.status || "completed",
+      auditSummary: audit?.summary || "",
+      auditReason: audit?.reason || "",
       auditIssues: audit?.fieldIssues || [],
       warnings
     }

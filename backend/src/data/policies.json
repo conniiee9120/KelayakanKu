@@ -47,7 +47,7 @@
         "Cash aid",
         "Food or living cost support",
         "Child or family support",
-        "Not sure - show me what I may qualify for"
+        "Not sure — show me suitable support options"
       ]
     },
     "requiredDocuments": [
@@ -141,7 +141,7 @@
       "supportNeeds": [
         "Cash aid",
         "Food or living cost support",
-        "Not sure - show me what I may qualify for"
+        "Not sure — show me suitable support options"
       ]
     },
     "requiredDocuments": [
@@ -236,7 +236,7 @@
       "supportNeeds": [
         "Cash aid",
         "Food or living cost support",
-        "Not sure - show me what I may qualify for"
+        "Not sure — show me suitable support options"
       ]
     },
     "requiredDocuments": [
@@ -303,7 +303,7 @@
     ],
     "applicationMethod": "Check eligibility and programme details through the official STR/SARA portal.",
     "importantNotes": [
-      "KelayakanKu does not collect STR approval or eKasih status in the MVP.",
+      "KelayakanKu does not collect STR approval or eKasih status in the public form.",
       "This programme should be verified directly through the official portal before taking action."
     ],
     "eligibilityRules": {
@@ -332,7 +332,7 @@
       "supportNeeds": [
         "Food or living cost support",
         "Cash aid",
-        "Not sure - show me what I may qualify for"
+        "Not sure — show me suitable support options"
       ]
     },
     "requiredDocuments": [
@@ -364,7 +364,7 @@
     ],
     "applicationMethodBm": "Semak kelayakan dan butiran program melalui portal rasmi STR/SARA.",
     "importantNotesBm": [
-      "KelayakanKu tidak mengumpul status kelulusan STR atau eKasih dalam MVP.",
+      "KelayakanKu tidak mengumpul status kelulusan STR atau eKasih dalam borang awam.",
       "Program ini perlu disahkan terus melalui portal rasmi sebelum tindakan lanjut."
     ],
     "requiredDocumentsBm": [
@@ -397,7 +397,7 @@
     "applicationMethod": "Apply through JKM channels and attend assessment if requested.",
     "importantNotes": [
       "JKM aid depends on official assessment, not only income range.",
-      "The MVP cannot confirm JKM case assessment outcomes."
+      "KelayakanKu cannot confirm JKM case assessment outcomes."
     ],
     "eligibilityRules": {
       "citizenship": "Malaysian",
@@ -424,7 +424,7 @@
         "Child or family support",
         "Cash aid",
         "Food or living cost support",
-        "Not sure - show me what I may qualify for"
+        "Not sure — show me suitable support options"
       ]
     },
     "requiredDocuments": [
@@ -459,7 +459,7 @@
     "applicationMethodBm": "Mohon melalui saluran JKM dan hadir penilaian jika diminta.",
     "importantNotesBm": [
       "Bantuan JKM bergantung pada penilaian rasmi, bukan hanya julat pendapatan.",
-      "MVP tidak boleh mengesahkan keputusan penilaian kes JKM."
+      "KelayakanKu tidak boleh mengesahkan keputusan penilaian kes JKM."
     ],
     "requiredDocumentsBm": [
       "MyKad pemohon",
@@ -519,7 +519,7 @@
       "supportNeeds": [
         "Cash aid",
         "Food or living cost support",
-        "Not sure - show me what I may qualify for"
+        "Not sure — show me suitable support options"
       ]
     },
     "requiredDocuments": [
@@ -617,7 +617,7 @@
       "supportNeeds": [
         "Cash aid",
         "Food or living cost support",
-        "Not sure - show me what I may qualify for"
+        "Not sure — show me suitable support options"
       ]
     },
     "requiredDocuments": [
@@ -685,7 +685,7 @@
     ],
     "applicationMethod": "Apply through JKM and prepare medical or disability-related evidence if requested.",
     "importantNotes": [
-      "The MVP does not collect detailed medical diagnosis.",
+      "KelayakanKu does not collect detailed medical diagnosis.",
       "Official JKM assessment is required to confirm eligibility."
     ],
     "eligibilityRules": {
@@ -713,7 +713,7 @@
       "supportNeeds": [
         "Medical or disability-related support",
         "Cash aid",
-        "Not sure - show me what I may qualify for"
+        "Not sure — show me suitable support options"
       ]
     },
     "requiredDocuments": [
@@ -747,7 +747,7 @@
     ],
     "applicationMethodBm": "Mohon melalui JKM dan sediakan bukti perubatan atau berkaitan OKU jika diminta.",
     "importantNotesBm": [
-      "MVP tidak mengumpul diagnosis perubatan terperinci.",
+      "KelayakanKu tidak mengumpul diagnosis perubatan terperinci.",
       "Penilaian rasmi JKM diperlukan untuk mengesahkan kelayakan."
     ],
     "requiredDocumentsBm": [
@@ -803,7 +803,7 @@
       "supportNeeds": [
         "Student or education support",
         "Medical or disability-related support",
-        "Not sure - show me what I may qualify for"
+        "Not sure — show me suitable support options"
       ]
     },
     "requiredDocuments": [
@@ -852,5 +852,329 @@
       "Sahkan kelayakan institusi dan kursus",
       "Mohon melalui SisPO atau hubungi penyelaras institusi"
     ]
+  },
+  {
+    "id": "draft-policy-for-review",
+    "title": "Draft policy for review",
+    "category": "Other",
+    "shortDescription": "%PDF-1.5 %���� 150 0 obj > endobj xref 150 98 0000000016 00000 n 0000002664 00000 n 0000002730 00000 n 0000003600 00000 n 0000003637 00000 n 0000003751 00000 n 0000003863 00000 n 0000022888 00000 n 0000040816 00000 n 0000057258 00000 n 0000071998 00000 n 00000",
+    "eligibilityRules": {
+      "citizenship": "Malaysian",
+      "maxHouseholdIncome": null,
+      "maxMonthlyIncome": null,
+      "strictIncomeCap": true,
+      "states": [
+        "All"
+      ],
+      "minAge": null,
+      "maxAge": null,
+      "allowedAgeGroups": [],
+      "householdSituations": [],
+      "employmentStatuses": [],
+      "workSituations": [],
+      "requiresChildren": false,
+      "requiresDisability": false,
+      "requiresStudent": false,
+      "requiresSenior": false,
+      "requiresSingleParent": false,
+      "requiresCaregiver": false,
+      "requiresEkasih": false,
+      "requiresStrApproved": false,
+      "minDependents": 0,
+      "maxDependents": null,
+      "incomeStability": [],
+      "acceptsUnstableIncome": false,
+      "contributionRequirements": {},
+      "supportNeeds": [],
+      "specialSituations": [],
+      "keywords": []
+    },
+    "requiredDocuments": [],
+    "nextSteps": [
+      "Review official source",
+      "Complete missing criteria",
+      "Approve only after verification"
+    ],
+    "officialUrl": "https://bantuantunai.hasil.gov.my/FAQ/RISALAH%20STR%202026.pdf",
+    "sourceUrl": "https://bantuantunai.hasil.gov.my/FAQ/RISALAH%20STR%202026.pdf",
+    "lastUpdated": "2026-05-24",
+    "verificationStatus": "draft",
+    "applicationDeadline": null,
+    "extractionMeta": {
+      "overallConfidence": 23,
+      "riskLevel": "high",
+      "evidenceByField": {
+        "id": {
+          "evidence": "",
+          "confidence": 0,
+          "status": "missing"
+        },
+        "title": {
+          "evidence": "%PDF-1.5 %���� 150 0 obj > endobj xref 150 98 0000000016 00000 n 0000002664 00000 n 0000002730 00000 n 0000003600 00000 n 0000003637 00000 n 0000003751 00000 n 0000003863 00000 n 0000022888 00000 n 0000040816 00000 n 0000057258 00000 n 0000071998 00000 n 00000",
+          "confidence": 0.25,
+          "status": "uncertain"
+        },
+        "category": {
+          "evidence": "",
+          "confidence": 0,
+          "status": "missing"
+        },
+        "shortDescription": {
+          "evidence": "%PDF-1.5 %���� 150 0 obj > endobj xref 150 98 0000000016 00000 n 0000002664 00000 n 0000002730 00000 n 0000003600 00000 n 0000003637 00000 n 0000003751 00000 n 0000003863 00000 n 0000022888 00000 n 0000040816 00000 n 0000057258 00000 n 0000071998 00000 n 00000",
+          "confidence": 0.25,
+          "status": "uncertain"
+        },
+        "eligibilityRules.citizenship": {
+          "evidence": "",
+          "confidence": 0,
+          "status": "missing"
+        },
+        "eligibilityRules.maxHouseholdIncome": {
+          "evidence": "",
+          "confidence": 0,
+          "status": "missing"
+        },
+        "eligibilityRules.maxMonthlyIncome": {
+          "evidence": "",
+          "confidence": 0,
+          "status": "missing"
+        },
+        "eligibilityRules.states": {
+          "evidence": "",
+          "confidence": 0,
+          "status": "missing"
+        },
+        "eligibilityRules.minAge": {
+          "evidence": "",
+          "confidence": 0,
+          "status": "missing"
+        },
+        "eligibilityRules.maxAge": {
+          "evidence": "",
+          "confidence": 0,
+          "status": "missing"
+        },
+        "eligibilityRules.employmentStatuses": {
+          "evidence": "",
+          "confidence": 0,
+          "status": "missing"
+        },
+        "eligibilityRules.requiresChildren": {
+          "evidence": "",
+          "confidence": 0,
+          "status": "missing"
+        },
+        "eligibilityRules.requiresDisability": {
+          "evidence": "",
+          "confidence": 0,
+          "status": "missing"
+        },
+        "eligibilityRules.requiresStudent": {
+          "evidence": "",
+          "confidence": 0,
+          "status": "missing"
+        },
+        "requiredDocuments": {
+          "evidence": "",
+          "confidence": 0,
+          "status": "missing"
+        },
+        "nextSteps": {
+          "evidence": "",
+          "confidence": 0.2,
+          "status": "uncertain"
+        },
+        "officialUrl": {
+          "evidence": "source URL provided by admin",
+          "confidence": 0.4,
+          "status": "uncertain"
+        },
+        "sourceUrl": {
+          "evidence": "source URL provided by admin",
+          "confidence": 1,
+          "status": "confirmed"
+        },
+        "applicationDeadline": {
+          "evidence": "",
+          "confidence": 0,
+          "status": "missing"
+        }
+      },
+      "auditIssues": [
+        {
+          "field": "overall",
+          "issue": "Gemini audit was unavailable. Admin must cross-check all fields manually.",
+          "severity": "high"
+        }
+      ],
+      "warnings": [
+        "Extraction failed. Admin must review and complete the draft manually.",
+        "Audit unavailable. Do not approve without manual review."
+      ]
+    }
+  },
+  {
+    "id": "draft-policy-for-review-2",
+    "title": "Draft policy for review",
+    "category": "Other",
+    "shortDescription": "Jabatan Kebajikan Masyarakat --> WARGA JKM AWAM BADAN NGO MY Bahasa Melayu Bahasa Inggeris A+ A A- Program Khidmat Bantu Di Rumah (KBDR) Program Khidmat Bantu Di Rumah (KBDR) Utama Program Khidmat Bantu Di Rumah (KBDR) PROGRAM KHIDMAT BANTU DI RUMAH (KBDR) PEN",
+    "eligibilityRules": {
+      "citizenship": "Malaysian",
+      "maxHouseholdIncome": null,
+      "maxMonthlyIncome": null,
+      "strictIncomeCap": true,
+      "states": [
+        "All"
+      ],
+      "minAge": null,
+      "maxAge": null,
+      "allowedAgeGroups": [],
+      "householdSituations": [],
+      "employmentStatuses": [],
+      "workSituations": [],
+      "requiresChildren": false,
+      "requiresDisability": false,
+      "requiresStudent": false,
+      "requiresSenior": false,
+      "requiresSingleParent": false,
+      "requiresCaregiver": false,
+      "requiresEkasih": false,
+      "requiresStrApproved": false,
+      "minDependents": 0,
+      "maxDependents": null,
+      "incomeStability": [],
+      "acceptsUnstableIncome": false,
+      "contributionRequirements": {},
+      "supportNeeds": [],
+      "specialSituations": [],
+      "keywords": []
+    },
+    "requiredDocuments": [],
+    "nextSteps": [
+      "Review official source",
+      "Complete missing criteria",
+      "Approve only after verification"
+    ],
+    "officialUrl": "https://www.jkm.gov.my/main/article/program-khidmat-bantu-di-rumah",
+    "sourceUrl": "https://www.jkm.gov.my/main/article/program-khidmat-bantu-di-rumah",
+    "lastUpdated": "2026-05-24",
+    "verificationStatus": "draft",
+    "applicationDeadline": null,
+    "extractionMeta": {
+      "overallConfidence": 35,
+      "riskLevel": "high",
+      "evidenceByField": {
+        "id": {
+          "evidence": "",
+          "confidence": 0,
+          "status": "missing"
+        },
+        "title": {
+          "evidence": "Jabatan Kebajikan Masyarakat --> WARGA JKM AWAM BADAN NGO MY Bahasa Melayu Bahasa Inggeris A+ A A- Program Khidmat Bantu Di Rumah (KBDR) Program Khidmat Bantu Di Rumah (KBDR) Utama Program Khidmat Bantu Di Rumah (KBDR) PROGRAM KHIDMAT BANTU DI RUMAH (KBDR) PEN",
+          "confidence": 0.25,
+          "status": "uncertain"
+        },
+        "category": {
+          "evidence": "",
+          "confidence": 0,
+          "status": "missing"
+        },
+        "shortDescription": {
+          "evidence": "Jabatan Kebajikan Masyarakat --> WARGA JKM AWAM BADAN NGO MY Bahasa Melayu Bahasa Inggeris A+ A A- Program Khidmat Bantu Di Rumah (KBDR) Program Khidmat Bantu Di Rumah (KBDR) Utama Program Khidmat Bantu Di Rumah (KBDR) PROGRAM KHIDMAT BANTU DI RUMAH (KBDR) PEN",
+          "confidence": 0.25,
+          "status": "uncertain"
+        },
+        "eligibilityRules.citizenship": {
+          "evidence": "",
+          "confidence": 0,
+          "status": "missing"
+        },
+        "eligibilityRules.maxHouseholdIncome": {
+          "evidence": "",
+          "confidence": 0,
+          "status": "missing"
+        },
+        "eligibilityRules.maxMonthlyIncome": {
+          "evidence": "",
+          "confidence": 0,
+          "status": "missing"
+        },
+        "eligibilityRules.states": {
+          "evidence": "",
+          "confidence": 0,
+          "status": "missing"
+        },
+        "eligibilityRules.minAge": {
+          "evidence": "",
+          "confidence": 0,
+          "status": "missing"
+        },
+        "eligibilityRules.maxAge": {
+          "evidence": "",
+          "confidence": 0,
+          "status": "missing"
+        },
+        "eligibilityRules.employmentStatuses": {
+          "evidence": "",
+          "confidence": 0,
+          "status": "missing"
+        },
+        "eligibilityRules.requiresChildren": {
+          "evidence": "",
+          "confidence": 0,
+          "status": "missing"
+        },
+        "eligibilityRules.requiresDisability": {
+          "evidence": "",
+          "confidence": 0,
+          "status": "missing"
+        },
+        "eligibilityRules.requiresStudent": {
+          "evidence": "",
+          "confidence": 0,
+          "status": "missing"
+        },
+        "requiredDocuments": {
+          "evidence": "",
+          "confidence": 0,
+          "status": "missing"
+        },
+        "nextSteps": {
+          "evidence": "",
+          "confidence": 0.2,
+          "status": "uncertain"
+        },
+        "officialUrl": {
+          "evidence": "source URL provided by admin",
+          "confidence": 0.4,
+          "status": "uncertain"
+        },
+        "sourceUrl": {
+          "evidence": "source URL provided by admin",
+          "confidence": 1,
+          "status": "confirmed"
+        },
+        "applicationDeadline": {
+          "evidence": "",
+          "confidence": 0,
+          "status": "missing"
+        }
+      },
+      "auditStatus": "unavailable",
+      "auditSummary": "Gemini audit was unavailable. Admin must manually cross-check all extracted fields.",
+      "auditReason": "quota_exceeded",
+      "auditIssues": [
+        {
+          "field": "overall",
+          "severity": "high",
+          "issue": "Gemini audit was unavailable.",
+          "suggestion": "Admin must cross-check all fields manually against the official source."
+        }
+      ],
+      "warnings": [
+        "Gemini quota is exhausted. Admin must review and complete the draft manually.",
+        "Gemini audit quota is exhausted. Admin must cross-check all fields manually."
+      ]
+    }
   }
 ]
