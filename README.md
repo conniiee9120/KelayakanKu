@@ -1,52 +1,46 @@
 # KelayakanKu
 
-KelayakanKu is an AI-assisted eligibility navigator for Malaysian B40 households. It helps users check which financial aid, subsidies, welfare support, food aid, education aid, or other support programmes may be relevant to their household profile.
+KelayakanKu is an AI-assisted eligibility navigator for Malaysian B40 households. Users answer a guided household profile form and receive an eligibility snapshot for support programmes that may be relevant to them.
 
-KelayakanKu provides guidance only. It does not submit applications, approve users, or guarantee eligibility. Users should always verify final criteria and apply through official channels.
+KelayakanKu provides guidance only. It does not submit applications, approve users, reject users, or guarantee eligibility. Final eligibility depends on the official agency and current programme rules.
 
 ## Tech Stack
 
 Frontend:
 - React.js
-- TypeScript / TSX
+- TypeScript
 - Vite
 - Custom CSS
-- LocalStorage for demo continuity
 
 Backend:
 - Node.js
 - Express.js
 - Local JSON policy database
-- Deterministic rule-based eligibility engine
+- Deterministic rule engine
 - Gemini API for explanations and admin extraction assistance
 - SerpAPI for admin-only official-source search
 - JWT-protected admin routes
 
-Deployment targets:
-- Frontend: Vercel
-- Backend: Render
-
 ## Main Features
 
-Public user flow:
-- Landing page
-- Household-focused eligibility form
+Public flow:
+- Landing page with BM/EN support
+- Eligibility form
 - Review details page
-- Processing page
-- Eligibility Snapshot with two result sections: Recommended and Need More Info
-- Programme details page with official source links, document checklist, next steps, and Gemini/fallback explanation
-- Bahasa Melayu and English support for public pages
+- Results page with `Recommended` and `Need More Info`
+- Programme detail page with document checklist, next steps, and official links
+- Gemini explanation when configured, with deterministic fallback when unavailable
 
 Admin flow:
 - Admin login at `/admin/login`
 - Approved policy management
-- Draft review
-- SerpAPI official-source search with saved cache
+- Draft policy review
+- Official-source search via SerpAPI
 - Webpage text extraction and pasted-text fallback
 - Gemini-assisted policy extraction with evidence and audit
-- Human review before draft save or approval
+- Manual review before high-risk policy approval
 
-Gemini does not decide eligibility. The backend rule engine remains the source of truth for recommendation status and score.
+Gemini does not decide eligibility. Recommendation status and scoring come from the backend rule engine.
 
 ## Frontend Setup
 
@@ -61,7 +55,7 @@ Frontend local URL:
 http://localhost:5173
 ```
 
-Build for production:
+Production build:
 
 ```bash
 npm run build
@@ -81,7 +75,56 @@ Backend local URL:
 http://localhost:5000
 ```
 
-Test health endpoint:
+Backend production start:
+
+```bash
+cd backend
+npm start
+```
+
+## Environment Variables
+
+Frontend `.env.example`:
+
+```text
+VITE_API_BASE_URL=http://localhost:5000
+```
+
+Backend `backend/.env.example`:
+
+```text
+PORT=5000
+FRONTEND_ORIGIN=http://localhost:5173
+GEMINI_API_KEY=
+SERPAPI_KEY=
+ADMIN_PASSWORD=
+ADMIN_TOKEN_SECRET=
+```
+
+Real API keys and admin secrets are not included in this repository. Keep real values only in local `.env` files or deployment environment variables.
+
+## Run Locally
+
+Terminal 1:
+
+```bash
+cd backend
+npm run dev
+```
+
+Terminal 2:
+
+```bash
+npm run dev
+```
+
+Open:
+
+```text
+http://localhost:5173
+```
+
+## Health Check
 
 ```text
 GET http://localhost:5000/api/health
@@ -96,65 +139,21 @@ Expected response:
 }
 ```
 
-## Environment Variables
-
-Create a frontend `.env` file from `.env.example`:
-
-```text
-VITE_API_BASE_URL=http://localhost:5000
-```
-
-Create `backend/.env` from `backend/.env.example`:
-
-```text
-PORT=5000
-FRONTEND_ORIGIN=http://localhost:5173
-GEMINI_API_KEY=
-SERPAPI_KEY=
-ADMIN_PASSWORD=
-ADMIN_TOKEN_SECRET=
-```
-
-Real API keys and admin secrets are not included in this repository. Keep them only in local `.env` files or deployment environment variables.
-
 ## Admin Access
 
-The admin pages are not shown in the public navbar.
+Admin login page:
 
-Routes:
-- `/admin/login`
-- `/admin/dashboard`
-- `/admin/policies`
-- `/admin/drafts`
-- `/admin/policy-import`
-- `/admin/policy-import/extract`
+```text
+http://localhost:5173/admin/login
+```
 
-Admin tokens are stored in `sessionStorage` for MVP use and sent to the backend as:
+Admin tokens are stored in frontend `sessionStorage` for MVP use and sent to the backend as:
 
 ```text
 Authorization: Bearer <token>
 ```
 
-## Backend API Summary
-
-Public endpoints:
-- `GET /api/health`
-- `GET /api/policies`
-- `POST /api/eligibility/check`
-- `POST /api/explanation`
-
-Admin endpoints:
-- `POST /api/admin/login`
-- `GET /api/admin/me`
-- `GET /api/admin/policies`
-- `POST /api/admin/policies`
-- `PUT /api/admin/policies/:id`
-- `DELETE /api/admin/policies/:id`
-- `GET /api/admin/policies/search-presets`
-- `POST /api/admin/policies/search-serpapi`
-- `GET /api/admin/policies/search-cache`
-- `POST /api/admin/policies/extract`
-- `POST /api/admin/policies/approve`
+Admin routes require `ADMIN_PASSWORD` and `ADMIN_TOKEN_SECRET` in the backend environment.
 
 ## Testing
 
@@ -170,9 +169,11 @@ Backend:
 cd backend
 npm run test:policies
 npm run test:rules
+npm run test:extraction-confidence
+npm run test:extraction-audit
 ```
 
-The public result response should contain only:
+The public eligibility response contains only:
 
 ```json
 {
@@ -181,23 +182,25 @@ The public result response should contain only:
 }
 ```
 
+There is no public `Less Likely` category.
+
 ## Deployment Notes
 
-Vercel frontend environment variable:
+Vercel frontend:
+- Set build command to `npm run build`.
+- Set output directory to `dist`.
+- Add `VITE_API_BASE_URL` pointing to the deployed backend URL.
 
-```text
-VITE_API_BASE_URL=https://your-render-backend-url.onrender.com
-```
+Render backend:
+- Use the `backend` folder as the service root, or set commands with `cd backend`.
+- Build command: `npm install`
+- Start command: `npm start`
+- Add backend environment variables in Render, not in source code.
+- Set `FRONTEND_ORIGIN` to the deployed Vercel frontend URL.
 
-Render backend environment variables:
+## Security Notes
 
-```text
-PORT=5000
-FRONTEND_ORIGIN=https://your-vercel-frontend-url.vercel.app
-GEMINI_API_KEY=
-SERPAPI_KEY=
-ADMIN_PASSWORD=
-ADMIN_TOKEN_SECRET=
-```
-
-Do not commit `.env`, `backend/.env`, `node_modules`, or `dist` folders.
+- Do not commit `.env` files.
+- Do not expose Gemini, SerpAPI, admin password, or JWT secret values in frontend code.
+- Gemini and SerpAPI are called only from the backend.
+- The frontend only calls the KelayakanKu backend through `VITE_API_BASE_URL`.

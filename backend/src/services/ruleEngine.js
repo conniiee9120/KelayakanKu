@@ -85,6 +85,10 @@ function hasKnownNumber(value) {
   return value !== null && value !== undefined && Number.isFinite(Number(value));
 }
 
+function optionalBoolean(value) {
+  return value === undefined || value === null ? null : Boolean(value);
+}
+
 function uniquePush(list, value) {
   if (value && !list.includes(value)) list.push(value);
 }
@@ -275,21 +279,24 @@ function normalizePolicyRules(policy) {
     householdSituations: asArray(rules.householdSituations),
     minDependents: hasKnownNumber(rules.minDependents) ? Number(rules.minDependents) : null,
     maxDependents: hasKnownNumber(rules.maxDependents) ? Number(rules.maxDependents) : null,
-    requiresChildren: rules.requiresChildren === undefined ? null : Boolean(rules.requiresChildren),
+    requiresChildren: optionalBoolean(rules.requiresChildren),
     workSituations: asArray(rules.workSituations),
     employmentStatuses: asArray(rules.employmentStatuses),
     incomeStability: asArray(rules.incomeStability),
-    acceptsUnstableIncome: rules.acceptsUnstableIncome === undefined ? null : Boolean(rules.acceptsUnstableIncome),
+    acceptsUnstableIncome: optionalBoolean(rules.acceptsUnstableIncome),
     contributionRequirements: rules.contributionRequirements || {},
     supportNeeds: asArray(rules.supportNeeds),
     specialSituations: asArray(rules.specialSituations),
-    requiresDisability: rules.requiresDisability === undefined ? null : Boolean(rules.requiresDisability),
-    requiresStudent: rules.requiresStudent === undefined ? null : Boolean(rules.requiresStudent),
-    requiresSenior: rules.requiresSenior === undefined ? null : Boolean(rules.requiresSenior),
-    requiresSingleParent: rules.requiresSingleParent === undefined ? null : Boolean(rules.requiresSingleParent),
-    requiresCaregiver: rules.requiresCaregiver === undefined ? null : Boolean(rules.requiresCaregiver),
-    requiresEkasih: rules.requiresEkasih === undefined ? null : Boolean(rules.requiresEkasih),
-    requiresStrApproved: rules.requiresStrApproved === undefined ? null : Boolean(rules.requiresStrApproved),
+    requiresDisability: optionalBoolean(rules.requiresDisability),
+    requiresStudent: optionalBoolean(rules.requiresStudent),
+    requiresSenior: optionalBoolean(rules.requiresSenior),
+    requiresSingleParent: optionalBoolean(rules.requiresSingleParent),
+    requiresCaregiver: optionalBoolean(rules.requiresCaregiver),
+    requiresEkasih: optionalBoolean(rules.requiresEkasih),
+    requiresStrApproved: optionalBoolean(rules.requiresStrApproved),
+    requiresEpfMembership: optionalBoolean(rules.requiresEpfMembership),
+    requiresOkuRegistration: optionalBoolean(rules.requiresOkuRegistration),
+    requiresHousingReview: optionalBoolean(rules.requiresHousingReview),
     keywords: asArray(rules.keywords)
   };
 }
@@ -620,6 +627,26 @@ export function scorePolicy(inputProfile, policy) {
     award("contributionStatus", "partial", Math.round(WEIGHTS.contributionStatus * 0.5), WEIGHTS.contributionStatus, "Contribution status provides useful context.");
   } else {
     award("contributionStatus", "unknown", 0, WEIGHTS.contributionStatus, "Contribution status is unknown or not required.");
+  }
+
+  if (rules.requiresStrApproved === true) {
+    markMissing("strApprovalStatus", "Official STR approval status is needed to confirm this programme.");
+  }
+
+  if (rules.requiresEkasih === true) {
+    markMissing("eKasihStatus", "Official eKasih status is needed to confirm this programme.");
+  }
+
+  if (rules.requiresEpfMembership === true && profile.hasEpf !== true) {
+    markMissing("epfMembershipStatus", "KWSP membership status is needed to confirm this programme.");
+  }
+
+  if (rules.requiresOkuRegistration === true) {
+    markMissing("okuRegistrationStatus", "Official JKM OKU registration status is needed to confirm this programme.");
+  }
+
+  if (rules.requiresHousingReview === true) {
+    markMissing("housingAndLandStatus", "Housing, land, and site status must be confirmed by the official programme.");
   }
 
   const hasSupportMatch = supportNeedMatches(profile.supportNeeds, policy, rules);

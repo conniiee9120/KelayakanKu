@@ -12,6 +12,7 @@ export function Results() {
   const { text } = useLanguage();
   const result = getEligibilityResult();
   const error = getEligibilityError();
+  const hasNoMatches = result ? result.recommended.length === 0 && result.needMoreInfo.length === 0 : false;
 
   if (!result) {
     return (
@@ -40,37 +41,58 @@ export function Results() {
         </div>
       </Card>
 
-      <section className="page-section compact">
-        <div className="section-header">
-          <h2>{text.results.recommended}</h2>
-          <p>{text.results.recommendedDesc}</p>
-        </div>
-        {result.recommended.length > 0 ? (
-          <div className="card-grid two">
-            {result.recommended.map((recommendation) => <RecommendationCard key={recommendation.id} recommendation={recommendation} />)}
-          </div>
-        ) : (
+      {hasNoMatches ? (
+        <section className="page-section compact">
           <Card className="empty-state">
-            <p>{text.results.noRecommended}</p>
+            <h2>{text.results.emptyNoMatchesTitle}</h2>
+            <p>{text.results.emptyNoMatchesDesc}</p>
+            <div className="button-row empty-state-actions">
+              <Button onClick={() => navigate("/review")}>{text.buttons.review}</Button>
+              <Button variant="outline" onClick={() => navigate("/eligibility")}>{text.buttons.tryAgain}</Button>
+            </div>
+            <div className="common-reasons">
+              <h3>{text.results.commonReasonsTitle}</h3>
+              <ul className="plain-list">
+                {text.results.commonReasons.map((reason) => <li key={reason}>{reason}</li>)}
+              </ul>
+            </div>
           </Card>
-        )}
-      </section>
+        </section>
+      ) : (
+        <>
+          <section className="page-section compact">
+            <div className="section-header">
+              <h2>{text.results.recommended}</h2>
+              <p>{text.results.recommendedDesc}</p>
+            </div>
+            {result.recommended.length > 0 ? (
+              <div className="card-grid two">
+                {result.recommended.map((recommendation) => <RecommendationCard key={recommendation.id} recommendation={recommendation} />)}
+              </div>
+            ) : (
+              <Card className="empty-state">
+                <p>{text.results.noRecommended}</p>
+              </Card>
+            )}
+          </section>
 
-      <section className="page-section compact">
-        <div className="section-header">
-          <h2>{text.results.needInfo}</h2>
-          <p>{text.results.needInfoDesc}</p>
-        </div>
-        {result.needMoreInfo.length > 0 ? (
-          <div className="card-grid two">
-            {result.needMoreInfo.map((recommendation) => <RecommendationCard key={recommendation.id} recommendation={recommendation} />)}
-          </div>
-        ) : (
-          <Card className="empty-state">
-            <p>{text.results.noNeedInfo}</p>
-          </Card>
-        )}
-      </section>
+          <section className="page-section compact">
+            <div className="section-header">
+              <h2>{text.results.needInfo}</h2>
+              <p>{text.results.needInfoDesc}</p>
+            </div>
+            {result.needMoreInfo.length > 0 ? (
+              <div className="card-grid two">
+                {result.needMoreInfo.map((recommendation) => <RecommendationCard key={recommendation.id} recommendation={recommendation} />)}
+              </div>
+            ) : (
+              <Card className="empty-state">
+                <p>{text.results.noNeedInfo}</p>
+              </Card>
+            )}
+          </section>
+        </>
+      )}
 
       <DisclaimerBanner>{text.common.disclaimer}</DisclaimerBanner>
     </main>

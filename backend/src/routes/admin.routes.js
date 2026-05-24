@@ -14,59 +14,6 @@ import { validatePolicy } from "../utils/validatePolicy.js";
 const router = Router();
 const MIN_EXTRACTABLE_TEXT_LENGTH = 220;
 
-function isDevelopment() {
-  return process.env.NODE_ENV !== "production";
-}
-
-function countExtractedFields(policy = {}) {
-  const checks = [
-    policy.title,
-    policy.category,
-    policy.shortDescription,
-    policy.eligibilityRules?.citizenship,
-    policy.eligibilityRules?.maxHouseholdIncome,
-    policy.eligibilityRules?.maxMonthlyIncome,
-    policy.eligibilityRules?.states,
-    policy.eligibilityRules?.minAge,
-    policy.eligibilityRules?.maxAge,
-    policy.eligibilityRules?.employmentStatuses,
-    policy.requiredDocuments,
-    policy.nextSteps,
-    policy.officialUrl || policy.sourceUrl
-  ];
-
-  return checks.filter((value) => {
-    if (Array.isArray(value)) return value.length > 0;
-    return value !== null && value !== undefined && value !== "";
-  }).length;
-}
-
-function countEvidenceFields(evidenceByField = {}) {
-  return Object.values(evidenceByField).filter((field) => field?.evidence?.trim()).length;
-}
-
-function logExtractionDebug({
-  sourceTextLength = 0,
-  success,
-  policy,
-  evidenceByField,
-  audit,
-  validation,
-  confidence
-}) {
-  if (!isDevelopment()) return;
-  console.info("[admin-policy-extraction]", {
-    cleanedSourceTextLength: sourceTextLength,
-    extractionSuccess: Boolean(success),
-    extractedFieldCount: countExtractedFields(policy),
-    evidenceFieldCount: countEvidenceFields(evidenceByField),
-    auditPassed: Boolean(audit?.auditPassed),
-    validationValid: Boolean(validation?.valid),
-    calculatedConfidence: confidence?.overallConfidence ?? null,
-    riskLevel: confidence?.riskLevel ?? null
-  });
-}
-
 function approvalNeedsManualVerification(policy = {}) {
   const auditStatus = policy.extractionMeta?.auditStatus;
   const riskLevel = policy.extractionMeta?.riskLevel;
@@ -119,16 +66,6 @@ function extractionFailure(res, payload, source = {}) {
     valid: false,
     errors: ["Policy draft requires manual completion."]
   };
-
-  logExtractionDebug({
-    sourceTextLength: source.rawText?.length || 0,
-    success: false,
-    policy: fallbackPolicy,
-    evidenceByField: {},
-    audit,
-    validation,
-    confidence
-  });
 
   return res.json({
     success: false,
@@ -337,16 +274,6 @@ router.post("/policies/extract", requireAdminAuth, async (req, res, next) => {
       warnings
     });
     const policy = flattenPolicyDraft(extraction.policyDraft, { confidence, audit, warnings });
-
-    logExtractionDebug({
-      sourceTextLength: source.rawText.length,
-      success: true,
-      policy,
-      evidenceByField,
-      audit,
-      validation,
-      confidence
-    });
 
     res.json({
       success: true,

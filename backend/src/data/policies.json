@@ -1,34 +1,42 @@
 [
   {
-    "id": "str-isi-rumah",
-    "title": "Sumbangan Tunai Rahmah (STR) - Isi Rumah",
+    "id": "str-2026-isi-rumah",
+    "title": "Sumbangan Tunai Rahmah (STR) 2026 - Isi Rumah",
     "category": "Cash Aid",
-    "shortDescription": "Cash assistance for Malaysian households living in Malaysia with gross monthly household income of RM5,000 and below. Final eligibility and payment rate depend on the official STR portal and household details.",
+    "shortDescription": "Cash assistance for Malaysian households living in Malaysia with gross monthly household income of RM5,000 and below. Final category and payment amount must be confirmed through the official STR portal.",
     "targetGroup": [
-      "B40 Malaysian households",
-      "Households with dependents",
-      "Low-income families"
+      "Low- and middle-income Malaysian households",
+      "Families with dependents",
+      "B40 households"
     ],
-    "benefitSummary": "STR provides direct cash assistance to eligible Malaysian households to help with living costs.",
+    "benefitSummary": "STR 2026 provides direct cash assistance to eligible Malaysian households to help with cost of living.",
     "eligibilitySummary": [
       "Malaysian citizen living in Malaysia",
-      "Gross monthly household income RM5,000 and below",
-      "Household category and payment amount must be confirmed through the STR portal"
+      "Household income RM5,000 and below",
+      "Household category and dependents are verified by LHDNM/MOF"
     ],
-    "applicationMethod": "Apply, update details, or check status through the official STR portal.",
+    "applicationMethod": "Apply, update details, or check status through the official STR 2026 portal.",
     "importantNotes": [
-      "Final STR eligibility depends on LHDN/official portal checks.",
-      "Payment amount may differ based on household category and dependents."
+      "KelayakanKu only screens against basic stated rules.",
+      "Final eligibility depends on LHDNM/MOF data checks and STR category rules."
     ],
     "eligibilityRules": {
       "citizenship": "Malaysian",
       "maxHouseholdIncome": 5000,
       "maxMonthlyIncome": 5000,
+      "strictIncomeCap": true,
       "states": [
         "All"
       ],
       "minAge": 18,
       "maxAge": null,
+      "allowedAgeGroups": [],
+      "householdSituations": [
+        "married",
+        "family_with_children",
+        "single_parent",
+        "supporting_family"
+      ],
       "employmentStatuses": [
         "employed",
         "unemployed",
@@ -39,15 +47,31 @@
         "retired",
         "unable-to-work"
       ],
+      "workSituations": [],
       "requiresChildren": false,
       "requiresDisability": false,
       "requiresStudent": false,
+      "requiresSenior": null,
+      "requiresSingleParent": null,
+      "requiresCaregiver": null,
+      "requiresEkasih": null,
+      "requiresStrApproved": null,
       "minDependents": 1,
+      "maxDependents": null,
+      "incomeStability": [],
+      "acceptsUnstableIncome": null,
+      "contributionRequirements": {},
       "supportNeeds": [
         "Cash aid",
         "Food or living cost support",
         "Child or family support",
         "Not sure — show me suitable support options"
+      ],
+      "specialSituations": [],
+      "keywords": [
+        "STR",
+        "Sumbangan Tunai Rahmah",
+        "cash assistance"
       ]
     },
     "requiredDocuments": [
@@ -57,31 +81,33 @@
       "Marriage, divorce, death, or child documents if required by STR"
     ],
     "nextSteps": [
-      "Check the official STR portal for the latest criteria and phase status",
-      "Prepare household and income information",
+      "Check the official STR 2026 portal",
+      "Prepare household, income, and bank information",
       "Apply, update, or check status through the official STR channel"
     ],
     "officialUrl": "https://bantuantunai.hasil.gov.my/",
-    "sourceUrl": "https://www.malaysia.gov.my/my/personas/keluarga-berpendapatan-rendah/mendapatkan-bantuan-asas/sumbangan-tunai-rahmah-str",
-    "lastUpdated": "2026-05-22",
-    "verificationStatus": "approved",
-    "titleBm": "Sumbangan Tunai Rahmah (STR) - Isi Rumah",
-    "shortDescriptionBm": "Bantuan tunai untuk isi rumah warganegara Malaysia yang tinggal di Malaysia dengan pendapatan kasar bulanan isi rumah RM5,000 dan ke bawah. Kelayakan akhir dan kadar bayaran bergantung pada portal rasmi STR dan butiran isi rumah.",
+    "sourceUrl": "https://bantuantunai.hasil.gov.my/FAQ/FAQ%20PERMOHONAN%20STR%202026.pdf",
+    "sourceYear": 2026,
+    "sourceAgency": "LHDNM / MOF",
+    "evidenceNotes": "Official STR 2026 FAQ states new applicants include household income RM5,000 and below; non-citizens and Malaysians not residing/working in Malaysia are not eligible.",
+    "lastUpdated": "2026-05-24",
+    "titleBm": "Sumbangan Tunai Rahmah (STR) 2026 - Isi Rumah",
+    "shortDescriptionBm": "Bantuan tunai untuk isi rumah warganegara Malaysia yang menetap di Malaysia dengan pendapatan kasar bulanan isi rumah RM5,000 dan ke bawah. Kategori dan amaun akhir mesti disahkan melalui portal rasmi STR.",
     "targetGroupBm": [
-      "Isi rumah B40 Malaysia",
-      "Isi rumah dengan tanggungan",
-      "Keluarga berpendapatan rendah"
+      "Isi rumah Malaysia berpendapatan rendah dan sederhana",
+      "Keluarga dengan tanggungan",
+      "Isi rumah B40"
     ],
-    "benefitSummaryBm": "STR menyediakan bantuan tunai terus kepada isi rumah Malaysia yang layak untuk membantu kos sara hidup.",
+    "benefitSummaryBm": "STR 2026 menyediakan bantuan tunai terus kepada isi rumah Malaysia yang layak untuk membantu kos sara hidup.",
     "eligibilitySummaryBm": [
-      "Warganegara Malaysia yang tinggal di Malaysia",
-      "Pendapatan kasar bulanan isi rumah RM5,000 dan ke bawah",
-      "Kategori isi rumah dan jumlah bayaran mesti disahkan melalui portal STR"
+      "Warganegara Malaysia yang menetap di Malaysia",
+      "Pendapatan isi rumah RM5,000 dan ke bawah",
+      "Kategori isi rumah dan tanggungan disahkan oleh LHDNM/MOF"
     ],
-    "applicationMethodBm": "Mohon, kemas kini butiran, atau semak status melalui portal rasmi STR.",
+    "applicationMethodBm": "Mohon, kemas kini, atau semak status melalui portal rasmi STR 2026.",
     "importantNotesBm": [
-      "Kelayakan akhir STR bergantung pada semakan LHDN/portal rasmi.",
-      "Jumlah bayaran mungkin berbeza mengikut kategori isi rumah dan tanggungan."
+      "KelayakanKu hanya menyaring berdasarkan peraturan asas yang dinyatakan.",
+      "Kelayakan akhir bergantung pada semakan data LHDNM/MOF dan kategori STR."
     ],
     "requiredDocumentsBm": [
       "MyKad",
@@ -90,137 +116,49 @@
       "Dokumen perkahwinan, perceraian, kematian, atau anak jika diminta oleh STR"
     ],
     "nextStepsBm": [
-      "Semak portal rasmi STR untuk kriteria terkini dan status fasa",
-      "Sediakan maklumat isi rumah dan pendapatan",
+      "Semak portal rasmi STR 2026",
+      "Sediakan maklumat isi rumah, pendapatan, dan bank",
       "Mohon, kemas kini, atau semak status melalui saluran rasmi STR"
-    ]
+    ],
+    "sourceLastChecked": "2026-05-24",
+    "verificationStatus": "approved"
   },
   {
-    "id": "str-warga-emas-tiada-pasangan",
-    "title": "Sumbangan Tunai Rahmah (STR) - Warga Emas Tiada Pasangan",
+    "id": "str-2026-bujang",
+    "title": "Sumbangan Tunai Rahmah (STR) 2026 - Bujang",
     "category": "Cash Aid",
-    "shortDescription": "STR category for Malaysian senior citizens aged 60 and above with income RM5,000 and below, without a spouse and without children under the STR category definition.",
+    "shortDescription": "STR 2026 category for eligible Malaysian single applicants with income RM2,500 and below, generally aged 21 to 59, with an OKU age exception from age 19 subject to official verification.",
     "targetGroup": [
-      "Senior citizens",
-      "Warga emas without spouse",
-      "Low-income older Malaysians"
+      "Low-income single Malaysians",
+      "Single adults",
+      "Eligible OKU single applicants"
     ],
-    "benefitSummary": "This STR category provides cash assistance for eligible senior citizens without a spouse.",
+    "benefitSummary": "STR 2026 provides cash assistance for eligible single Malaysian applicants.",
     "eligibilitySummary": [
-      "Malaysian citizen",
-      "Aged 60 and above",
-      "Income RM5,000 and below",
-      "Spouse and household category must be verified through the official STR portal"
+      "Malaysian citizen living in Malaysia",
+      "Single/no spouse/no child income RM2,500 and below",
+      "Generally aged 21 to 59, or age 19 and above for registered OKU"
     ],
-    "applicationMethod": "Check status, update details, or apply through the official STR portal.",
+    "applicationMethod": "Apply, update details, or check status through the official STR 2026 portal.",
     "importantNotes": [
-      "The official STR portal should be used to confirm the latest senior category rules.",
-      "Supporting documents may be requested depending on marital or household status."
-    ],
-    "eligibilityRules": {
-      "citizenship": "Malaysian",
-      "maxHouseholdIncome": 5000,
-      "maxMonthlyIncome": 5000,
-      "states": [
-        "All"
-      ],
-      "minAge": 60,
-      "maxAge": null,
-      "employmentStatuses": [
-        "retired",
-        "unemployed",
-        "homemaker",
-        "unable-to-work",
-        "employed",
-        "self-employed"
-      ],
-      "requiresChildren": false,
-      "requiresDisability": false,
-      "requiresStudent": false,
-      "minDependents": 0,
-      "supportNeeds": [
-        "Cash aid",
-        "Food or living cost support",
-        "Not sure — show me suitable support options"
-      ]
-    },
-    "requiredDocuments": [
-      "MyKad",
-      "Income information",
-      "Bank account details",
-      "Marital status or spouse-related documents if required by STR"
-    ],
-    "nextSteps": [
-      "Check the official STR portal for current senior-without-spouse criteria",
-      "Prepare income and bank account information",
-      "Apply, update, or check status through the official STR channel"
-    ],
-    "officialUrl": "https://bantuantunai.hasil.gov.my/",
-    "sourceUrl": "https://www.malaysia.gov.my/my/personas/keluarga-berpendapatan-rendah/mendapatkan-bantuan-asas/sumbangan-tunai-rahmah-str",
-    "lastUpdated": "2026-05-22",
-    "verificationStatus": "approved",
-    "titleBm": "Sumbangan Tunai Rahmah (STR) - Warga Emas Tiada Pasangan",
-    "shortDescriptionBm": "Kategori STR untuk warga emas Malaysia berumur 60 tahun ke atas dengan pendapatan RM5,000 dan ke bawah, tanpa pasangan dan tanpa anak mengikut definisi kategori STR.",
-    "targetGroupBm": [
-      "Warga emas",
-      "Warga emas tanpa pasangan",
-      "Warga emas Malaysia berpendapatan rendah"
-    ],
-    "benefitSummaryBm": "Kategori STR ini menyediakan bantuan tunai untuk warga emas tanpa pasangan yang layak.",
-    "eligibilitySummaryBm": [
-      "Warganegara Malaysia",
-      "Berumur 60 tahun dan ke atas",
-      "Pendapatan RM5,000 dan ke bawah",
-      "Status pasangan dan kategori isi rumah mesti disahkan melalui portal rasmi STR"
-    ],
-    "applicationMethodBm": "Semak status, kemas kini butiran, atau mohon melalui portal rasmi STR.",
-    "importantNotesBm": [
-      "Portal rasmi STR perlu digunakan untuk mengesahkan peraturan kategori warga emas terkini.",
-      "Dokumen sokongan mungkin diminta bergantung pada status perkahwinan atau isi rumah."
-    ],
-    "requiredDocumentsBm": [
-      "MyKad",
-      "Maklumat pendapatan",
-      "Butiran akaun bank",
-      "Dokumen status perkahwinan atau pasangan jika diminta oleh STR"
-    ],
-    "nextStepsBm": [
-      "Semak portal rasmi STR untuk kriteria warga emas tanpa pasangan terkini",
-      "Sediakan maklumat pendapatan dan akaun bank",
-      "Mohon, kemas kini, atau semak status melalui saluran rasmi STR"
-    ]
-  },
-  {
-    "id": "str-bujang",
-    "title": "Sumbangan Tunai Rahmah (STR) - Bujang",
-    "category": "Cash Aid",
-    "shortDescription": "STR category for Malaysian single applicants aged 21 to 59, or 19 and above for OKU, with monthly income RM2,500 and below. Full-time student exclusion must be verified through the official STR criteria.",
-    "targetGroup": [
-      "Single B40 adults",
-      "Low-income individual applicants",
-      "OKU applicants under the STR age exception"
-    ],
-    "benefitSummary": "This STR category provides cash assistance for eligible single Malaysian applicants.",
-    "eligibilitySummary": [
-      "Malaysian citizen",
-      "Single applicant aged 21 to 59, or 19 and above for OKU",
-      "Monthly income RM2,500 and below",
-      "Full-time student exclusion must be checked through official STR criteria"
-    ],
-    "applicationMethod": "Apply, update, or check STR status through the official STR portal.",
-    "importantNotes": [
-      "Full-time student status may affect this category.",
-      "OKU age exception should be verified with the official STR criteria."
+      "Full-time student and OKU exceptions must be checked through official STR rules.",
+      "KelayakanKu cannot verify official category records."
     ],
     "eligibilityRules": {
       "citizenship": "Malaysian",
       "maxHouseholdIncome": 2500,
       "maxMonthlyIncome": 2500,
+      "strictIncomeCap": true,
       "states": [
         "All"
       ],
       "minAge": 21,
       "maxAge": 59,
+      "allowedAgeGroups": [],
+      "householdSituations": [
+        "single",
+        "single_parent"
+      ],
       "employmentStatuses": [
         "employed",
         "unemployed",
@@ -229,14 +167,30 @@
         "homemaker",
         "unable-to-work"
       ],
+      "workSituations": [],
       "requiresChildren": false,
       "requiresDisability": false,
       "requiresStudent": false,
+      "requiresSenior": null,
+      "requiresSingleParent": null,
+      "requiresCaregiver": null,
+      "requiresEkasih": null,
+      "requiresStrApproved": null,
       "minDependents": 0,
+      "maxDependents": null,
+      "incomeStability": [],
+      "acceptsUnstableIncome": null,
+      "contributionRequirements": {},
       "supportNeeds": [
         "Cash aid",
         "Food or living cost support",
         "Not sure — show me suitable support options"
+      ],
+      "specialSituations": [],
+      "keywords": [
+        "STR",
+        "bujang",
+        "single"
       ]
     },
     "requiredDocuments": [
@@ -246,75 +200,202 @@
       "OKU card if applying under the OKU age exception"
     ],
     "nextSteps": [
-      "Check whether the full-time student exclusion applies",
+      "Check official STR 2026 single category rules",
       "Prepare income and identity information",
-      "Apply, update, or check status through the official STR channel"
+      "Apply, update, or check status through the STR portal"
     ],
     "officialUrl": "https://bantuantunai.hasil.gov.my/",
-    "sourceUrl": "https://www.malaysia.gov.my/my/personas/keluarga-berpendapatan-rendah/mendapatkan-bantuan-asas/sumbangan-tunai-rahmah-str",
-    "lastUpdated": "2026-05-22",
-    "verificationStatus": "approved",
-    "titleBm": "Sumbangan Tunai Rahmah (STR) - Bujang",
-    "shortDescriptionBm": "Kategori STR untuk pemohon bujang warganegara Malaysia berumur 21 hingga 59 tahun, atau 19 tahun ke atas untuk OKU, dengan pendapatan bulanan RM2,500 dan ke bawah. Pengecualian pelajar sepenuh masa mesti disahkan melalui kriteria rasmi STR.",
+    "sourceUrl": "https://bantuantunai.hasil.gov.my/FAQ/FAQ%20PERMOHONAN%20STR%202026.pdf",
+    "sourceYear": 2026,
+    "sourceAgency": "LHDNM / MOF",
+    "evidenceNotes": "Official STR 2026 FAQ states RM2,500 and below for single/no spouse/no child applicants and describes age/category rules.",
+    "lastUpdated": "2026-05-24",
+    "titleBm": "Sumbangan Tunai Rahmah (STR) 2026 - Bujang",
+    "shortDescriptionBm": "Kategori STR 2026 untuk pemohon bujang Malaysia yang layak dengan pendapatan RM2,500 dan ke bawah, lazimnya berumur 21 hingga 59 tahun, dengan pengecualian umur OKU mulai 19 tahun tertakluk kepada pengesahan rasmi.",
     "targetGroupBm": [
-      "Individu bujang B40",
-      "Pemohon individu berpendapatan rendah",
-      "Pemohon OKU di bawah pengecualian umur STR"
+      "Individu bujang Malaysia berpendapatan rendah",
+      "Dewasa bujang",
+      "Pemohon bujang OKU yang layak"
     ],
-    "benefitSummaryBm": "Kategori STR ini menyediakan bantuan tunai untuk pemohon bujang Malaysia yang layak.",
+    "benefitSummaryBm": "STR 2026 menyediakan bantuan tunai untuk pemohon bujang Malaysia yang layak.",
     "eligibilitySummaryBm": [
-      "Warganegara Malaysia",
-      "Pemohon bujang berumur 21 hingga 59 tahun, atau 19 tahun ke atas untuk OKU",
-      "Pendapatan bulanan RM2,500 dan ke bawah",
-      "Pengecualian pelajar sepenuh masa mesti disemak melalui kriteria rasmi STR"
+      "Warganegara Malaysia yang menetap di Malaysia",
+      "Bujang/tiada pasangan/tiada anak berpendapatan RM2,500 dan ke bawah",
+      "Lazimnya berumur 21 hingga 59 tahun, atau 19 tahun ke atas untuk OKU berdaftar"
     ],
-    "applicationMethodBm": "Mohon, kemas kini, atau semak status STR melalui portal rasmi STR.",
+    "applicationMethodBm": "Mohon, kemas kini, atau semak status melalui portal rasmi STR 2026.",
     "importantNotesBm": [
-      "Status pelajar sepenuh masa mungkin mempengaruhi kategori ini.",
-      "Pengecualian umur OKU perlu disahkan dengan kriteria rasmi STR."
+      "Status pelajar sepenuh masa dan pengecualian OKU mesti disemak melalui peraturan rasmi STR.",
+      "KelayakanKu tidak boleh mengesahkan rekod kategori rasmi."
     ],
     "requiredDocumentsBm": [
       "MyKad",
       "Maklumat pendapatan",
       "Butiran akaun bank",
-      "Kad OKU jika memohon di bawah pengecualian umur OKU"
+      "Kad OKU jika memohon bawah pengecualian umur OKU"
     ],
     "nextStepsBm": [
-      "Semak sama ada pengecualian pelajar sepenuh masa terpakai",
+      "Semak peraturan rasmi kategori bujang STR 2026",
       "Sediakan maklumat pendapatan dan identiti",
-      "Mohon, kemas kini, atau semak status melalui saluran rasmi STR"
-    ]
+      "Mohon, kemas kini, atau semak status melalui portal STR"
+    ],
+    "sourceLastChecked": "2026-05-24",
+    "verificationStatus": "approved"
   },
   {
-    "id": "sara-sumbangan-asas-rahmah",
-    "title": "Sumbangan Asas Rahmah (SARA)",
-    "category": "Food Aid",
-    "shortDescription": "Cashless essential goods support linked to STR approval and, for some groups, eKasih records. The current form does not confirm STR approval or eKasih status, so users should verify directly through the official STR/SARA portal.",
+    "id": "str-2026-warga-emas-tiada-pasangan",
+    "title": "Sumbangan Tunai Rahmah (STR) 2026 - Warga Emas Tiada Pasangan",
+    "category": "Cash Aid",
+    "shortDescription": "STR 2026 category for Malaysian senior citizens without spouse who meet official STR category and income checks. Final eligibility must be confirmed through the official STR portal.",
     "targetGroup": [
-      "STR recipients",
-      "B40 households needing essential goods support",
-      "Households with possible eKasih linkage"
+      "Senior citizens aged 60 and above",
+      "Older Malaysians without spouse",
+      "Low-income senior applicants"
     ],
-    "benefitSummary": "SARA supports approved recipients with cashless purchases of selected basic goods using MyKad.",
+    "benefitSummary": "STR 2026 provides cash assistance for eligible senior citizens without spouse.",
     "eligibilitySummary": [
-      "Linked to STR approval and certain official records",
-      "Some eligibility may depend on eKasih or official category checks",
-      "MyKad is used for approved essential goods purchases"
+      "Malaysian citizen living in Malaysia",
+      "Age 60 and above",
+      "Senior-without-spouse category must be verified by STR",
+      "Income/category checks apply through official STR rules"
     ],
-    "applicationMethod": "Check eligibility and programme details through the official STR/SARA portal.",
+    "applicationMethod": "Apply, update details, or check status through the official STR 2026 portal.",
     "importantNotes": [
-      "KelayakanKu does not collect STR approval or eKasih status in the public form.",
-      "This programme should be verified directly through the official portal before taking action."
+      "The public form does not fully confirm spouse/category records.",
+      "Final eligibility depends on LHDNM/MOF STR category checks."
+    ],
+    "eligibilityRules": {
+      "citizenship": "Malaysian",
+      "maxHouseholdIncome": 5000,
+      "maxMonthlyIncome": 5000,
+      "strictIncomeCap": true,
+      "states": [
+        "All"
+      ],
+      "minAge": 60,
+      "maxAge": null,
+      "allowedAgeGroups": [],
+      "householdSituations": [
+        "single",
+        "senior_led"
+      ],
+      "employmentStatuses": [
+        "retired",
+        "unemployed",
+        "homemaker",
+        "unable-to-work",
+        "employed",
+        "self-employed"
+      ],
+      "workSituations": [],
+      "requiresChildren": false,
+      "requiresDisability": false,
+      "requiresStudent": false,
+      "requiresSenior": true,
+      "requiresSingleParent": null,
+      "requiresCaregiver": null,
+      "requiresEkasih": null,
+      "requiresStrApproved": null,
+      "minDependents": 0,
+      "maxDependents": null,
+      "incomeStability": [],
+      "acceptsUnstableIncome": null,
+      "contributionRequirements": {},
+      "supportNeeds": [
+        "Cash aid",
+        "Food or living cost support",
+        "Not sure — show me suitable support options"
+      ],
+      "specialSituations": [],
+      "keywords": [
+        "STR",
+        "warga emas",
+        "senior without spouse"
+      ]
+    },
+    "requiredDocuments": [
+      "MyKad",
+      "Income information",
+      "Bank account details",
+      "Spouse or marital-status documents if requested by STR"
+    ],
+    "nextSteps": [
+      "Check the official STR 2026 senior category rules",
+      "Prepare identity, income, and bank information",
+      "Apply, update, or check status through the official STR portal"
+    ],
+    "officialUrl": "https://bantuantunai.hasil.gov.my/",
+    "sourceUrl": "https://bantuantunai.hasil.gov.my/FAQ/FAQ%20PERMOHONAN%20STR%202026.pdf",
+    "sourceYear": 2026,
+    "sourceAgency": "LHDNM / MOF",
+    "evidenceNotes": "Official STR 2026 FAQ explains applicants reaching age 60 in 2026 are categorized as Warga Emas Tiada Pasangan where relevant; official portal confirms final category.",
+    "lastUpdated": "2026-05-24",
+    "titleBm": "Sumbangan Tunai Rahmah (STR) 2026 - Warga Emas Tiada Pasangan",
+    "shortDescriptionBm": "Kategori STR 2026 untuk warga emas Malaysia tanpa pasangan yang memenuhi semakan kategori dan pendapatan STR rasmi. Kelayakan akhir mesti disahkan melalui portal rasmi STR.",
+    "targetGroupBm": [
+      "Warga emas berumur 60 tahun dan ke atas",
+      "Warga emas Malaysia tanpa pasangan",
+      "Pemohon warga emas berpendapatan rendah"
+    ],
+    "benefitSummaryBm": "STR 2026 menyediakan bantuan tunai untuk warga emas tanpa pasangan yang layak.",
+    "eligibilitySummaryBm": [
+      "Warganegara Malaysia yang menetap di Malaysia",
+      "Berumur 60 tahun dan ke atas",
+      "Kategori warga emas tiada pasangan mesti disahkan oleh STR",
+      "Semakan pendapatan/kategori terpakai melalui peraturan rasmi STR"
+    ],
+    "applicationMethodBm": "Mohon, kemas kini, atau semak status melalui portal rasmi STR 2026.",
+    "importantNotesBm": [
+      "Borang awam tidak mengesahkan sepenuhnya rekod pasangan/kategori.",
+      "Kelayakan akhir bergantung pada semakan kategori STR LHDNM/MOF."
+    ],
+    "requiredDocumentsBm": [
+      "MyKad",
+      "Maklumat pendapatan",
+      "Butiran akaun bank",
+      "Dokumen pasangan atau status perkahwinan jika diminta oleh STR"
+    ],
+    "nextStepsBm": [
+      "Semak peraturan rasmi kategori warga emas STR 2026",
+      "Sediakan maklumat identiti, pendapatan, dan bank",
+      "Mohon, kemas kini, atau semak status melalui portal rasmi STR"
+    ],
+    "sourceLastChecked": "2026-05-24",
+    "verificationStatus": "approved"
+  },
+  {
+    "id": "sara-2026",
+    "title": "Sumbangan Asas Rahmah (SARA) 2026",
+    "category": "Food Aid",
+    "shortDescription": "Cashless basic goods support for approved STR 2026 recipients. eKasih poor or hardcore poor status affects the amount, so KelayakanKu marks this for confirmation unless official STR/eKasih status is known.",
+    "targetGroup": [
+      "Approved STR 2026 recipients",
+      "B40 households needing basic goods support",
+      "eKasih poor or hardcore poor recipients"
+    ],
+    "benefitSummary": "SARA 2026 credits approved recipients' MyKad for selected basic goods purchases at participating retailers.",
+    "eligibilitySummary": [
+      "Malaysian citizen",
+      "Approved STR 2026 recipient",
+      "eKasih status affects monthly amount"
+    ],
+    "applicationMethod": "Check eligibility through the official STR or SARA portal.",
+    "importantNotes": [
+      "The public form does not collect official STR approval or eKasih status.",
+      "This programme should normally appear as Need More Info until those official statuses are confirmed."
     ],
     "eligibilityRules": {
       "citizenship": "Malaysian",
       "maxHouseholdIncome": null,
-      "maxMonthlyIncome": 5000,
+      "maxMonthlyIncome": null,
+      "strictIncomeCap": false,
       "states": [
         "All"
       ],
       "minAge": null,
       "maxAge": null,
+      "allowedAgeGroups": [],
+      "householdSituations": [],
       "employmentStatuses": [
         "employed",
         "unemployed",
@@ -325,378 +406,1207 @@
         "retired",
         "unable-to-work"
       ],
+      "workSituations": [],
       "requiresChildren": false,
       "requiresDisability": false,
       "requiresStudent": false,
+      "requiresSenior": null,
+      "requiresSingleParent": null,
+      "requiresCaregiver": null,
+      "requiresEkasih": true,
+      "requiresStrApproved": true,
       "minDependents": 0,
+      "maxDependents": null,
+      "incomeStability": [],
+      "acceptsUnstableIncome": null,
+      "contributionRequirements": {},
       "supportNeeds": [
         "Food or living cost support",
         "Cash aid",
         "Not sure — show me suitable support options"
+      ],
+      "specialSituations": [],
+      "keywords": [
+        "SARA",
+        "Sumbangan Asas Rahmah",
+        "MyKasih"
       ]
     },
     "requiredDocuments": [
       "MyKad",
-      "STR approval or status information",
+      "STR 2026 approval or status information",
       "eKasih status if applicable"
     ],
     "nextSteps": [
-      "Check SARA eligibility through the official STR/SARA portal",
-      "Confirm whether STR approval or eKasih record applies",
+      "Check eligibility on the official SARA or STR portal",
+      "Confirm STR approval and eKasih category",
       "Use MyKad at participating retailers only if approved"
     ],
-    "officialUrl": "https://bantuantunai.hasil.gov.my/Info/SumbanganAsasRahmah",
-    "sourceUrl": "https://bantuantunai.hasil.gov.my/Info/SumbanganAsasRahmah",
-    "lastUpdated": "2026-05-22",
-    "verificationStatus": "approved",
-    "titleBm": "Sumbangan Asas Rahmah (SARA)",
-    "shortDescriptionBm": "Sokongan barangan keperluan asas tanpa tunai yang berkait dengan kelulusan STR dan, untuk sesetengah kumpulan, rekod eKasih. Borang semasa tidak mengesahkan kelulusan STR atau status eKasih, jadi pengguna perlu menyemak terus melalui portal rasmi STR/SARA.",
+    "officialUrl": "https://sara.gov.my/",
+    "sourceUrl": "https://www.sara.gov.my/documents/sara2026_faqs_final_20260108.pdf",
+    "sourceYear": 2026,
+    "sourceAgency": "MOF / LHDNM / Yayasan MyKasih",
+    "evidenceNotes": "Official SARA 2026 FAQ states recipients are approved STR 2026 recipients, with eKasih poor/hardcore poor status affecting amount.",
+    "lastUpdated": "2026-05-24",
+    "titleBm": "Sumbangan Asas Rahmah (SARA) 2026",
+    "shortDescriptionBm": "Sokongan barangan asas tanpa tunai untuk penerima STR 2026 yang diluluskan. Status Miskin atau Miskin Tegar eKasih mempengaruhi amaun, jadi KelayakanKu menandakan program ini untuk pengesahan melainkan status STR/eKasih rasmi diketahui.",
     "targetGroupBm": [
-      "Penerima STR",
+      "Penerima STR 2026 yang diluluskan",
       "Isi rumah B40 yang memerlukan sokongan barangan asas",
-      "Isi rumah yang mungkin berkait dengan eKasih"
+      "Penerima Miskin atau Miskin Tegar eKasih"
     ],
-    "benefitSummaryBm": "SARA membantu penerima yang diluluskan membeli barangan asas terpilih secara tanpa tunai menggunakan MyKad.",
+    "benefitSummaryBm": "SARA 2026 mengkreditkan MyKad penerima yang diluluskan untuk pembelian barangan asas terpilih di peruncit terlibat.",
     "eligibilitySummaryBm": [
-      "Berkait dengan kelulusan STR dan rekod rasmi tertentu",
-      "Sebahagian kelayakan mungkin bergantung pada eKasih atau semakan kategori rasmi",
-      "MyKad digunakan untuk pembelian barangan asas bagi penerima yang diluluskan"
+      "Warganegara Malaysia",
+      "Penerima STR 2026 yang diluluskan",
+      "Status eKasih mempengaruhi amaun bulanan"
     ],
-    "applicationMethodBm": "Semak kelayakan dan butiran program melalui portal rasmi STR/SARA.",
+    "applicationMethodBm": "Semak kelayakan melalui portal rasmi STR atau SARA.",
     "importantNotesBm": [
-      "KelayakanKu tidak mengumpul status kelulusan STR atau eKasih dalam borang awam.",
-      "Program ini perlu disahkan terus melalui portal rasmi sebelum tindakan lanjut."
+      "Borang awam tidak mengumpul status kelulusan STR atau eKasih rasmi.",
+      "Program ini biasanya perlu dipaparkan sebagai Perlu Maklumat Lanjut sehingga status rasmi tersebut disahkan."
     ],
     "requiredDocumentsBm": [
       "MyKad",
-      "Maklumat kelulusan atau status STR",
+      "Maklumat kelulusan atau status STR 2026",
       "Status eKasih jika berkaitan"
     ],
     "nextStepsBm": [
-      "Semak kelayakan SARA melalui portal rasmi STR/SARA",
-      "Sahkan sama ada kelulusan STR atau rekod eKasih berkaitan",
+      "Semak kelayakan di portal rasmi SARA atau STR",
+      "Sahkan kelulusan STR dan kategori eKasih",
       "Gunakan MyKad di peruncit terlibat hanya jika diluluskan"
-    ]
+    ],
+    "sourceLastChecked": "2026-05-24",
+    "verificationStatus": "approved"
   },
   {
-    "id": "jkm-bantuan-kanak-kanak-bkk",
-    "title": "JKM Bantuan Kanak-Kanak (BKK)",
-    "category": "Other",
-    "shortDescription": "Monthly JKM assistance for families or guardians caring for children under 18, subject to JKM assessment, current PGK or case criteria, and supporting documents.",
+    "id": "peka-b40",
+    "title": "PeKa B40 Healthcare Protection",
+    "category": "Healthcare Aid",
+    "shortDescription": "Healthcare benefits for STR recipients and registered spouses aged 40 and above. STR approval is required, so KelayakanKu asks users to confirm official status.",
     "targetGroup": [
-      "Families with children",
-      "Guardians caring for children under 18",
-      "Low-income households needing child support"
+      "STR recipients aged 40 and above",
+      "Registered spouses aged 40 and above",
+      "B40 healthcare users"
     ],
-    "benefitSummary": "BKK provides monthly assistance for eligible families or guardians caring for children.",
+    "benefitSummary": "PeKa B40 provides health screening and selected medical-related benefits for eligible recipients.",
     "eligibilitySummary": [
-      "Applicant is caring for children under 18",
-      "Subject to JKM assessment and current PGK or case criteria",
-      "Supporting child, guardian, and household documents may be required"
+      "STR recipient or registered spouse",
+      "Age 40 and above",
+      "Eligibility should be checked through the official PeKa B40 channel"
     ],
-    "applicationMethod": "Apply through JKM channels and attend assessment if requested.",
+    "applicationMethod": "Check eligibility and visit a PeKa B40 clinic if eligible.",
     "importantNotes": [
-      "JKM aid depends on official assessment, not only income range.",
-      "KelayakanKu cannot confirm JKM case assessment outcomes."
+      "No special registration is needed if officially eligible.",
+      "The public form does not confirm STR recipient status."
     ],
     "eligibilityRules": {
       "citizenship": "Malaysian",
       "maxHouseholdIncome": null,
       "maxMonthlyIncome": null,
+      "strictIncomeCap": false,
       "states": [
         "All"
       ],
-      "minAge": 18,
+      "minAge": 40,
       "maxAge": null,
+      "allowedAgeGroups": [],
+      "householdSituations": [],
       "employmentStatuses": [
         "employed",
         "unemployed",
         "self-employed",
         "gig-worker",
         "homemaker",
+        "retired",
         "unable-to-work"
       ],
-      "requiresChildren": true,
+      "workSituations": [],
+      "requiresChildren": false,
       "requiresDisability": false,
       "requiresStudent": false,
-      "minDependents": 1,
+      "requiresSenior": null,
+      "requiresSingleParent": null,
+      "requiresCaregiver": null,
+      "requiresEkasih": null,
+      "requiresStrApproved": true,
+      "minDependents": 0,
+      "maxDependents": null,
+      "incomeStability": [],
+      "acceptsUnstableIncome": null,
+      "contributionRequirements": {},
       "supportNeeds": [
-        "Child or family support",
-        "Cash aid",
-        "Food or living cost support",
+        "Medical or disability-related support",
         "Not sure — show me suitable support options"
+      ],
+      "specialSituations": [],
+      "keywords": [
+        "PeKa B40",
+        "health screening",
+        "STR recipient"
       ]
     },
     "requiredDocuments": [
-      "MyKad applicant",
-      "MyKid or birth certificate of child",
-      "Household member identity documents",
-      "Income proof or income declaration",
-      "Other documents requested by JKM"
+      "MyKad",
+      "STR recipient status",
+      "PeKa B40 eligibility check result"
     ],
     "nextSteps": [
-      "Apply through JKM manual or online channel",
-      "Prepare child and guardian documents",
-      "Attend JKM assessment if requested"
+      "Check eligibility on the PeKa B40 official portal",
+      "Find a participating PeKa B40 clinic",
+      "Bring MyKad for verification"
     ],
-    "officialUrl": "https://www.jkm.gov.my/main/article/bantuan-bulanan",
-    "sourceUrl": "https://www.jkm.gov.my/main/article/bantuan-bulanan",
-    "lastUpdated": "2026-05-22",
-    "verificationStatus": "approved",
-    "titleBm": "JKM Bantuan Kanak-Kanak (BKK)",
-    "shortDescriptionBm": "Bantuan bulanan JKM untuk keluarga atau penjaga yang menjaga kanak-kanak bawah 18 tahun, tertakluk kepada penilaian JKM, PGK atau kriteria kes semasa, dan dokumen sokongan.",
+    "officialUrl": "https://protecthealth.com.my/peka-b40/",
+    "sourceUrl": "https://protecthealth.com.my/peka-b40/",
+    "sourceYear": 2026,
+    "sourceAgency": "ProtectHealth / MOH",
+    "evidenceNotes": "Official PeKa B40 page states STR recipients and registered spouses aged 40 and above are eligible.",
+    "lastUpdated": "2026-05-24",
+    "titleBm": "Perlindungan Kesihatan PeKa B40",
+    "shortDescriptionBm": "Manfaat kesihatan untuk penerima STR dan pasangan berdaftar yang berumur 40 tahun ke atas. Kelulusan STR diperlukan, jadi KelayakanKu meminta pengguna mengesahkan status rasmi.",
     "targetGroupBm": [
-      "Keluarga dengan anak",
-      "Penjaga kanak-kanak bawah 18 tahun",
-      "Isi rumah berpendapatan rendah yang memerlukan sokongan anak"
+      "Penerima STR berumur 40 tahun ke atas",
+      "Pasangan berdaftar berumur 40 tahun ke atas",
+      "Pengguna kesihatan B40"
     ],
-    "benefitSummaryBm": "BKK menyediakan bantuan bulanan untuk keluarga atau penjaga yang layak menjaga kanak-kanak.",
+    "benefitSummaryBm": "PeKa B40 menyediakan saringan kesihatan dan manfaat berkaitan perubatan terpilih untuk penerima yang layak.",
     "eligibilitySummaryBm": [
-      "Pemohon menjaga kanak-kanak bawah 18 tahun",
-      "Tertakluk kepada penilaian JKM dan PGK atau kriteria kes semasa",
-      "Dokumen kanak-kanak, penjaga, dan isi rumah mungkin diperlukan"
+      "Penerima STR atau pasangan berdaftar",
+      "Berumur 40 tahun dan ke atas",
+      "Kelayakan perlu disemak melalui saluran rasmi PeKa B40"
     ],
-    "applicationMethodBm": "Mohon melalui saluran JKM dan hadir penilaian jika diminta.",
+    "applicationMethodBm": "Semak kelayakan dan lawati klinik PeKa B40 jika layak.",
     "importantNotesBm": [
-      "Bantuan JKM bergantung pada penilaian rasmi, bukan hanya julat pendapatan.",
-      "KelayakanKu tidak boleh mengesahkan keputusan penilaian kes JKM."
+      "Tiada pendaftaran khas diperlukan jika layak secara rasmi.",
+      "Borang awam tidak mengesahkan status penerima STR."
     ],
     "requiredDocumentsBm": [
-      "MyKad pemohon",
-      "MyKid atau sijil lahir anak",
-      "Dokumen pengenalan ahli isi rumah",
-      "Bukti pendapatan atau pengakuan pendapatan",
-      "Dokumen lain yang diminta oleh JKM"
+      "MyKad",
+      "Status penerima STR",
+      "Keputusan semakan kelayakan PeKa B40"
     ],
     "nextStepsBm": [
-      "Mohon melalui saluran manual atau dalam talian JKM",
-      "Sediakan dokumen anak dan penjaga",
-      "Hadir penilaian JKM jika diminta"
-    ]
+      "Semak kelayakan di portal rasmi PeKa B40",
+      "Cari klinik PeKa B40 yang mengambil bahagian",
+      "Bawa MyKad untuk pengesahan"
+    ],
+    "sourceLastChecked": "2026-05-24",
+    "verificationStatus": "approved"
   },
   {
-    "id": "jkm-bantuan-warga-emas-bwe",
-    "title": "JKM Bantuan Warga Emas (BWE)",
-    "category": "Other",
-    "shortDescription": "JKM monthly assistance for senior citizens aged 60 and above, subject to JKM assessment, current PGK or case criteria, and official supporting documents.",
+    "id": "mysalam-2026",
+    "title": "mySalam Protection Scheme 2026",
+    "category": "Healthcare Aid",
+    "shortDescription": "Free takaful protection for eligible STR recipients, including hospitalisation and critical illness benefits, subject to mySalam criteria and claim rules.",
     "targetGroup": [
-      "Senior citizens aged 60 and above",
-      "Low-income older Malaysians",
-      "Older persons needing JKM support"
+      "Eligible STR recipients",
+      "B40 healthcare protection users",
+      "Hospitalisation or critical illness claimants"
     ],
-    "benefitSummary": "BWE provides monthly JKM assistance for eligible senior citizens.",
+    "benefitSummary": "mySalam provides hospitalisation and critical illness claim benefits for eligible protected persons.",
     "eligibilitySummary": [
-      "Aged 60 and above",
-      "Subject to JKM assessment and current PGK or case criteria",
-      "Identity, income, and household documents may be requested"
+      "Eligibility for 2024, 2025 and 2026 is based on STR receipt",
+      "Age criteria apply by category",
+      "Claims require official mySalam verification"
     ],
-    "applicationMethod": "Apply through JKM channels and follow any assessment instructions from JKM.",
+    "applicationMethod": "Check eligibility and submit claims through the official mySalam portal.",
     "importantNotes": [
-      "JKM will make the final assessment based on current criteria.",
-      "Income threshold is not forced here when the source depends on PGK or case assessment."
+      "The public form does not confirm STR or mySalam protected-person status.",
+      "KelayakanKu cannot confirm diagnosis or claim approval."
     ],
     "eligibilityRules": {
       "citizenship": "Malaysian",
       "maxHouseholdIncome": null,
       "maxMonthlyIncome": null,
+      "strictIncomeCap": false,
+      "states": [
+        "All"
+      ],
+      "minAge": 18,
+      "maxAge": 66,
+      "allowedAgeGroups": [],
+      "householdSituations": [],
+      "employmentStatuses": [
+        "employed",
+        "unemployed",
+        "self-employed",
+        "gig-worker",
+        "homemaker",
+        "retired",
+        "unable-to-work"
+      ],
+      "workSituations": [],
+      "requiresChildren": false,
+      "requiresDisability": false,
+      "requiresStudent": false,
+      "requiresSenior": null,
+      "requiresSingleParent": null,
+      "requiresCaregiver": null,
+      "requiresEkasih": null,
+      "requiresStrApproved": true,
+      "minDependents": 0,
+      "maxDependents": null,
+      "incomeStability": [],
+      "acceptsUnstableIncome": null,
+      "contributionRequirements": {},
+      "supportNeeds": [
+        "Medical or disability-related support",
+        "Cash aid",
+        "Not sure — show me suitable support options"
+      ],
+      "specialSituations": [
+        "chronic_illness"
+      ],
+      "keywords": [
+        "mySalam",
+        "hospitalisation",
+        "critical illness"
+      ]
+    },
+    "requiredDocuments": [
+      "MyKad",
+      "mySalam eligibility status",
+      "Medical or hospital documents for claims",
+      "Bank account details"
+    ],
+    "nextSteps": [
+      "Check mySalam 2026 eligibility on the official portal",
+      "Review claim requirements",
+      "Submit claims only through official mySalam channels"
+    ],
+    "officialUrl": "https://www.mysalam.com.my/",
+    "sourceUrl": "https://www.mysalam.com.my/mys/info/?url=faq_kelayakan",
+    "sourceYear": 2026,
+    "sourceAgency": "MOF / mySalam",
+    "evidenceNotes": "Official mySalam FAQ states 2024, 2025 and 2026 eligibility is determined based on STR receipt.",
+    "lastUpdated": "2026-05-24",
+    "titleBm": "Skim Perlindungan mySalam 2026",
+    "shortDescriptionBm": "Perlindungan takaful percuma untuk penerima STR yang layak, termasuk manfaat hospitalisasi dan penyakit kritikal, tertakluk kepada kriteria dan peraturan tuntutan mySalam.",
+    "targetGroupBm": [
+      "Penerima STR yang layak",
+      "Pengguna perlindungan kesihatan B40",
+      "Penuntut hospitalisasi atau penyakit kritikal"
+    ],
+    "benefitSummaryBm": "mySalam menyediakan manfaat tuntutan hospitalisasi dan penyakit kritikal untuk orang yang dilindungi dan layak.",
+    "eligibilitySummaryBm": [
+      "Kelayakan 2024, 2025 dan 2026 berdasarkan penerimaan STR",
+      "Kriteria umur terpakai mengikut kategori",
+      "Tuntutan memerlukan pengesahan rasmi mySalam"
+    ],
+    "applicationMethodBm": "Semak kelayakan dan hantar tuntutan melalui portal rasmi mySalam.",
+    "importantNotesBm": [
+      "Borang awam tidak mengesahkan status STR atau orang dilindungi mySalam.",
+      "KelayakanKu tidak boleh mengesahkan diagnosis atau kelulusan tuntutan."
+    ],
+    "requiredDocumentsBm": [
+      "MyKad",
+      "Status kelayakan mySalam",
+      "Dokumen perubatan atau hospital untuk tuntutan",
+      "Butiran akaun bank"
+    ],
+    "nextStepsBm": [
+      "Semak kelayakan mySalam 2026 di portal rasmi",
+      "Semak syarat tuntutan",
+      "Hantar tuntutan hanya melalui saluran rasmi mySalam"
+    ],
+    "sourceLastChecked": "2026-05-24",
+    "verificationStatus": "approved"
+  },
+  {
+    "id": "kwsp-i-saraan-2026",
+    "title": "KWSP i-Saraan 2026",
+    "category": "Employment Support",
+    "shortDescription": "Voluntary retirement savings incentive for EPF members who are self-employed, have no fixed income, are in the gig economy, or are pensionable public-sector members, before age 60.",
+    "targetGroup": [
+      "Self-employed Malaysians",
+      "Gig economy workers",
+      "People with no fixed income"
+    ],
+    "benefitSummary": "i-Saraan gives eligible members a government incentive on voluntary EPF savings, subject to KWSP terms.",
+    "eligibilitySummary": [
+      "EPF member",
+      "Malaysian citizen",
+      "Below age 60",
+      "Self-employed, no fixed income, pensionable public service, or gig economy worker"
+    ],
+    "applicationMethod": "Register through KWSP i-Akaun, SST, online registration, or a KWSP office.",
+    "importantNotes": [
+      "The public form asks contribution status but not full KWSP membership details.",
+      "KelayakanKu treats unknown KWSP membership as Need More Info."
+    ],
+    "eligibilityRules": {
+      "citizenship": "Malaysian",
+      "maxHouseholdIncome": null,
+      "maxMonthlyIncome": null,
+      "strictIncomeCap": false,
+      "states": [
+        "All"
+      ],
+      "minAge": 18,
+      "maxAge": 59,
+      "allowedAgeGroups": [],
+      "householdSituations": [],
+      "employmentStatuses": [
+        "self-employed",
+        "gig-worker"
+      ],
+      "workSituations": [
+        "self_employed",
+        "gig_worker",
+        "small_business"
+      ],
+      "requiresChildren": false,
+      "requiresDisability": false,
+      "requiresStudent": false,
+      "requiresSenior": null,
+      "requiresSingleParent": null,
+      "requiresCaregiver": null,
+      "requiresEkasih": null,
+      "requiresStrApproved": null,
+      "minDependents": 0,
+      "maxDependents": null,
+      "incomeStability": [
+        "unstable",
+        "seasonal"
+      ],
+      "acceptsUnstableIncome": true,
+      "contributionRequirements": {},
+      "supportNeeds": [
+        "Gig worker / self-employed support",
+        "EPF / retirement contribution support",
+        "Not sure — show me suitable support options"
+      ],
+      "specialSituations": [
+        "no_fixed_income",
+        "no_payslip"
+      ],
+      "keywords": [
+        "i-Saraan",
+        "KWSP",
+        "EPF",
+        "gig"
+      ],
+      "requiresEpfMembership": true
+    },
+    "requiredDocuments": [
+      "MyKad",
+      "KWSP membership details",
+      "KWSP i-Akaun or registration form if needed"
+    ],
+    "nextSteps": [
+      "Confirm KWSP membership status",
+      "Register through official KWSP channels",
+      "Make voluntary contributions through approved channels"
+    ],
+    "officialUrl": "https://www.kwsp.gov.my/ms/ahli/simpanan/i-saraan",
+    "sourceUrl": "https://www.kwsp.gov.my/ms/ahli/simpanan/i-saraan",
+    "sourceYear": 2026,
+    "sourceAgency": "KWSP / EPF",
+    "evidenceNotes": "KWSP i-Saraan page states eligibility includes EPF membership, Malaysian citizenship, below age 60, and self-employed/no-fixed-income/gig economy categories.",
+    "lastUpdated": "2026-05-24",
+    "titleBm": "KWSP i-Saraan 2026",
+    "shortDescriptionBm": "Insentif simpanan persaraan sukarela untuk ahli KWSP yang bekerja sendiri, tiada pendapatan tetap, dalam ekonomi gig, atau anggota perkhidmatan awam berpencen, sebelum umur 60 tahun.",
+    "targetGroupBm": [
+      "Warganegara Malaysia yang bekerja sendiri",
+      "Pekerja ekonomi gig",
+      "Individu tanpa pendapatan tetap"
+    ],
+    "benefitSummaryBm": "i-Saraan memberi insentif kerajaan ke atas simpanan sukarela KWSP ahli yang layak, tertakluk kepada terma KWSP.",
+    "eligibilitySummaryBm": [
+      "Ahli KWSP",
+      "Warganegara Malaysia",
+      "Belum mencapai umur 60 tahun",
+      "Bekerja sendiri, tiada pendapatan tetap, perkhidmatan awam berpencen, atau pekerja ekonomi gig"
+    ],
+    "applicationMethodBm": "Daftar melalui KWSP i-Akaun, SST, pendaftaran dalam talian, atau pejabat KWSP.",
+    "importantNotesBm": [
+      "Borang awam bertanya status caruman tetapi bukan semua butiran keahlian KWSP.",
+      "KelayakanKu menganggap status keahlian KWSP yang tidak diketahui sebagai Perlu Maklumat Lanjut."
+    ],
+    "requiredDocumentsBm": [
+      "MyKad",
+      "Butiran keahlian KWSP",
+      "KWSP i-Akaun atau borang pendaftaran jika diperlukan"
+    ],
+    "nextStepsBm": [
+      "Sahkan status keahlian KWSP",
+      "Daftar melalui saluran rasmi KWSP",
+      "Buat caruman sukarela melalui saluran diluluskan"
+    ],
+    "sourceLastChecked": "2026-05-24",
+    "verificationStatus": "approved"
+  },
+  {
+    "id": "kwsp-i-saraan-plus-2026",
+    "title": "KWSP i-Saraan Plus 2026",
+    "category": "Employment Support",
+    "shortDescription": "EPF voluntary contribution incentive introduced from 2026 for e-hailing and p-hailing drivers, subject to i-Saraan registration and contribution through participating service providers.",
+    "targetGroup": [
+      "e-hailing drivers",
+      "p-hailing riders",
+      "Gig platform workers"
+    ],
+    "benefitSummary": "i-Saraan Plus provides a higher government incentive for eligible e-hailing and p-hailing drivers.",
+    "eligibilitySummary": [
+      "Malaysian",
+      "Works as e-hailing or p-hailing driver",
+      "EPF member registered under i-Saraan",
+      "Contribution through service provider"
+    ],
+    "applicationMethod": "Participation is automatic when eligible contributions are made through the relevant service provider.",
+    "importantNotes": [
+      "KelayakanKu cannot confirm platform-service-provider contribution records.",
+      "Unknown KWSP/i-Saraan status should be checked with KWSP."
+    ],
+    "eligibilityRules": {
+      "citizenship": "Malaysian",
+      "maxHouseholdIncome": null,
+      "maxMonthlyIncome": null,
+      "strictIncomeCap": false,
+      "states": [
+        "All"
+      ],
+      "minAge": 18,
+      "maxAge": 59,
+      "allowedAgeGroups": [],
+      "householdSituations": [],
+      "employmentStatuses": [
+        "gig-worker"
+      ],
+      "workSituations": [
+        "gig_worker"
+      ],
+      "requiresChildren": false,
+      "requiresDisability": false,
+      "requiresStudent": false,
+      "requiresSenior": null,
+      "requiresSingleParent": null,
+      "requiresCaregiver": null,
+      "requiresEkasih": null,
+      "requiresStrApproved": null,
+      "minDependents": 0,
+      "maxDependents": null,
+      "incomeStability": [
+        "unstable",
+        "seasonal"
+      ],
+      "acceptsUnstableIncome": true,
+      "contributionRequirements": {},
+      "supportNeeds": [
+        "Gig worker / self-employed support",
+        "EPF / retirement contribution support"
+      ],
+      "specialSituations": [
+        "no_fixed_income",
+        "no_payslip"
+      ],
+      "keywords": [
+        "i-Saraan Plus",
+        "e-hailing",
+        "p-hailing",
+        "driver",
+        "rider"
+      ],
+      "requiresEpfMembership": true
+    },
+    "requiredDocuments": [
+      "MyKad",
+      "KWSP membership and i-Saraan status",
+      "e-hailing or p-hailing service provider contribution record"
+    ],
+    "nextSteps": [
+      "Confirm i-Saraan registration",
+      "Check whether your platform service provider supports i-Saraan Plus contributions",
+      "Verify eligibility through KWSP"
+    ],
+    "officialUrl": "https://www.kwsp.gov.my/en/member/savings/i-saraan-plus",
+    "sourceUrl": "https://www.kwsp.gov.my/en/member/savings/i-saraan-plus",
+    "sourceYear": 2026,
+    "sourceAgency": "KWSP / EPF",
+    "evidenceNotes": "KWSP i-Saraan Plus page states the 2026 programme is for e-hailing/p-hailing drivers who are EPF members registered under i-Saraan.",
+    "lastUpdated": "2026-05-24",
+    "titleBm": "KWSP i-Saraan Plus 2026",
+    "shortDescriptionBm": "Insentif caruman sukarela KWSP yang diperkenalkan mulai 2026 untuk pemandu e-hailing dan p-hailing, tertakluk kepada pendaftaran i-Saraan dan caruman melalui penyedia perkhidmatan terlibat.",
+    "targetGroupBm": [
+      "Pemandu e-hailing",
+      "Rider p-hailing",
+      "Pekerja platform gig"
+    ],
+    "benefitSummaryBm": "i-Saraan Plus menyediakan insentif kerajaan yang lebih tinggi untuk pemandu e-hailing dan p-hailing yang layak.",
+    "eligibilitySummaryBm": [
+      "Warganegara Malaysia",
+      "Bekerja sebagai pemandu e-hailing atau p-hailing",
+      "Ahli KWSP berdaftar bawah i-Saraan",
+      "Caruman melalui penyedia perkhidmatan"
+    ],
+    "applicationMethodBm": "Penyertaan adalah automatik apabila caruman layak dibuat melalui penyedia perkhidmatan berkaitan.",
+    "importantNotesBm": [
+      "KelayakanKu tidak boleh mengesahkan rekod caruman penyedia perkhidmatan platform.",
+      "Status KWSP/i-Saraan yang tidak diketahui perlu disemak dengan KWSP."
+    ],
+    "requiredDocumentsBm": [
+      "MyKad",
+      "Status keahlian KWSP dan i-Saraan",
+      "Rekod caruman penyedia perkhidmatan e-hailing atau p-hailing"
+    ],
+    "nextStepsBm": [
+      "Sahkan pendaftaran i-Saraan",
+      "Semak sama ada penyedia platform anda menyokong caruman i-Saraan Plus",
+      "Sahkan kelayakan melalui KWSP"
+    ],
+    "sourceLastChecked": "2026-05-24",
+    "verificationStatus": "approved"
+  },
+  {
+    "id": "kwsp-i-suri-2026",
+    "title": "KWSP i-Suri 2026",
+    "category": "Employment Support",
+    "shortDescription": "Voluntary EPF savings incentive for women registered in eKasih, including housewives, widows, single mothers and single women, subject to age and KWSP terms.",
+    "targetGroup": [
+      "Women in eKasih",
+      "Homemakers",
+      "Widows and single mothers"
+    ],
+    "benefitSummary": "i-Suri supports eligible women with retirement savings incentives through KWSP.",
+    "eligibilitySummary": [
+      "Woman registered in eKasih",
+      "EPF member",
+      "Below age 60",
+      "Includes housewives, widows, single mothers and single women"
+    ],
+    "applicationMethod": "Register through KWSP i-Akaun, SST, or KWSP office; eKasih-listed members may be registered automatically based on KWSP rules.",
+    "importantNotes": [
+      "The public form does not collect gender or official eKasih status.",
+      "This programme should normally be Need More Info until official status is confirmed."
+    ],
+    "eligibilityRules": {
+      "citizenship": "Malaysian",
+      "maxHouseholdIncome": null,
+      "maxMonthlyIncome": null,
+      "strictIncomeCap": false,
+      "states": [
+        "All"
+      ],
+      "minAge": 18,
+      "maxAge": 59,
+      "allowedAgeGroups": [],
+      "householdSituations": [
+        "single_parent",
+        "single",
+        "married"
+      ],
+      "employmentStatuses": [
+        "homemaker",
+        "unemployed"
+      ],
+      "workSituations": [
+        "homemaker"
+      ],
+      "requiresChildren": false,
+      "requiresDisability": false,
+      "requiresStudent": false,
+      "requiresSenior": null,
+      "requiresSingleParent": null,
+      "requiresCaregiver": null,
+      "requiresEkasih": true,
+      "requiresStrApproved": null,
+      "minDependents": 0,
+      "maxDependents": null,
+      "incomeStability": [],
+      "acceptsUnstableIncome": null,
+      "contributionRequirements": {},
+      "supportNeeds": [
+        "EPF / retirement contribution support",
+        "Cash aid",
+        "Not sure — show me suitable support options"
+      ],
+      "specialSituations": [
+        "single_parent"
+      ],
+      "keywords": [
+        "i-Suri",
+        "KWSP",
+        "eKasih",
+        "suri rumah"
+      ],
+      "requiresEpfMembership": true
+    },
+    "requiredDocuments": [
+      "MyKad",
+      "KWSP membership details",
+      "eKasih status",
+      "KWSP registration form if needed"
+    ],
+    "nextSteps": [
+      "Confirm eKasih listing and KWSP membership",
+      "Register or check status through KWSP",
+      "Make voluntary contributions through official KWSP channels"
+    ],
+    "officialUrl": "https://www.kwsp.gov.my/ms/ahli/simpanan/i-suri",
+    "sourceUrl": "https://www.kwsp.gov.my/ms/ahli/simpanan/i-suri",
+    "sourceYear": 2026,
+    "sourceAgency": "KWSP / EPF",
+    "evidenceNotes": "KWSP i-Suri page states it is for women registered in eKasih and notes automatic registration if listed in latest eKasih data.",
+    "lastUpdated": "2026-05-24",
+    "titleBm": "KWSP i-Suri 2026",
+    "shortDescriptionBm": "Insentif simpanan sukarela KWSP untuk wanita yang berdaftar dalam eKasih, termasuk suri rumah, balu, ibu tunggal dan wanita bujang, tertakluk kepada umur dan terma KWSP.",
+    "targetGroupBm": [
+      "Wanita dalam eKasih",
+      "Suri rumah",
+      "Balu dan ibu tunggal"
+    ],
+    "benefitSummaryBm": "i-Suri menyokong wanita yang layak dengan insentif simpanan persaraan melalui KWSP.",
+    "eligibilitySummaryBm": [
+      "Wanita berdaftar dalam eKasih",
+      "Ahli KWSP",
+      "Belum mencapai umur 60 tahun",
+      "Termasuk suri rumah, balu, ibu tunggal dan wanita bujang"
+    ],
+    "applicationMethodBm": "Daftar melalui KWSP i-Akaun, SST, atau pejabat KWSP; ahli yang tersenarai dalam eKasih mungkin didaftarkan secara automatik mengikut peraturan KWSP.",
+    "importantNotesBm": [
+      "Borang awam tidak mengumpul jantina atau status eKasih rasmi.",
+      "Program ini biasanya perlu menjadi Perlu Maklumat Lanjut sehingga status rasmi disahkan."
+    ],
+    "requiredDocumentsBm": [
+      "MyKad",
+      "Butiran keahlian KWSP",
+      "Status eKasih",
+      "Borang pendaftaran KWSP jika diperlukan"
+    ],
+    "nextStepsBm": [
+      "Sahkan senarai eKasih dan keahlian KWSP",
+      "Daftar atau semak status melalui KWSP",
+      "Buat caruman sukarela melalui saluran rasmi KWSP"
+    ],
+    "sourceLastChecked": "2026-05-24",
+    "verificationStatus": "approved"
+  },
+  {
+    "id": "spnb-rumah-mesra-rakyat",
+    "title": "SPNB Rumah Mesra Rakyat",
+    "category": "Housing Aid",
+    "shortDescription": "Housing programme for Malaysian applicants aged 18 and above with household income RM750 to RM5,000, who do not own a home or live in a poor-condition home and have suitable land.",
+    "targetGroup": [
+      "Low-income households needing a home",
+      "Applicants with suitable land",
+      "Households living in poor-condition homes"
+    ],
+    "benefitSummary": "Rumah Mesra Rakyat helps eligible households build a basic home, subject to SPNB assessment and annual allocation.",
+    "eligibilitySummary": [
+      "Malaysian citizen",
+      "Age 18 and above",
+      "Household income RM750 to RM5,000",
+      "Does not own a house or owns/lives in poor-condition house",
+      "Suitable land/site required"
+    ],
+    "applicationMethod": "Apply online through SPNB and submit supporting documents to the relevant SPNB branch.",
+    "importantNotes": [
+      "The public form does not confirm land ownership, site suitability, or current house condition.",
+      "KelayakanKu marks this as Need More Info even when income appears compatible."
+    ],
+    "eligibilityRules": {
+      "citizenship": "Malaysian",
+      "maxHouseholdIncome": 5000,
+      "maxMonthlyIncome": 5000,
+      "strictIncomeCap": true,
+      "states": [
+        "All"
+      ],
+      "minAge": 18,
+      "maxAge": null,
+      "allowedAgeGroups": [],
+      "householdSituations": [],
+      "employmentStatuses": [
+        "employed",
+        "self-employed",
+        "gig-worker",
+        "unemployed",
+        "homemaker"
+      ],
+      "workSituations": [],
+      "requiresChildren": false,
+      "requiresDisability": false,
+      "requiresStudent": false,
+      "requiresSenior": null,
+      "requiresSingleParent": null,
+      "requiresCaregiver": null,
+      "requiresEkasih": null,
+      "requiresStrApproved": null,
+      "minDependents": 0,
+      "maxDependents": null,
+      "incomeStability": [],
+      "acceptsUnstableIncome": null,
+      "contributionRequirements": {},
+      "supportNeeds": [
+        "Rental or housing support",
+        "Not sure — show me suitable support options"
+      ],
+      "specialSituations": [],
+      "keywords": [
+        "Rumah Mesra Rakyat",
+        "SPNB",
+        "housing",
+        "land"
+      ],
+      "requiresHousingReview": true
+    },
+    "requiredDocuments": [
+      "MyKad applicant and spouse if applicable",
+      "Land title and official land search",
+      "Income proof or declaration",
+      "Confirmation of not owning a house or owning/living in poor-condition house",
+      "Site report/photos"
+    ],
+    "nextSteps": [
+      "Check SPNB Rumah Mesra Rakyat criteria",
+      "Confirm land and housing status",
+      "Apply online and submit documents to SPNB branch"
+    ],
+    "officialUrl": "https://spnb.com.my/rumah-mesra-rakyat/",
+    "sourceUrl": "https://spnb.com.my/rumah-mesra-rakyat/",
+    "sourceYear": 2025,
+    "sourceAgency": "SPNB / KPKT",
+    "evidenceNotes": "SPNB page states citizenship, age 18+, RM750-RM5,000 household income, no house/poor-condition house, and suitable land requirements.",
+    "lastUpdated": "2026-05-24",
+    "titleBm": "SPNB Rumah Mesra Rakyat",
+    "shortDescriptionBm": "Program perumahan untuk pemohon warganegara Malaysia berumur 18 tahun ke atas dengan pendapatan isi rumah RM750 hingga RM5,000, yang tidak memiliki rumah atau tinggal di rumah usang/tidak sempurna dan mempunyai tanah sesuai.",
+    "targetGroupBm": [
+      "Isi rumah berpendapatan rendah yang memerlukan rumah",
+      "Pemohon dengan tanah sesuai",
+      "Isi rumah yang tinggal di rumah usang atau tidak sempurna"
+    ],
+    "benefitSummaryBm": "Rumah Mesra Rakyat membantu isi rumah layak membina rumah asas, tertakluk kepada penilaian SPNB dan peruntukan tahunan.",
+    "eligibilitySummaryBm": [
+      "Warganegara Malaysia",
+      "Berumur 18 tahun ke atas",
+      "Pendapatan isi rumah RM750 hingga RM5,000",
+      "Tidak memiliki rumah atau memiliki/tinggal di rumah usang/tidak sempurna",
+      "Tanah/tapak sesuai diperlukan"
+    ],
+    "applicationMethodBm": "Mohon dalam talian melalui SPNB dan hantar dokumen sokongan ke cawangan SPNB berkaitan.",
+    "importantNotesBm": [
+      "Borang awam tidak mengesahkan pemilikan tanah, kesesuaian tapak, atau keadaan rumah semasa.",
+      "KelayakanKu menandakan program ini sebagai Perlu Maklumat Lanjut walaupun pendapatan kelihatan sepadan."
+    ],
+    "requiredDocumentsBm": [
+      "MyKad pemohon dan pasangan jika berkaitan",
+      "Geran tanah dan carian rasmi tanah",
+      "Bukti atau pengesahan pendapatan",
+      "Pengesahan tidak memiliki rumah atau memiliki/tinggal di rumah usang",
+      "Laporan/gambar tapak"
+    ],
+    "nextStepsBm": [
+      "Semak kriteria SPNB Rumah Mesra Rakyat",
+      "Sahkan status tanah dan perumahan",
+      "Mohon dalam talian dan hantar dokumen ke cawangan SPNB"
+    ],
+    "sourceLastChecked": "2026-05-24",
+    "verificationStatus": "approved"
+  },
+  {
+    "id": "jkm-btb",
+    "title": "JKM Bantuan OKU Tidak Berupaya Bekerja (BTB)",
+    "category": "Disability Aid",
+    "shortDescription": "Monthly JKM assistance for registered OKU aged 16 to 59 who are unable to work, subject to medical/JKM verification and current PGK-related assessment.",
+    "targetGroup": [
+      "Registered OKU unable to work",
+      "Low-income disabled adults",
+      "Malaysians needing disability support"
+    ],
+    "benefitSummary": "BTB provides monthly support for eligible OKU who are unable to work.",
+    "eligibilitySummary": [
+      "Malaysian resident in Malaysia",
+      "Age 16 to 59",
+      "JKM-registered OKU card holder",
+      "Unable to work with medical/JKM verification",
+      "Individual income must meet current PGK-related criteria"
+    ],
+    "applicationMethod": "Apply through JKM and attend assessment if requested.",
+    "importantNotes": [
+      "The public form can capture disability context but not official JKM OKU registration.",
+      "KelayakanKu marks this as Need More Info when registration and medical verification are not confirmed."
+    ],
+    "eligibilityRules": {
+      "citizenship": "Malaysian",
+      "maxHouseholdIncome": null,
+      "maxMonthlyIncome": null,
+      "strictIncomeCap": false,
+      "states": [
+        "All"
+      ],
+      "minAge": 16,
+      "maxAge": 59,
+      "allowedAgeGroups": [],
+      "householdSituations": [],
+      "employmentStatuses": [
+        "unable-to-work",
+        "unemployed"
+      ],
+      "workSituations": [
+        "unable_to_work",
+        "unemployed"
+      ],
+      "requiresChildren": false,
+      "requiresDisability": true,
+      "requiresStudent": false,
+      "requiresSenior": null,
+      "requiresSingleParent": null,
+      "requiresCaregiver": null,
+      "requiresEkasih": null,
+      "requiresStrApproved": null,
+      "minDependents": 0,
+      "maxDependents": null,
+      "incomeStability": [],
+      "acceptsUnstableIncome": null,
+      "contributionRequirements": {},
+      "supportNeeds": [
+        "Medical or disability-related support",
+        "Cash aid"
+      ],
+      "specialSituations": [
+        "oku_or_disability"
+      ],
+      "keywords": [
+        "BTB",
+        "OKU",
+        "tidak berupaya bekerja"
+      ],
+      "requiresOkuRegistration": true
+    },
+    "requiredDocuments": [
+      "MyKad",
+      "OKU card or temporary OKU registration slip",
+      "Medical or JKM confirmation of inability to work",
+      "Income confirmation",
+      "Bank account details"
+    ],
+    "nextSteps": [
+      "Confirm OKU registration with JKM",
+      "Prepare medical or JKM confirmation documents",
+      "Apply through JKM or eBantuan JKM"
+    ],
+    "officialUrl": "https://www.jkm.gov.my/main/article/bantuan-bulanan",
+    "sourceUrl": "https://www.jkm.gov.my/main/article/bantuan-bulanan",
+    "sourceYear": 2025,
+    "sourceAgency": "JKM",
+    "evidenceNotes": "JKM Bantuan Bulanan page updated 2025 states BTB age 16-59, registered OKU card, unable-to-work verification and income assessment requirements.",
+    "lastUpdated": "2026-05-24",
+    "titleBm": "JKM Bantuan OKU Tidak Berupaya Bekerja (BTB)",
+    "shortDescriptionBm": "Bantuan bulanan JKM untuk OKU berdaftar berumur 16 hingga 59 tahun yang tidak berupaya bekerja, tertakluk kepada pengesahan perubatan/JKM dan penilaian PGK semasa.",
+    "targetGroupBm": [
+      "OKU berdaftar yang tidak berupaya bekerja",
+      "Dewasa OKU berpendapatan rendah",
+      "Rakyat Malaysia yang memerlukan sokongan OKU"
+    ],
+    "benefitSummaryBm": "BTB menyediakan sokongan bulanan untuk OKU yang layak dan tidak berupaya bekerja.",
+    "eligibilitySummaryBm": [
+      "Warganegara Malaysia bermastautin di Malaysia",
+      "Berumur 16 hingga 59 tahun",
+      "Pemegang kad OKU berdaftar JKM",
+      "Tidak berupaya bekerja dengan pengesahan perubatan/JKM",
+      "Pendapatan individu mesti memenuhi kriteria berkaitan PGK semasa"
+    ],
+    "applicationMethodBm": "Mohon melalui JKM dan hadir penilaian jika diminta.",
+    "importantNotesBm": [
+      "Borang awam boleh menangkap konteks OKU tetapi bukan pendaftaran OKU rasmi JKM.",
+      "KelayakanKu menandakan program ini sebagai Perlu Maklumat Lanjut apabila pendaftaran dan pengesahan perubatan belum disahkan."
+    ],
+    "requiredDocumentsBm": [
+      "MyKad",
+      "Kad OKU atau slip pendaftaran sementara OKU",
+      "Pengesahan perubatan atau JKM tentang ketidakupayaan bekerja",
+      "Pengesahan pendapatan",
+      "Butiran akaun bank"
+    ],
+    "nextStepsBm": [
+      "Sahkan pendaftaran OKU dengan JKM",
+      "Sediakan dokumen pengesahan perubatan atau JKM",
+      "Mohon melalui JKM atau eBantuan JKM"
+    ],
+    "sourceLastChecked": "2026-05-24",
+    "verificationStatus": "approved"
+  },
+  {
+    "id": "jkm-epoku",
+    "title": "JKM Elaun Pekerja Orang Kurang Upaya (EPOKU)",
+    "category": "Disability Aid",
+    "shortDescription": "Monthly JKM allowance for working JKM-registered OKU aged 16 and above with income within the official limit.",
+    "targetGroup": [
+      "Working OKU",
+      "Self-employed OKU",
+      "Low-income disabled workers"
+    ],
+    "benefitSummary": "EPOKU supports registered OKU who are working or self-employed.",
+    "eligibilitySummary": [
+      "Malaysian resident in Malaysia",
+      "Age 16 and above and not a student",
+      "JKM-registered OKU card holder",
+      "Monthly income RM100 to RM1,700"
+    ],
+    "applicationMethod": "Apply through JKM and provide income and OKU registration documents.",
+    "importantNotes": [
+      "The public form does not confirm official OKU registration.",
+      "Income and work status must be verified by JKM."
+    ],
+    "eligibilityRules": {
+      "citizenship": "Malaysian",
+      "maxHouseholdIncome": null,
+      "maxMonthlyIncome": 1700,
+      "strictIncomeCap": true,
+      "states": [
+        "All"
+      ],
+      "minAge": 16,
+      "maxAge": null,
+      "allowedAgeGroups": [],
+      "householdSituations": [],
+      "employmentStatuses": [
+        "employed",
+        "self-employed",
+        "gig-worker"
+      ],
+      "workSituations": [
+        "employed",
+        "self_employed",
+        "gig_worker",
+        "small_business"
+      ],
+      "requiresChildren": false,
+      "requiresDisability": true,
+      "requiresStudent": false,
+      "requiresSenior": null,
+      "requiresSingleParent": null,
+      "requiresCaregiver": null,
+      "requiresEkasih": null,
+      "requiresStrApproved": null,
+      "minDependents": 0,
+      "maxDependents": null,
+      "incomeStability": [],
+      "acceptsUnstableIncome": null,
+      "contributionRequirements": {},
+      "supportNeeds": [
+        "Medical or disability-related support",
+        "Cash aid",
+        "Gig worker / self-employed support"
+      ],
+      "specialSituations": [
+        "oku_or_disability"
+      ],
+      "keywords": [
+        "EPOKU",
+        "Elaun Pekerja OKU",
+        "working OKU"
+      ],
+      "requiresOkuRegistration": true
+    },
+    "requiredDocuments": [
+      "MyKad",
+      "OKU card or temporary OKU registration slip",
+      "Income statement or declaration",
+      "Utility bill or address proof",
+      "Bank account details"
+    ],
+    "nextSteps": [
+      "Confirm OKU registration",
+      "Prepare income proof or declaration",
+      "Apply through JKM or eBantuan JKM"
+    ],
+    "officialUrl": "https://www.jkm.gov.my/main/article/bantuan-bulanan",
+    "sourceUrl": "https://www.jkm.gov.my/main/article/bantuan-bulanan",
+    "sourceYear": 2025,
+    "sourceAgency": "JKM",
+    "evidenceNotes": "JKM Bantuan Bulanan page updated 2025 states EPOKU age 16+, registered OKU card and monthly income RM100-RM1,700.",
+    "lastUpdated": "2026-05-24",
+    "titleBm": "JKM Elaun Pekerja Orang Kurang Upaya (EPOKU)",
+    "shortDescriptionBm": "Elaun bulanan JKM untuk OKU berdaftar JKM yang bekerja, berumur 16 tahun ke atas, dengan pendapatan dalam had rasmi.",
+    "targetGroupBm": [
+      "OKU bekerja",
+      "OKU bekerja sendiri",
+      "Pekerja OKU berpendapatan rendah"
+    ],
+    "benefitSummaryBm": "EPOKU menyokong OKU berdaftar yang bekerja atau bekerja sendiri.",
+    "eligibilitySummaryBm": [
+      "Warganegara Malaysia bermastautin di Malaysia",
+      "Berumur 16 tahun ke atas dan bukan pelajar",
+      "Pemegang kad OKU berdaftar JKM",
+      "Pendapatan bulanan RM100 hingga RM1,700"
+    ],
+    "applicationMethodBm": "Mohon melalui JKM dan sediakan dokumen pendapatan serta pendaftaran OKU.",
+    "importantNotesBm": [
+      "Borang awam tidak mengesahkan pendaftaran OKU rasmi.",
+      "Pendapatan dan status kerja mesti disahkan oleh JKM."
+    ],
+    "requiredDocumentsBm": [
+      "MyKad",
+      "Kad OKU atau slip pendaftaran sementara OKU",
+      "Penyata atau pengesahan pendapatan",
+      "Bil utiliti atau bukti alamat",
+      "Butiran akaun bank"
+    ],
+    "nextStepsBm": [
+      "Sahkan pendaftaran OKU",
+      "Sediakan bukti atau pengesahan pendapatan",
+      "Mohon melalui JKM atau eBantuan JKM"
+    ],
+    "sourceLastChecked": "2026-05-24",
+    "verificationStatus": "approved"
+  },
+  {
+    "id": "jkm-bwe",
+    "title": "JKM Bantuan Warga Emas (BWE)",
+    "category": "Senior Support",
+    "shortDescription": "Monthly JKM assistance for Malaysian senior citizens aged 60 and above, subject to PGK-related poverty criteria, case assessment, and JKM conditions.",
+    "targetGroup": [
+      "Senior citizens aged 60 and above",
+      "Low-income older Malaysians",
+      "Older adults needing welfare support"
+    ],
+    "benefitSummary": "BWE provides monthly support to eligible senior citizens to continue living in the community.",
+    "eligibilitySummary": [
+      "Malaysian resident in Malaysia",
+      "Age 60 and above",
+      "Income/poverty criteria and JKM assessment apply",
+      "Not living in certain JKM-funded institutions or free care facilities"
+    ],
+    "applicationMethod": "Apply through JKM and attend assessment if requested.",
+    "importantNotes": [
+      "PGK and case-assessment details are not fully captured by the public form.",
+      "KelayakanKu should treat many BWE matches as Need More Info."
+    ],
+    "eligibilityRules": {
+      "citizenship": "Malaysian",
+      "maxHouseholdIncome": null,
+      "maxMonthlyIncome": null,
+      "strictIncomeCap": false,
       "states": [
         "All"
       ],
       "minAge": 60,
       "maxAge": null,
+      "allowedAgeGroups": [],
+      "householdSituations": [],
       "employmentStatuses": [
         "retired",
         "unemployed",
         "homemaker",
         "unable-to-work",
-        "employed",
-        "self-employed"
+        "self-employed",
+        "employed"
       ],
+      "workSituations": [],
       "requiresChildren": false,
       "requiresDisability": false,
       "requiresStudent": false,
+      "requiresSenior": true,
+      "requiresSingleParent": null,
+      "requiresCaregiver": null,
+      "requiresEkasih": null,
+      "requiresStrApproved": null,
       "minDependents": 0,
+      "maxDependents": null,
+      "incomeStability": [],
+      "acceptsUnstableIncome": null,
+      "contributionRequirements": {},
       "supportNeeds": [
         "Cash aid",
         "Food or living cost support",
         "Not sure — show me suitable support options"
+      ],
+      "specialSituations": [
+        "senior_citizen"
+      ],
+      "keywords": [
+        "BWE",
+        "Bantuan Warga Emas",
+        "senior"
       ]
     },
     "requiredDocuments": [
-      "MyKad applicant",
-      "Income proof or income declaration",
-      "Household member identity documents if requested",
-      "Bank account information",
-      "Other documents requested by JKM"
+      "MyKad",
+      "Household member identity documents",
+      "Income proof or declaration",
+      "Utility bill or address proof",
+      "Bank account details"
     ],
     "nextSteps": [
-      "Apply through JKM manual or online channel",
-      "Prepare identity and income documents",
-      "Attend JKM assessment if requested"
+      "Check JKM Bantuan Warga Emas criteria",
+      "Prepare identity, income, and address documents",
+      "Apply through JKM or eBantuan JKM"
     ],
     "officialUrl": "https://www.jkm.gov.my/main/article/bantuan-bulanan",
     "sourceUrl": "https://www.jkm.gov.my/main/article/bantuan-bulanan",
-    "lastUpdated": "2026-05-22",
-    "verificationStatus": "approved",
+    "sourceYear": 2025,
+    "sourceAgency": "JKM",
+    "evidenceNotes": "JKM Bantuan Bulanan page updated 2025 states BWE age 60+ and PGK/case-assessment conditions.",
+    "lastUpdated": "2026-05-24",
     "titleBm": "JKM Bantuan Warga Emas (BWE)",
-    "shortDescriptionBm": "Bantuan bulanan JKM untuk warga emas berumur 60 tahun dan ke atas, tertakluk kepada penilaian JKM, PGK atau kriteria kes semasa, dan dokumen sokongan rasmi.",
+    "shortDescriptionBm": "Bantuan bulanan JKM untuk warga emas Malaysia berumur 60 tahun dan ke atas, tertakluk kepada kriteria kemiskinan berkaitan PGK, penilaian kes, dan syarat JKM.",
     "targetGroupBm": [
       "Warga emas berumur 60 tahun dan ke atas",
       "Warga emas Malaysia berpendapatan rendah",
-      "Warga emas yang memerlukan sokongan JKM"
+      "Warga emas yang memerlukan sokongan kebajikan"
     ],
-    "benefitSummaryBm": "BWE menyediakan bantuan bulanan JKM untuk warga emas yang layak.",
+    "benefitSummaryBm": "BWE menyediakan sokongan bulanan kepada warga emas yang layak untuk meneruskan kehidupan dalam komuniti.",
     "eligibilitySummaryBm": [
+      "Warganegara Malaysia bermastautin di Malaysia",
       "Berumur 60 tahun dan ke atas",
-      "Tertakluk kepada penilaian JKM dan PGK atau kriteria kes semasa",
-      "Dokumen identiti, pendapatan, dan isi rumah mungkin diminta"
+      "Kriteria pendapatan/kemiskinan dan penilaian JKM terpakai",
+      "Bukan tinggal di institusi tertentu yang dibiayai JKM atau pusat jagaan percuma"
     ],
-    "applicationMethodBm": "Mohon melalui saluran JKM dan ikut arahan penilaian daripada JKM.",
+    "applicationMethodBm": "Mohon melalui JKM dan hadir penilaian jika diminta.",
     "importantNotesBm": [
-      "JKM akan membuat penilaian akhir berdasarkan kriteria semasa.",
-      "Had pendapatan tidak dipaksa di sini apabila sumber bergantung pada PGK atau penilaian kes."
+      "Butiran PGK dan penilaian kes tidak ditangkap sepenuhnya oleh borang awam.",
+      "KelayakanKu patut menganggap banyak padanan BWE sebagai Perlu Maklumat Lanjut."
     ],
     "requiredDocumentsBm": [
-      "MyKad pemohon",
-      "Bukti pendapatan atau pengakuan pendapatan",
-      "Dokumen pengenalan ahli isi rumah jika diminta",
-      "Maklumat akaun bank",
-      "Dokumen lain yang diminta oleh JKM"
-    ],
-    "nextStepsBm": [
-      "Mohon melalui saluran manual atau dalam talian JKM",
-      "Sediakan dokumen identiti dan pendapatan",
-      "Hadir penilaian JKM jika diminta"
-    ]
-  },
-  {
-    "id": "jkm-bantuan-am-persekutuan-ba",
-    "title": "JKM Bantuan Am Persekutuan (BA)",
-    "category": "Cash Aid",
-    "shortDescription": "Federal general assistance for low-income individuals or families in Wilayah Persekutuan who are not covered by other JKM monthly aid schemes, subject to PGK and JKM case assessment.",
-    "targetGroup": [
-      "Low-income individuals in Wilayah Persekutuan",
-      "Low-income families in Kuala Lumpur, Putrajaya, or Labuan",
-      "Applicants not covered by other JKM monthly aid"
-    ],
-    "benefitSummary": "Bantuan Am Persekutuan provides general cash assistance for eligible low-income applicants in Wilayah Persekutuan.",
-    "eligibilitySummary": [
-      "Available for Wilayah Persekutuan areas",
-      "Subject to JKM assessment and PGK or case criteria",
-      "May apply when the applicant is not covered by another JKM monthly aid scheme"
-    ],
-    "applicationMethod": "Confirm residence and apply through JKM or the official government assistance channel.",
-    "importantNotes": [
-      "This support is state/territory-specific.",
-      "JKM assessment is still required before approval."
-    ],
-    "eligibilityRules": {
-      "citizenship": "Malaysian",
-      "maxHouseholdIncome": null,
-      "maxMonthlyIncome": null,
-      "states": [
-        "Kuala Lumpur",
-        "Putrajaya",
-        "Labuan"
-      ],
-      "minAge": 18,
-      "maxAge": null,
-      "employmentStatuses": [
-        "employed",
-        "unemployed",
-        "self-employed",
-        "gig-worker",
-        "homemaker",
-        "retired",
-        "unable-to-work"
-      ],
-      "requiresChildren": false,
-      "requiresDisability": false,
-      "requiresStudent": false,
-      "minDependents": 0,
-      "supportNeeds": [
-        "Cash aid",
-        "Food or living cost support",
-        "Not sure — show me suitable support options"
-      ]
-    },
-    "requiredDocuments": [
-      "MyKad applicant",
-      "Household member identity documents",
-      "Income proof or income declaration",
-      "Utility bill or address proof",
-      "Other documents requested by JKM"
-    ],
-    "nextSteps": [
-      "Confirm residence in Wilayah Persekutuan",
-      "Apply through JKM manual or online channel",
-      "Attend JKM assessment if requested"
-    ],
-    "officialUrl": "https://www.malaysia.gov.my/personas/keluarga-berpendapatan-rendah/mendapatkan-bantuan-asas/bantuan-am-persekutuan-ba",
-    "sourceUrl": "https://www.malaysia.gov.my/personas/keluarga-berpendapatan-rendah/mendapatkan-bantuan-asas/bantuan-am-persekutuan-ba",
-    "lastUpdated": "2026-05-22",
-    "verificationStatus": "approved",
-    "titleBm": "JKM Bantuan Am Persekutuan (BA)",
-    "shortDescriptionBm": "Bantuan am persekutuan untuk individu atau keluarga berpendapatan rendah di Wilayah Persekutuan yang tidak diliputi skim bantuan bulanan JKM lain, tertakluk kepada PGK dan penilaian kes JKM.",
-    "targetGroupBm": [
-      "Individu berpendapatan rendah di Wilayah Persekutuan",
-      "Keluarga berpendapatan rendah di Kuala Lumpur, Putrajaya, atau Labuan",
-      "Pemohon yang tidak diliputi bantuan bulanan JKM lain"
-    ],
-    "benefitSummaryBm": "Bantuan Am Persekutuan menyediakan bantuan tunai am untuk pemohon berpendapatan rendah yang layak di Wilayah Persekutuan.",
-    "eligibilitySummaryBm": [
-      "Tersedia untuk kawasan Wilayah Persekutuan",
-      "Tertakluk kepada penilaian JKM dan PGK atau kriteria kes",
-      "Boleh dipertimbangkan apabila pemohon tidak diliputi skim bantuan bulanan JKM lain"
-    ],
-    "applicationMethodBm": "Sahkan tempat tinggal dan mohon melalui JKM atau saluran bantuan rasmi kerajaan.",
-    "importantNotesBm": [
-      "Sokongan ini khusus negeri/wilayah.",
-      "Penilaian JKM masih diperlukan sebelum kelulusan."
-    ],
-    "requiredDocumentsBm": [
-      "MyKad pemohon",
+      "MyKad",
       "Dokumen pengenalan ahli isi rumah",
-      "Bukti pendapatan atau pengakuan pendapatan",
+      "Bukti atau pengesahan pendapatan",
       "Bil utiliti atau bukti alamat",
-      "Dokumen lain yang diminta oleh JKM"
+      "Butiran akaun bank"
     ],
     "nextStepsBm": [
-      "Sahkan tempat tinggal di Wilayah Persekutuan",
-      "Mohon melalui saluran manual atau dalam talian JKM",
-      "Hadir penilaian JKM jika diminta"
-    ]
+      "Semak kriteria JKM Bantuan Warga Emas",
+      "Sediakan dokumen identiti, pendapatan, dan alamat",
+      "Mohon melalui JKM atau eBantuan JKM"
+    ],
+    "sourceLastChecked": "2026-05-24",
+    "verificationStatus": "approved"
   },
   {
-    "id": "jkm-bantuan-penjagaan-oku-terlantar-bpt",
+    "id": "jkm-bpt",
     "title": "JKM Bantuan Penjagaan OKU Terlantar / Pesakit Kronik Terlantar (BPT)",
     "category": "Healthcare Aid",
-    "shortDescription": "Monthly support for caregivers or eligible patients involving bedridden OKU, bedridden chronic patients, or chronic patients requiring continuous treatment, subject to JKM criteria and assessment.",
+    "shortDescription": "Monthly JKM support for caregivers or eligible patients involving bedridden OKU, bedridden chronic patients, or chronic patients requiring continuous treatment, with household income not exceeding RM5,000.",
     "targetGroup": [
       "Caregivers of bedridden OKU",
-      "Households with chronic patients requiring care",
-      "Families with disability-related care needs"
+      "Households caring for chronic patients",
+      "Families with serious medical care needs"
     ],
-    "benefitSummary": "BPT provides monthly support linked to caregiving for bedridden OKU or chronic patients who meet JKM criteria.",
+    "benefitSummary": "BPT helps reduce the care burden for families, caregivers, or eligible patients.",
     "eligibilitySummary": [
-      "Involves bedridden OKU or chronic patient care needs",
-      "Subject to JKM criteria and assessment",
-      "Medical, disability, identity, and income documents may be requested"
+      "Malaysian resident in Malaysia",
+      "Caregiving or patient condition requirements apply",
+      "Household monthly income not exceeding RM5,000",
+      "Medical/JKM verification required"
     ],
-    "applicationMethod": "Apply through JKM and prepare medical or disability-related evidence if requested.",
+    "applicationMethod": "Apply through JKM and prepare medical or disability-related evidence.",
     "importantNotes": [
-      "KelayakanKu does not collect detailed medical diagnosis.",
-      "Official JKM assessment is required to confirm eligibility."
+      "The public form does not collect detailed medical diagnosis or caregiving verification.",
+      "Official JKM assessment is required."
     ],
     "eligibilityRules": {
       "citizenship": "Malaysian",
       "maxHouseholdIncome": 5000,
       "maxMonthlyIncome": null,
+      "strictIncomeCap": true,
       "states": [
         "All"
       ],
       "minAge": null,
       "maxAge": null,
+      "allowedAgeGroups": [],
+      "householdSituations": [],
       "employmentStatuses": [
         "employed",
         "unemployed",
@@ -706,152 +1616,213 @@
         "retired",
         "unable-to-work"
       ],
+      "workSituations": [],
       "requiresChildren": false,
-      "requiresDisability": true,
+      "requiresDisability": false,
       "requiresStudent": false,
+      "requiresSenior": null,
+      "requiresSingleParent": null,
+      "requiresCaregiver": true,
+      "requiresEkasih": null,
+      "requiresStrApproved": null,
       "minDependents": 0,
+      "maxDependents": null,
+      "incomeStability": [],
+      "acceptsUnstableIncome": null,
+      "contributionRequirements": {},
       "supportNeeds": [
         "Medical or disability-related support",
         "Cash aid",
         "Not sure — show me suitable support options"
+      ],
+      "specialSituations": [
+        "chronic_illness",
+        "oku_or_disability"
+      ],
+      "keywords": [
+        "BPT",
+        "penjagaan",
+        "pesakit kronik",
+        "OKU terlantar"
       ]
     },
     "requiredDocuments": [
       "MyKad applicant or caregiver",
-      "MyKad or MyKid of OKU or chronic patient",
-      "Household member identity documents",
-      "Income proof or income declaration",
-      "Medical or JKM report if requested"
+      "MyKad/MyKid of OKU or chronic patient",
+      "Income proof or declaration",
+      "Medical or treatment confirmation",
+      "Utility bill or address proof",
+      "Bank account details"
     ],
     "nextSteps": [
-      "Confirm whether the person needing care meets JKM BPT criteria",
-      "Prepare medical, identity, and income documents",
-      "Apply through JKM and attend assessment if requested"
+      "Confirm medical/caregiving criteria with JKM",
+      "Prepare medical, identity, income, and address documents",
+      "Apply through JKM or eBantuan JKM"
     ],
     "officialUrl": "https://www.jkm.gov.my/main/article/bantuan-bulanan",
     "sourceUrl": "https://www.jkm.gov.my/main/article/bantuan-bulanan",
-    "lastUpdated": "2026-05-22",
-    "verificationStatus": "approved",
+    "sourceYear": 2025,
+    "sourceAgency": "JKM",
+    "evidenceNotes": "JKM Bantuan Bulanan page updated 2025 states BPT RM500/month, caregiver/patient conditions and household income not exceeding RM5,000.",
+    "lastUpdated": "2026-05-24",
     "titleBm": "JKM Bantuan Penjagaan OKU Terlantar / Pesakit Kronik Terlantar (BPT)",
-    "shortDescriptionBm": "Sokongan bulanan untuk penjaga atau pesakit layak melibatkan OKU terlantar, pesakit kronik terlantar, atau pesakit kronik yang memerlukan rawatan berterusan, tertakluk kepada kriteria dan penilaian JKM.",
+    "shortDescriptionBm": "Sokongan bulanan JKM untuk penjaga atau pesakit layak melibatkan OKU terlantar, pesakit kronik terlantar, atau pesakit kronik yang memerlukan rawatan berterusan, dengan pendapatan isi rumah tidak melebihi RM5,000.",
     "targetGroupBm": [
       "Penjaga OKU terlantar",
-      "Isi rumah dengan pesakit kronik yang memerlukan penjagaan",
-      "Keluarga dengan keperluan penjagaan berkaitan OKU"
+      "Isi rumah yang menjaga pesakit kronik",
+      "Keluarga dengan keperluan penjagaan perubatan serius"
     ],
-    "benefitSummaryBm": "BPT menyediakan sokongan bulanan berkaitan penjagaan OKU terlantar atau pesakit kronik yang memenuhi kriteria JKM.",
+    "benefitSummaryBm": "BPT membantu meringankan beban penjagaan keluarga, penjaga, atau pesakit yang layak.",
     "eligibilitySummaryBm": [
-      "Melibatkan keperluan penjagaan OKU terlantar atau pesakit kronik",
-      "Tertakluk kepada kriteria dan penilaian JKM",
-      "Dokumen perubatan, OKU, identiti, dan pendapatan mungkin diminta"
+      "Warganegara Malaysia bermastautin di Malaysia",
+      "Syarat penjagaan atau keadaan pesakit terpakai",
+      "Pendapatan bulanan isi rumah tidak melebihi RM5,000",
+      "Pengesahan perubatan/JKM diperlukan"
     ],
-    "applicationMethodBm": "Mohon melalui JKM dan sediakan bukti perubatan atau berkaitan OKU jika diminta.",
+    "applicationMethodBm": "Mohon melalui JKM dan sediakan bukti perubatan atau berkaitan OKU.",
     "importantNotesBm": [
-      "KelayakanKu tidak mengumpul diagnosis perubatan terperinci.",
-      "Penilaian rasmi JKM diperlukan untuk mengesahkan kelayakan."
+      "Borang awam tidak mengumpul diagnosis perubatan terperinci atau pengesahan penjagaan.",
+      "Penilaian rasmi JKM diperlukan."
     ],
     "requiredDocumentsBm": [
       "MyKad pemohon atau penjaga",
-      "MyKad atau MyKid OKU atau pesakit kronik",
-      "Dokumen pengenalan ahli isi rumah",
-      "Bukti pendapatan atau pengakuan pendapatan",
-      "Laporan perubatan atau JKM jika diminta"
+      "MyKad/MyKid OKU atau pesakit kronik",
+      "Bukti atau pengesahan pendapatan",
+      "Pengesahan perubatan atau rawatan",
+      "Bil utiliti atau bukti alamat",
+      "Butiran akaun bank"
     ],
     "nextStepsBm": [
-      "Sahkan sama ada orang yang memerlukan penjagaan memenuhi kriteria JKM BPT",
-      "Sediakan dokumen perubatan, identiti, dan pendapatan",
-      "Mohon melalui JKM dan hadir penilaian jika diminta"
-    ]
+      "Sahkan kriteria perubatan/penjagaan dengan JKM",
+      "Sediakan dokumen perubatan, identiti, pendapatan, dan alamat",
+      "Mohon melalui JKM atau eBantuan JKM"
+    ],
+    "sourceLastChecked": "2026-05-24",
+    "verificationStatus": "approved"
   },
   {
-    "id": "kpt-bkoku-sispo",
-    "title": "KPT BKOKU / SisPO Education Support for OKU Students",
-    "category": "Education Aid",
-    "shortDescription": "Education financial support for Malaysian OKU students under KPT through SisPO. The source states that household income is not used as an eligibility condition, but OKU registration, student status, institution, course, and scholarship conditions must be verified.",
+    "id": "perkeso-sip",
+    "title": "PERKESO Employment Insurance System (SIP) Benefits",
+    "category": "Employment Support",
+    "shortDescription": "PERKESO employment insurance benefits for insured persons who lost employment, apply within 60 days, meet contribution qualifying conditions, and register with MYFutureJobs.",
     "targetGroup": [
-      "Malaysian OKU students",
-      "Students registered with JKM as OKU",
-      "Eligible students under KPT/SisPO education support"
+      "Recently retrenched workers",
+      "SOCSO/PERKESO contributors",
+      "Jobseekers after loss of employment"
     ],
-    "benefitSummary": "BKOKU / SisPO supports eligible OKU students with education-related financial assistance.",
+    "benefitSummary": "SIP provides employment insurance benefits and re-employment support for eligible insured persons.",
     "eligibilitySummary": [
-      "Malaysian OKU student",
-      "OKU registration and student status must be confirmed",
-      "Institution, course, and scholarship conditions must be checked through SisPO"
+      "Application within 60 days from loss of employment",
+      "Meets contribution qualifying conditions",
+      "Loss of employment fits Act 800 definitions",
+      "MYFutureJobs registration required"
     ],
-    "applicationMethod": "Apply or check application status through the official SisPO/BKOKU portal.",
+    "applicationMethod": "Apply through the official PERKESO EIS portal and register with MYFutureJobs.",
     "importantNotes": [
-      "Household income is not encoded as a requirement because the official support depends on SisPO rules.",
-      "Current application dates and institution eligibility should be checked on the portal."
+      "Voluntary resignation, misconduct dismissal, retirement, and some contract endings are not covered loss-of-employment cases.",
+      "KelayakanKu relies on selected job-loss and contribution answers only."
     ],
     "eligibilityRules": {
       "citizenship": "Malaysian",
       "maxHouseholdIncome": null,
       "maxMonthlyIncome": null,
+      "strictIncomeCap": false,
       "states": [
         "All"
       ],
       "minAge": null,
       "maxAge": null,
+      "allowedAgeGroups": [],
+      "householdSituations": [],
       "employmentStatuses": [
-        "student"
+        "unemployed"
+      ],
+      "workSituations": [
+        "unemployed"
       ],
       "requiresChildren": false,
-      "requiresDisability": true,
-      "requiresStudent": true,
+      "requiresDisability": false,
+      "requiresStudent": false,
+      "requiresSenior": null,
+      "requiresSingleParent": null,
+      "requiresCaregiver": null,
+      "requiresEkasih": null,
+      "requiresStrApproved": null,
       "minDependents": 0,
+      "maxDependents": null,
+      "incomeStability": [],
+      "acceptsUnstableIncome": null,
+      "contributionRequirements": {
+        "socso": "required"
+      },
       "supportNeeds": [
-        "Student or education support",
-        "Medical or disability-related support",
+        "Gig worker / self-employed support",
+        "Cash aid",
         "Not sure — show me suitable support options"
+      ],
+      "specialSituations": [
+        "recently_lost_job"
+      ],
+      "keywords": [
+        "SIP",
+        "PERKESO",
+        "loss of employment",
+        "MYFutureJobs"
       ]
     },
     "requiredDocuments": [
       "MyKad",
-      "OKU card or JKM OKU registration proof",
-      "Student or institution confirmation",
-      "Bank account in student's name if required",
-      "Other SisPO documents requested by KPT"
+      "Termination or loss-of-employment letter",
+      "Six months salary statements before loss of employment",
+      "Personal bank account details",
+      "Supporting documents depending on case"
     ],
     "nextSteps": [
-      "Check current application dates on the SisPO portal",
-      "Confirm institution and course eligibility",
-      "Apply through SisPO or contact the institution coordinator"
+      "Apply within 60 days of loss of employment",
+      "Check contribution qualifying conditions with PERKESO",
+      "Register with MYFutureJobs",
+      "Prepare original documents for PERKESO verification"
     ],
-    "officialUrl": "https://bkoku.mohe.gov.my/",
-    "sourceUrl": "https://bkoku.mohe.gov.my/",
-    "lastUpdated": "2026-05-22",
-    "verificationStatus": "approved",
-    "titleBm": "Sokongan Pendidikan KPT BKOKU / SisPO untuk Pelajar OKU",
-    "shortDescriptionBm": "Sokongan kewangan pendidikan untuk pelajar OKU Malaysia di bawah KPT melalui SisPO. Sumber menyatakan pendapatan isi rumah tidak digunakan sebagai syarat kelayakan, tetapi pendaftaran OKU, status pelajar, institusi, kursus, dan syarat biasiswa mesti disahkan.",
+    "officialUrl": "https://eis.perkeso.gov.my/eisportal/insured/appl/instruction",
+    "sourceUrl": "https://eis.perkeso.gov.my/eisportal/insured/appl/instruction",
+    "sourceYear": 2026,
+    "sourceAgency": "PERKESO",
+    "evidenceNotes": "PERKESO EIS portal states applications must be within 60 days, require contribution qualifying conditions, defined loss of employment, documents, and MYFutureJobs registration.",
+    "lastUpdated": "2026-05-24",
+    "titleBm": "Faedah Sistem Insurans Pekerjaan (SIP) PERKESO",
+    "shortDescriptionBm": "Faedah insurans pekerjaan PERKESO untuk orang berinsurans yang kehilangan pekerjaan, memohon dalam tempoh 60 hari, memenuhi syarat kelayakan caruman, dan berdaftar dengan MYFutureJobs.",
     "targetGroupBm": [
-      "Pelajar OKU Malaysia",
-      "Pelajar yang berdaftar dengan JKM sebagai OKU",
-      "Pelajar layak di bawah sokongan pendidikan KPT/SisPO"
+      "Pekerja yang baru diberhentikan",
+      "Pencarum SOCSO/PERKESO",
+      "Pencari kerja selepas kehilangan pekerjaan"
     ],
-    "benefitSummaryBm": "BKOKU / SisPO menyokong pelajar OKU yang layak dengan bantuan kewangan berkaitan pendidikan.",
+    "benefitSummaryBm": "SIP menyediakan faedah insurans pekerjaan dan sokongan penempatan semula pekerjaan untuk orang berinsurans yang layak.",
     "eligibilitySummaryBm": [
-      "Pelajar OKU Malaysia",
-      "Pendaftaran OKU dan status pelajar mesti disahkan",
-      "Institusi, kursus, dan syarat biasiswa mesti disemak melalui SisPO"
+      "Permohonan dalam tempoh 60 hari dari tarikh kehilangan pekerjaan",
+      "Memenuhi syarat kelayakan caruman",
+      "Kehilangan pekerjaan mengikut definisi Akta 800",
+      "Pendaftaran MYFutureJobs diperlukan"
     ],
-    "applicationMethodBm": "Mohon atau semak status permohonan melalui portal rasmi SisPO/BKOKU.",
+    "applicationMethodBm": "Mohon melalui portal rasmi EIS PERKESO dan daftar dengan MYFutureJobs.",
     "importantNotesBm": [
-      "Pendapatan isi rumah tidak dikodkan sebagai syarat kerana sokongan rasmi bergantung pada peraturan SisPO.",
-      "Tarikh permohonan semasa dan kelayakan institusi perlu disemak di portal."
+      "Peletakan jawatan sukarela, salah laku, persaraan, dan sesetengah tamat kontrak tidak termasuk kes kehilangan pekerjaan yang dilindungi.",
+      "KelayakanKu bergantung pada jawapan kehilangan kerja dan caruman yang dipilih sahaja."
     ],
     "requiredDocumentsBm": [
       "MyKad",
-      "Kad OKU atau bukti pendaftaran OKU JKM",
-      "Pengesahan pelajar atau institusi",
-      "Akaun bank atas nama pelajar jika diperlukan",
-      "Dokumen SisPO lain yang diminta oleh KPT"
+      "Surat pemberhentian atau kehilangan pekerjaan",
+      "Penyata gaji enam bulan sebelum kehilangan pekerjaan",
+      "Butiran akaun bank persendirian",
+      "Dokumen sokongan mengikut kes"
     ],
     "nextStepsBm": [
-      "Semak tarikh permohonan semasa di portal SisPO",
-      "Sahkan kelayakan institusi dan kursus",
-      "Mohon melalui SisPO atau hubungi penyelaras institusi"
-    ]
+      "Mohon dalam tempoh 60 hari dari kehilangan pekerjaan",
+      "Semak syarat kelayakan caruman dengan PERKESO",
+      "Daftar dengan MYFutureJobs",
+      "Sediakan dokumen asal untuk pengesahan PERKESO"
+    ],
+    "sourceLastChecked": "2026-05-24",
+    "verificationStatus": "approved"
   },
   {
     "id": "draft-policy-for-review",

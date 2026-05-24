@@ -7,7 +7,7 @@ import { validateUserProfile } from "../src/utils/validateUserProfile.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const policiesPath = join(__dirname, "../src/data/policies.json");
-const policies = JSON.parse(await readFile(policiesPath, "utf8"));
+const policies = JSON.parse(await readFile(policiesPath, "utf8")).filter((policy) => policy.verificationStatus === "approved");
 const expectedRules = [
   "citizenship",
   "income",
@@ -134,9 +134,9 @@ const profiles = [
   }
 ];
 
-const rm5000Policy = policies.find((policy) => policy.id === "str-isi-rumah");
+const rm5000Policy = policies.find((policy) => policy.id === "str-2026-isi-rumah");
 if (!rm5000Policy) {
-  throw new Error("Boundary test requires str-isi-rumah policy.");
+  throw new Error("Boundary test requires str-2026-isi-rumah policy.");
 }
 
 const boundaryBaseProfile = {
@@ -302,7 +302,7 @@ const enhancedProfiles = [
     },
     assert(response) {
       assertHasAnyResult(response, this.name);
-      assertTopIncludes(response, ["str-isi-rumah", "sara-sumbangan-asas-rahmah"], this.name);
+      assertTopIncludes(response, ["str-2026-isi-rumah", "sara-2026"], this.name);
     }
   },
   {
@@ -377,7 +377,7 @@ const enhancedProfiles = [
       specialSituations: ["single_parent"]
     },
     assert(response) {
-      assertTopIncludes(response, ["jkm-bantuan-kanak-kanak-bkk", "str-isi-rumah"], this.name);
+      assertTopIncludes(response, ["str-2026-isi-rumah"], this.name);
     }
   },
   {
@@ -396,7 +396,7 @@ const enhancedProfiles = [
       specialSituations: ["student", "oku_or_disability"]
     },
     assert(response) {
-      assertTopIncludes(response, ["kpt-bkoku-sispo"], this.name);
+      assertTopIncludes(response, ["jkm-btb", "jkm-epoku"], this.name);
     }
   },
   {
@@ -415,7 +415,7 @@ const enhancedProfiles = [
       specialSituations: ["senior_citizen"]
     },
     assert(response) {
-      assertTopIncludes(response, ["str-warga-emas-tiada-pasangan", "jkm-bantuan-warga-emas-bwe"], this.name);
+      assertTopIncludes(response, ["str-2026-warga-emas-tiada-pasangan", "jkm-bwe"], this.name);
     }
   },
   {
@@ -435,7 +435,7 @@ const enhancedProfiles = [
     },
     assert(response) {
       const publicIds = [...response.recommended, ...response.needMoreInfo].map((item) => item.id);
-      if (publicIds.includes("str-isi-rumah")) {
+      if (publicIds.includes("str-2026-isi-rumah")) {
         throw new Error(`${this.name}: dependents must not override strict STR income cap.`);
       }
     }
@@ -456,7 +456,20 @@ const enhancedProfiles = [
       specialSituations: []
     },
     assert() {
-      const baPolicy = policies.find((policy) => policy.id === "jkm-bantuan-am-persekutuan-ba");
+      const baPolicy = {
+        id: "test-state-specific-policy",
+        title: "Test State Specific Policy",
+        category: "Cash Aid",
+        shortDescription: "Synthetic state-specific rule-engine test policy.",
+        eligibilityRules: {
+          citizenship: "Malaysian",
+          maxHouseholdIncome: 5000,
+          states: ["Kuala Lumpur", "Putrajaya", "Labuan"],
+          supportNeeds: ["Cash aid"]
+        },
+        requiredDocuments: [],
+        nextSteps: []
+      };
       const result = scorePolicyLikePublic(this.profile, baPolicy);
       if (result.status !== "Excluded" || !result.disqualificationReasons.some((reason) => reason.includes("State"))) {
         throw new Error(`${this.name}: state-specific policy should be excluded for wrong state.`);
@@ -727,8 +740,16 @@ for (const { name, profile } of profiles) {
     throw new Error(`${name}: response must not include lessLikely.`);
   }
 
-  if (name === "Higher-income user" && totalPublicResults > 0) {
-    throw new Error(`${name}: high-income user should not receive public recommendations.`);
+  if (name === "Higher-income user") {
+    const strictCappedIds = new Set(
+      policies
+        .filter((policy) => policy.eligibilityRules?.strictIncomeCap)
+        .map((policy) => policy.id)
+    );
+    const cappedResults = [...response.recommended, ...response.needMoreInfo].filter((item) => strictCappedIds.has(item.id));
+    if (cappedResults.length > 0) {
+      throw new Error(`${name}: high-income user should not receive strict income-capped aid.`);
+    }
   }
 
   if (name !== "Higher-income user" && totalPublicResults === 0) {

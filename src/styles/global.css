@@ -100,6 +100,9 @@ p { color: var(--muted); line-height: 1.7; }
 .flow-card > span { background: var(--primary); border-radius: 12px; color: #fff; display: grid; flex: 0 0 34px; font-weight: 900; height: 34px; place-items: center; }
 .flow-card strong { display: block; font-size: 1rem; }
 .flow-card p { margin: 4px 0 0; font-size: 0.92rem; line-height: 1.45; }
+.sample-preview-intro { border-top: 1px solid var(--border); margin-top: 20px; padding-top: 18px; }
+.sample-preview-intro h3 { margin-top: 10px; }
+.sample-preview-intro p { margin: 6px 0 0; }
 .metrics-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: 20px; }
 .metric-card { border-radius: 16px; background: #e5f3ff; padding: 18px; text-align: center; }
 .metric-card:nth-child(1) { background: #d9fbe7; }
@@ -175,6 +178,9 @@ p { color: var(--muted); line-height: 1.7; }
 .summary-grid dd { margin: 8px 0 0; font-weight: 800; line-height: 1.55; }
 .action-card { display: grid; gap: 12px; }
 .empty-state, .centered-page { max-width: 720px; margin-inline: auto; text-align: center; }
+.empty-state-actions { justify-content: center; }
+.common-reasons { margin-top: 28px; text-align: left; }
+.common-reasons h3 { margin-top: 0; }
 .processing-card { display: grid; justify-items: center; gap: 16px; }
 .spinner { width: 56px; height: 56px; border: 5px solid #d5ede9; border-top-color: var(--primary); border-radius: 50%; animation: spin 900ms linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }

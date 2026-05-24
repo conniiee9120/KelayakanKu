@@ -1,24 +1,7 @@
 // Second-pass audit that checks whether extracted values are supported by source text.
-import { DEFAULT_GEMINI_MODEL, generateGeminiText, getConfiguredGeminiModel, isMockGeminiEnabled } from "./geminiClient.js";
+import { DEFAULT_GEMINI_MODEL, generateGeminiText, getConfiguredGeminiModel } from "./geminiClient.js";
 
 const SEVERITIES = new Set(["low", "medium", "high"]);
-
-function isDevelopment() {
-  return process.env.NODE_ENV !== "production";
-}
-
-function countDraftFields(node) {
-  if (!node || typeof node !== "object") return 0;
-  return Object.values(node).reduce((count, value) => {
-    if (value && typeof value === "object" && "value" in value) return count + 1;
-    return count + countDraftFields(value);
-  }, 0);
-}
-
-function logAuditDebug(payload) {
-  if (!isDevelopment()) return;
-  console.info("[policy-extraction-audit]", payload);
-}
 
 function unavailableAudit(reason = "unknown", warning = "Audit unavailable. Do not approve without manual review.") {
   return {
@@ -123,14 +106,6 @@ export async function auditExtractedPolicy({ rawText, extractedPolicy }) {
   const model = getConfiguredGeminiModel("GEMINI_AUDIT_MODEL");
   const missingApiKey = !process.env.GEMINI_API_KEY;
 
-  logAuditDebug({
-    auditStarted: true,
-    auditModel: model,
-    sourceTextLength: rawText?.length || 0,
-    extractedPolicyFieldCount: countDraftFields(extractedPolicy),
-    mockGeminiEnabled: isMockGeminiEnabled()
-  });
-
   const result = await generateGeminiText({
     task: "policy_extraction_audit",
     model,
@@ -143,14 +118,6 @@ export async function auditExtractedPolicy({ rawText, extractedPolicy }) {
     audit.warnings.push("Selected Gemini audit model hit quota. Retried with fallback model.");
     audit.correctedWarnings.push("Selected Gemini audit model hit quota. Retried with fallback model.");
   }
-
-  logAuditDebug({
-    auditStarted: false,
-    auditSuccess: audit.status === "completed",
-    auditIssueCount: audit.fieldIssues.length,
-    auditErrorReason: audit.reason || "",
-    fallbackAuditUsed: audit.status === "unavailable"
-  });
 
   return audit;
 }

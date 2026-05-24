@@ -17,6 +17,7 @@ backend/.env.local
 .vite/
 node_modules/.vite/
 *.tsbuildinfo
+backend/src/data/serpapi-search-cache.json
 
 # OS/editor files
 .DS_Store

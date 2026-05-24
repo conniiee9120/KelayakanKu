@@ -20,6 +20,7 @@ export const translations = {
       edit: "Edit Details",
       find: "Find My Matches",
       start: "Start Eligibility Form",
+      tryAgain: "Try Again",
       viewProgram: "View Program Details",
       official: "Open Official Source",
       backResults: "Back to Results"
@@ -114,6 +115,15 @@ export const translations = {
       readyReview: "Ready to review",
       notReadyTitle: "Results are not ready yet",
       notReadyDesc: "Please run the eligibility check first.",
+      emptyNoMatchesTitle: "No suitable matches found from your current profile.",
+      emptyNoMatchesDesc: "This does not mean you are not eligible for all support. It only means your current answers did not strongly match the policy rules currently available in this system.",
+      commonReasonsTitle: "Common reasons:",
+      commonReasons: [
+        "Income is above the policy limit",
+        "Citizenship or state does not match",
+        "Age is outside the required range",
+        "Required special condition was not selected"
+      ],
       noRecommended: "No strong matches found yet. You can check the Need More Info section or update your profile details.",
       noNeedInfo: "No additional programs need more information right now."
     },
@@ -388,6 +398,7 @@ export const translations = {
       edit: "Edit Butiran",
       find: "Cari Padanan Saya",
       start: "Mula Borang Kelayakan",
+      tryAgain: "Cuba Lagi",
       viewProgram: "Lihat Butiran Program",
       official: "Buka Sumber Rasmi",
       backResults: "Kembali ke Keputusan"
@@ -482,6 +493,15 @@ export const translations = {
       readyReview: "Sedia untuk disemak",
       notReadyTitle: "Keputusan belum tersedia",
       notReadyDesc: "Sila jalankan semakan kelayakan dahulu.",
+      emptyNoMatchesTitle: "Tiada padanan yang sesuai ditemui berdasarkan profil semasa anda.",
+      emptyNoMatchesDesc: "Ini tidak bermaksud anda tidak layak untuk semua bantuan. Ini hanya bermaksud jawapan semasa anda tidak sepadan dengan kuat dengan peraturan polisi yang tersedia dalam sistem ini buat masa ini.",
+      commonReasonsTitle: "Sebab biasa:",
+      commonReasons: [
+        "Pendapatan melebihi had polisi",
+        "Kewarganegaraan atau negeri tidak sepadan",
+        "Umur berada di luar julat yang diperlukan",
+        "Syarat khas yang diperlukan tidak dipilih"
+      ],
       noRecommended: "Tiada padanan kukuh ditemui buat masa ini. Anda boleh semak bahagian Perlu Maklumat Lanjut atau kemas kini butiran profil anda.",
       noNeedInfo: "Tiada program tambahan yang memerlukan maklumat lanjut buat masa ini."
     },

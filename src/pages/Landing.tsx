@@ -31,8 +31,12 @@ const landingCopy = {
       ["4", "Snapshot is ready", "Recommended programs, need-more-info items, documents, and next steps are shown."]
     ],
     supportProfile: "Support profile",
+    samplePreviewTitle: "Sample eligibility result preview",
+    samplePreviewHelper: "These numbers are examples only. Your actual results will be shown after you complete the form.",
+    exampleOnly: "Example only",
     recommended: "Recommended",
-    needInfo: "Need Info",
+    needInfo: "Need More Info",
+    documentChecklist: "Document Checklist",
     match: "Match based on income and household.",
     depends: "Depends on household records.",
     scrollHint: "Scroll to preview the steps",
@@ -64,8 +68,12 @@ const landingCopy = {
       ["4", "Ringkasan sedia", "Program disyorkan, item perlu maklumat lanjut, dokumen, dan langkah seterusnya dipaparkan."]
     ],
     supportProfile: "Profil sokongan",
+    samplePreviewTitle: "Contoh pratonton keputusan kelayakan",
+    samplePreviewHelper: "Nombor ini hanyalah contoh. Keputusan sebenar anda akan dipaparkan selepas anda melengkapkan borang.",
+    exampleOnly: "Contoh sahaja",
     recommended: "Disyorkan",
-    needInfo: "Perlu Info",
+    needInfo: "Perlu Maklumat Lanjut",
+    documentChecklist: "Senarai Dokumen",
     match: "Padanan berdasarkan pendapatan dan isi rumah.",
     depends: "Bergantung pada rekod isi rumah.",
     scrollHint: "Tatal untuk melihat langkah-langkah",
@@ -118,10 +126,15 @@ export function Landing() {
                 ))}
               </div>
             </div>
+            <div className="sample-preview-intro">
+              <Badge tone="neutral">{copy.exampleOnly}</Badge>
+              <h3>{copy.samplePreviewTitle}</h3>
+              <p>{copy.samplePreviewHelper}</p>
+            </div>
             <div className="metrics-grid">
               <MetricCard label={copy.recommended} value={2} />
               <MetricCard label={copy.needInfo} value={1} />
-              <MetricCard label={text.results.checklistReady} value={2} />
+              <MetricCard label={copy.documentChecklist} value={2} />
             </div>
             <div className="snapshot-list">
               <p><strong>{language === "bm" ? "Sokongan Bantuan Tunai (STR)" : "Cash Aid Support (STR)"}</strong><small>{copy.match}</small><span>{copy.recommended}</span></p>

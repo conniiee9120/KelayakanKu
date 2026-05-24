@@ -17,23 +17,8 @@ export function isGeminiQuotaError(error) {
   return status === 429 || message.includes("429") || message.includes("resource_exhausted") || message.includes("quota");
 }
 
-function logGeminiAttempt({ task, model, fallbackModelUsed = false, quotaExceeded = false }) {
-  console.info("[Gemini]", {
-    task,
-    model,
-    fallbackModelUsed,
-    quotaExceeded
-  });
-}
-
 export async function generateGeminiText({ task, model, contents, fallbackModel = DEFAULT_GEMINI_MODEL }) {
   if (!process.env.GEMINI_API_KEY || isMockGeminiEnabled()) {
-    logGeminiAttempt({
-      task,
-      model,
-      fallbackModelUsed: false,
-      quotaExceeded: false
-    });
     return {
       text: "",
       source: "fallback",
@@ -47,7 +32,6 @@ export async function generateGeminiText({ task, model, contents, fallbackModel 
   const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
   try {
-    logGeminiAttempt({ task, model, fallbackModelUsed: false, quotaExceeded: false });
     const response = await ai.models.generateContent({ model, contents });
     return {
       text: response.text?.trim() || "",
@@ -62,7 +46,6 @@ export async function generateGeminiText({ task, model, contents, fallbackModel 
 
     if (quotaExceeded && model !== fallbackModel) {
       try {
-        logGeminiAttempt({ task, model: fallbackModel, fallbackModelUsed: true, quotaExceeded: true });
         const fallbackResponse = await ai.models.generateContent({ model: fallbackModel, contents });
         return {
           text: fallbackResponse.text?.trim() || "",
