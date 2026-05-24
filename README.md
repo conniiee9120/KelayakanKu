@@ -181,25 +181,6 @@ The public eligibility response contains only:
   "needMoreInfo": []
 }
 ```
-
-There is no public `Less Likely` category.
-
-## Deployment Notes
-
-Vercel frontend:
-- Set build command to `npm run build`.
-- Set output directory to `dist`.
-- Add `VITE_API_BASE_URL` pointing to the deployed backend URL.
-
-Render backend:
-- Use the `backend` folder as the service root, or set commands with `cd backend`.
-- Build command: `npm install`
-- Start command: `npm start`
-- Add backend environment variables in Render, not in source code.
-- Set `FRONTEND_ORIGIN` to the deployed Vercel frontend URL.
-
-## Security Notes
-
 - Do not commit `.env` files.
 - Do not expose Gemini, SerpAPI, admin password, or JWT secret values in frontend code.
 - Gemini and SerpAPI are called only from the backend.
